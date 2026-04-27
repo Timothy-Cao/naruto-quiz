@@ -128,3 +128,31 @@
     @apply font-sans;
   }
 }
+
+@theme {
+  --color-bg: #0c0a09;
+  --color-surface: #1c1917;
+  --color-surface-2: #292524;
+  --color-border: #292524;
+  --color-border-2: #44403c;
+  --color-text: #fafaf9;
+  --color-text-dim: #a8a29e;
+  --color-accent: #f97316;
+  --color-accent-2: #dc2626;
+  --color-correct: #22c55e;
+  --color-incorrect: #ef4444;
+
+  --font-display: "Bebas Neue", system-ui, sans-serif;
+
+  --radius-card: 12px;
+  --radius-input: 8px;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+* { box-sizing: border-box; }
