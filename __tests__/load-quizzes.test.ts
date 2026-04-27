@@ -4,6 +4,7 @@ import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 
+
 function makeFixtureDir(files: Record<string, unknown>): string {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "quiz-fixture-"));
   for (const [name, content] of Object.entries(files)) {
@@ -40,4 +41,10 @@ describe("loadQuizzesFrom", () => {
     fs.writeFileSync(path.join(dir, "README.md"), "# notes");
     expect(loadQuizzesFrom(dir)).toHaveLength(1);
   });
+});
+
+it("loads the seeded example quiz from data/quizzes/", () => {
+  const dir = path.join(process.cwd(), "data", "quizzes");
+  const quizzes = loadQuizzesFrom(dir);
+  expect(quizzes.find((q) => q.slug === "example")).toBeTruthy();
 });

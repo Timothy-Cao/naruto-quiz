@@ -1,0 +1,89 @@
+{
+  "slug": "example",
+  "title": "Naruto Knowledge — Sample Quiz",
+  "description": "One of every question type. Six questions, six points possible.",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mc-single",
+      "prompt": "Who is the Fourth Hokage of the Hidden Leaf Village?",
+      "options": [
+        { "id": "minato", "label": "Minato Namikaze" },
+        { "id": "tobirama", "label": "Tobirama Senju" },
+        { "id": "hiruzen", "label": "Hiruzen Sarutobi" }
+      ],
+      "correctId": "minato",
+      "explanation": "Minato Namikaze, the Yellow Flash, served as the Fourth Hokage. He sealed the Nine-Tails into his newborn son Naruto, dying in the process."
+    },
+    {
+      "id": "q2",
+      "type": "mc-multi",
+      "prompt": "Which of the following are members of the Akatsuki?",
+      "options": [
+        { "id": "itachi", "label": "Itachi Uchiha" },
+        { "id": "kisame", "label": "Kisame Hoshigaki" },
+        { "id": "jiraiya", "label": "Jiraiya" },
+        { "id": "pain", "label": "Pain" },
+        { "id": "kakashi", "label": "Kakashi Hatake" },
+        { "id": "konan", "label": "Konan" }
+      ],
+      "correctIds": ["itachi", "kisame", "pain", "konan"],
+      "explanation": "Itachi, Kisame, Pain, and Konan were all Akatsuki members. Jiraiya was a Sannin and infiltrated Akatsuki only as a spy. Kakashi was never a member."
+    },
+    {
+      "id": "q3",
+      "type": "match",
+      "prompt": "Match each Sannin to their summon.",
+      "left": [
+        { "id": "jiraiya", "label": "Jiraiya" },
+        { "id": "tsunade", "label": "Tsunade" },
+        { "id": "orochimaru", "label": "Orochimaru" }
+      ],
+      "right": [
+        { "id": "toads", "label": "Toads" },
+        { "id": "slugs", "label": "Slugs" },
+        { "id": "snakes", "label": "Snakes" }
+      ],
+      "correctPairs": [
+        { "leftId": "jiraiya", "rightId": "toads" },
+        { "leftId": "tsunade", "rightId": "slugs" },
+        { "leftId": "orochimaru", "rightId": "snakes" }
+      ],
+      "explanation": "Each Sannin signed a different summoning contract on Mount Myoboku, Shikkotsu Forest, and Ryuchi Cave respectively."
+    },
+    {
+      "id": "q4",
+      "type": "order",
+      "prompt": "Order these Hokage from earliest reign to latest.",
+      "items": [
+        { "id": "hashirama", "label": "Hashirama Senju" },
+        { "id": "tobirama", "label": "Tobirama Senju" },
+        { "id": "hiruzen", "label": "Hiruzen Sarutobi" },
+        { "id": "minato", "label": "Minato Namikaze" },
+        { "id": "tsunade", "label": "Tsunade" }
+      ],
+      "axis": "horizontal",
+      "startLabel": "Earliest",
+      "endLabel": "Latest",
+      "correctOrder": ["hashirama", "tobirama", "hiruzen", "minato", "tsunade"],
+      "explanation": "Hashirama (1st) → Tobirama (2nd) → Hiruzen (3rd) → Minato (4th) → Tsunade (5th). Hiruzen returned briefly between Minato and Tsunade but his second term doesn't count as a separate Hokage seat."
+    },
+    {
+      "id": "q5",
+      "type": "slider",
+      "prompt": "How many tailed beasts are there in total?",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "correctValue": 9,
+      "explanation": "There are nine tailed beasts, originally split off from the Ten-Tails (Jubi). Numbered One-Tail (Shukaku) through Nine-Tails (Kurama)."
+    },
+    {
+      "id": "q6",
+      "type": "name",
+      "prompt": "Name Sasuke's older brother.",
+      "acceptedAnswers": ["Itachi Uchiha", "Itachi"],
+      "explanation": "Itachi Uchiha massacred the Uchiha clan under orders from Konoha's leadership to prevent a coup, sparing only his younger brother Sasuke."
+    }
+  ]
+}
