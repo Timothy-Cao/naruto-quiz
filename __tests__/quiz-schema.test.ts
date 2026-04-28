@@ -50,10 +50,13 @@ describe("QuizSchema", () => {
         { ...baseQuestion, id: "q2", type: "mc-multi",
           options: [{ id: "a", label: "A" }, { id: "b", label: "B" }, { id: "c", label: "C" }],
           correctIds: ["a", "c"] },
-        { ...baseQuestion, id: "q3", type: "match",
-          left: [{ id: "L1", label: "L1" }, { id: "L2", label: "L2" }],
-          right: [{ id: "R1", label: "R1" }, { id: "R2", label: "R2" }],
-          correctPairs: [{ leftId: "L1", rightId: "R2" }, { leftId: "L2", rightId: "R1" }] },
+        { ...baseQuestion, id: "q3", type: "categorize",
+          buckets: [{ id: "B1", label: "B1" }, { id: "B2", label: "B2" }],
+          items: [
+            { id: "i1", label: "Item 1", correctBucketId: "B1" },
+            { id: "i2", label: "Item 2", correctBucketId: "B2" },
+            { id: "i3", label: "Item 3", correctBucketId: "B1" },
+          ] },
         { ...baseQuestion, id: "q4", type: "order",
           items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }],
           axis: "horizontal", startLabel: "Start", endLabel: "End",
@@ -67,16 +70,15 @@ describe("QuizSchema", () => {
     expect(() => QuizSchema.parse(quiz)).not.toThrow();
   });
 
-  it("rejects match where correctPairs length differs from left length", () => {
+  it("rejects categorize where an item.correctBucketId doesn't match any bucket", () => {
     const quiz = {
       slug: "ex",
       title: "Ex",
       questions: [{
         ...baseQuestion,
-        type: "match",
-        left: [{ id: "L1", label: "a" }, { id: "L2", label: "b" }],
-        right: [{ id: "R1", label: "a" }, { id: "R2", label: "b" }],
-        correctPairs: [{ leftId: "L1", rightId: "R1" }],
+        type: "categorize",
+        buckets: [{ id: "B1", label: "B1" }],
+        items: [{ id: "i1", label: "Item 1", correctBucketId: "GHOST" }],
       }],
     };
     expect(() => QuizSchema.parse(quiz)).toThrow();

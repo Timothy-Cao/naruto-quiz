@@ -4,7 +4,7 @@ import { matchName } from "@/lib/match-name";
 export type AnswerValue =
   | string                              // mc-single, name
   | string[]                            // mc-multi, order
-  | Record<string, string>              // match: leftId -> rightId
+  | Record<string, string>              // categorize: itemId -> bucketId
   | number;                             // slider
 
 export function scoreQuestion(q: Question, value: AnswerValue): boolean {
@@ -19,11 +19,10 @@ export function scoreQuestion(q: Question, value: AnswerValue): boolean {
       for (const id of a) if (!b.has(id)) return false;
       return true;
     }
-    case "match": {
+    case "categorize": {
       if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
       const v = value as Record<string, string>;
-      if (Object.keys(v).length !== q.correctPairs.length) return false;
-      return q.correctPairs.every((p) => v[p.leftId] === p.rightId);
+      return q.items.every((it) => v[it.id] === it.correctBucketId);
     }
     case "order": {
       if (!Array.isArray(value)) return false;

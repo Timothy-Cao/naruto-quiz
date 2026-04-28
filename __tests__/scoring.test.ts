@@ -22,14 +22,18 @@ describe("scoreQuestion", () => {
     expect(scoreQuestion(q, ["a", "b", "c"])).toBe(false);
   });
 
-  it("match: every pair correct", () => {
-    const q: Question = { ...base, type: "match",
-      left: [{ id: "L1", label: "L1" }, { id: "L2", label: "L2" }],
-      right: [{ id: "R1", label: "R1" }, { id: "R2", label: "R2" }],
-      correctPairs: [{ leftId: "L1", rightId: "R2" }, { leftId: "L2", rightId: "R1" }] } as Question;
-    expect(scoreQuestion(q, { L1: "R2", L2: "R1" })).toBe(true);
-    expect(scoreQuestion(q, { L1: "R1", L2: "R2" })).toBe(false);
-    expect(scoreQuestion(q, { L1: "R2" })).toBe(false);
+  it("categorize: every item in its correct bucket", () => {
+    const q: Question = { ...base, type: "categorize",
+      buckets: [{ id: "B1", label: "B1" }, { id: "B2", label: "B2" }],
+      items: [
+        { id: "i1", label: "i1", correctBucketId: "B1" },
+        { id: "i2", label: "i2", correctBucketId: "B2" },
+        { id: "i3", label: "i3", correctBucketId: "B1" },
+      ] } as Question;
+    expect(scoreQuestion(q, { i1: "B1", i2: "B2", i3: "B1" })).toBe(true);
+    expect(scoreQuestion(q, { i1: "B1", i2: "B1", i3: "B1" })).toBe(false);
+    expect(scoreQuestion(q, { i1: "B1", i2: "B2" })).toBe(false); // i3 unplaced
+    expect(scoreQuestion(q, {})).toBe(false);
   });
 
   it("order: deep equality of arrays", () => {

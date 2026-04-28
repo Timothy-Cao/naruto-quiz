@@ -7,7 +7,7 @@ import { ZoomableImage } from "./ZoomableImage";
 import { RevealPanel } from "./RevealPanel";
 import { McSingleQuestionRenderer } from "@/components/questions/McSingleQuestion";
 import { McMultiQuestionRenderer } from "@/components/questions/McMultiQuestion";
-import { MatchQuestionRenderer } from "@/components/questions/MatchQuestion";
+import { CategorizeQuestionRenderer } from "@/components/questions/CategorizeQuestion";
 import { OrderQuestionRenderer } from "@/components/questions/OrderQuestion";
 import { SliderQuestionRenderer } from "@/components/questions/SliderQuestion";
 import { NameQuestionRenderer } from "@/components/questions/NameQuestion";
@@ -20,7 +20,7 @@ type Props = {
 
 export function QuestionFrame({ question, state, onChange }: Props) {
   return (
-    <Card className="p-6 bg-[var(--color-surface)] border-[var(--color-border)]">
+    <Card className="p-6 bg-[var(--color-surface)] border-[var(--color-border)] overflow-visible">
       <h2 className="text-xl font-medium text-[var(--color-text)] mb-4">{question.prompt}</h2>
       {question.image && (
         <div className="mb-4 max-w-md mx-auto">
@@ -41,8 +41,8 @@ function Renderer({ question, state, onChange }: Props) {
       return <McSingleQuestionRenderer question={question} state={state} onChange={onChange as (v: string) => void} />;
     case "mc-multi":
       return <McMultiQuestionRenderer question={question} state={state} onChange={onChange as (v: string[]) => void} />;
-    case "match":
-      return <MatchQuestionRenderer question={question} state={state} onChange={onChange as (v: Record<string, string>) => void} />;
+    case "categorize":
+      return <CategorizeQuestionRenderer question={question} state={state} onChange={onChange as (v: Record<string, string>) => void} />;
     case "order":
       return <OrderQuestionRenderer question={question} state={state} onChange={onChange as (v: string[]) => void} />;
     case "slider":

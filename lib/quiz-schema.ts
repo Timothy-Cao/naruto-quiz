@@ -38,25 +38,24 @@ const McMulti = z.object({
   { message: "every correctIds entry must match an option id" },
 );
 
-const Match = z.object({
+const CategorizeItem = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  thumbnail: ImageRef.optional(),
+  correctBucketId: z.string().min(1),
+});
+
+const Categorize = z.object({
   ...QuestionBase,
-  type: z.literal("match"),
-  left: z.array(Option).min(1),
-  right: z.array(Option).min(1),
-  correctPairs: z.array(z.object({
-    leftId: z.string().min(1),
-    rightId: z.string().min(1),
-  })).min(1),
+  type: z.literal("categorize"),
+  buckets: z.array(Option).min(1),
+  items: z.array(CategorizeItem).min(1),
 }).refine(
-  (q) => q.correctPairs.length === q.left.length && q.right.length === q.left.length,
-  { message: "match must be 1:1 — left, right, and correctPairs must all have equal length" },
-).refine(
   (q) => {
-    const lefts = new Set(q.left.map((o) => o.id));
-    const rights = new Set(q.right.map((o) => o.id));
-    return q.correctPairs.every((p) => lefts.has(p.leftId) && rights.has(p.rightId));
+    const bucketIds = new Set(q.buckets.map((b) => b.id));
+    return q.items.every((it) => bucketIds.has(it.correctBucketId));
   },
-  { message: "every correctPairs entry must reference valid left/right ids" },
+  { message: "every item.correctBucketId must reference a bucket id" },
 );
 
 const Order = z.object({
@@ -100,7 +99,7 @@ const Name = z.object({
 });
 
 export const QuestionSchema = z.discriminatedUnion("type", [
-  McSingle, McMulti, Match, Order, Slider, Name,
+  McSingle, McMulti, Categorize, Order, Slider, Name,
 ]);
 
 export const QuizSchema = z.object({
@@ -115,7 +114,7 @@ export type Quiz = z.infer<typeof QuizSchema>;
 export type Question = z.infer<typeof QuestionSchema>;
 export type McSingleQuestion = z.infer<typeof McSingle>;
 export type McMultiQuestion = z.infer<typeof McMulti>;
-export type MatchQuestion = z.infer<typeof Match>;
+export type CategorizeQuestion = z.infer<typeof Categorize>;
 export type OrderQuestion = z.infer<typeof Order>;
 export type SliderQuestion = z.infer<typeof Slider>;
 export type NameQuestion = z.infer<typeof Name>;

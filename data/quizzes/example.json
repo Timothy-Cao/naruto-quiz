@@ -32,24 +32,24 @@
     },
     {
       "id": "q3",
-      "type": "match",
-      "prompt": "Match each Sannin to their summon.",
-      "left": [
-        { "id": "jiraiya", "label": "Jiraiya" },
-        { "id": "tsunade", "label": "Tsunade" },
-        { "id": "orochimaru", "label": "Orochimaru" }
+      "type": "categorize",
+      "prompt": "Place each character in their village or organization.",
+      "buckets": [
+        { "id": "konoha", "label": "Konoha" },
+        { "id": "suna", "label": "Sunagakure" },
+        { "id": "akatsuki", "label": "Akatsuki" }
       ],
-      "right": [
-        { "id": "toads", "label": "Toads" },
-        { "id": "slugs", "label": "Slugs" },
-        { "id": "snakes", "label": "Snakes" }
+      "items": [
+        { "id": "naruto", "label": "Naruto Uzumaki", "correctBucketId": "konoha" },
+        { "id": "sasuke", "label": "Sasuke Uchiha", "correctBucketId": "konoha" },
+        { "id": "sakura", "label": "Sakura Haruno", "correctBucketId": "konoha" },
+        { "id": "gaara", "label": "Gaara", "correctBucketId": "suna" },
+        { "id": "temari", "label": "Temari", "correctBucketId": "suna" },
+        { "id": "itachi", "label": "Itachi Uchiha", "correctBucketId": "akatsuki" },
+        { "id": "pain", "label": "Pain", "correctBucketId": "akatsuki" },
+        { "id": "konan", "label": "Konan", "correctBucketId": "akatsuki" }
       ],
-      "correctPairs": [
-        { "leftId": "jiraiya", "rightId": "toads" },
-        { "leftId": "tsunade", "rightId": "slugs" },
-        { "leftId": "orochimaru", "rightId": "snakes" }
-      ],
-      "explanation": "Each Sannin signed a different summoning contract on Mount Myoboku, Shikkotsu Forest, and Ryuchi Cave respectively."
+      "explanation": "Naruto, Sasuke, and Sakura are all genin of Konoha (Team 7). Gaara and Temari are siblings from the Sand Village. Itachi, Pain, and Konan are Akatsuki members — Itachi defected from Konoha, Pain led the Hidden Rain, and Konan was Pain's partner."
     },
     {
       "id": "q4",
@@ -62,7 +62,7 @@
         { "id": "minato", "label": "Minato Namikaze" },
         { "id": "tsunade", "label": "Tsunade" }
       ],
-      "axis": "horizontal",
+      "axis": "vertical",
       "startLabel": "Earliest",
       "endLabel": "Latest",
       "correctOrder": ["hashirama", "tobirama", "hiruzen", "minato", "tsunade"],
