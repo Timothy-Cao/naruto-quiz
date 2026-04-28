@@ -19,6 +19,11 @@ function getCtx(): AudioContext | null {
   return _ctx;
 }
 
+/** Public accessor for the shared AudioContext, used by the music analyser. */
+export function getAudioContext(): AudioContext | null {
+  return getCtx();
+}
+
 function tone(
   ctx: AudioContext,
   freq: number,

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { pickNext, appendHistory } from "@/lib/audio/play-queue";
 import { useAudio } from "@/lib/audio/audio-context";
+import { getAudioContext } from "@/lib/audio/sfx";
+import { attachAnalyser } from "@/lib/audio/music-analyser";
 
 export function MusicPlayer({ tracks }: { tracks: string[] }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -60,6 +62,15 @@ export function MusicPlayer({ tracks }: { tracks: string[] }) {
     if (!a) return;
     a.src = currentTrack;
     a.volume = settings.musicVolume;
+    // Wire up the analyser the first time we have a real audio element + ctx.
+    const ctx = getAudioContext();
+    if (ctx) {
+      try {
+        attachAnalyser(a, ctx);
+      } catch {
+        // ignore — already attached or unsupported
+      }
+    }
     a.play().catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTrack]);
