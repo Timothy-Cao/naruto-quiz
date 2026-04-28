@@ -7,9 +7,11 @@ import { QuizHeader } from "./QuizHeader";
 import { QuestionFrame } from "./QuestionFrame";
 import { NavBar } from "./NavBar";
 import { Results } from "./Results";
+import { useAudio } from "@/lib/audio/audio-context";
 
 export function QuizPage({ quiz }: { quiz: Quiz }) {
   const [state, dispatch] = useReducer(playerReducer, quiz, initialState);
+  const { playSfx } = useAudio();
 
   const total = quiz.questions.length;
   const isResults = state.currentIndex >= total;
@@ -32,6 +34,7 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
   function handleConfirm() {
     if (!currentQuestion || !currentAnswer || currentAnswer.status !== "draft") return;
     const correct = scoreQuestion(currentQuestion, currentAnswer.value);
+    playSfx(correct ? "correct" : "wrong");
     dispatch({ type: "confirm", id: currentQuestion.id, correct });
   }
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Bebas_Neue } from "next/font/google";
 import "./globals.css";
+import { AudioRoot } from "@/components/audio/AudioRoot";
+import { getMusicTracks } from "@/lib/audio/music-list";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -15,9 +17,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const tracks = getMusicTracks();
   return (
     <html lang="en" className={`${bebas.variable} dark`}>
-      <body>{children}</body>
+      <body>
+        <AudioRoot tracks={tracks}>{children}</AudioRoot>
+      </body>
     </html>
   );
 }
