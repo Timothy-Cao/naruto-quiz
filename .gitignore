@@ -39,6 +39,9 @@ yarn-error.log*
 # superpowers
 .superpowers/
 
+# scratch / reference dumps
+.tmp/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

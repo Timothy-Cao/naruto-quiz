@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { getCurrentAuthUser, isSupabaseAuthReady } from "@/lib/auth";
+import { AdminGate } from "@/components/auth/AdminGate";
 
-export default function ManagerPage() {
+export default async function ManagerPage() {
+  const user = isSupabaseAuthReady() ? await getCurrentAuthUser() : null;
+
   return (
     <main className="max-w-3xl mx-auto p-6 grid gap-4">
       <Link href="/" className="text-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)]">
@@ -9,7 +13,11 @@ export default function ManagerPage() {
       <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--color-text)]">
         Quiz Manager
       </h1>
-      <p className="text-[var(--color-text-dim)]">Coming soon. This is where you'll edit and publish quizzes.</p>
+      <AdminGate user={user}>
+        <p className="text-[var(--color-text-dim)]">
+          Coming soon. This is where the admin will edit and publish quizzes.
+        </p>
+      </AdminGate>
     </main>
   );
 }
