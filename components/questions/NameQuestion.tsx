@@ -48,7 +48,7 @@ export function NameQuestionRenderer({
         )}
       />
       {open && suggestions.length > 0 && !locked && (
-        <ul className="absolute top-full left-0 right-0 z-10 mt-1 max-h-56 overflow-auto rounded-md border border-[var(--color-border-2)] bg-[var(--color-surface)] shadow-lg">
+        <ul className="absolute top-full left-0 right-0 z-50 mt-1 max-h-56 overflow-auto rounded-md border border-[var(--color-border-2)] bg-[var(--color-surface)] shadow-2xl">
           {suggestions.map((s) => (
             <li key={s}>
               <button
