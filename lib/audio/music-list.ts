@@ -14,7 +14,7 @@ export function getMusicTracks(): string[] {
     return entries
       .filter((name) => /\.(mp3|m4a|ogg|wav)$/i.test(name))
       .sort()
-      .map((name) => `/music/${name}`);
+      .map((name) => `/music/${encodeURIComponent(name)}`);
   } catch {
     return [];
   }
