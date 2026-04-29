@@ -78,5 +78,17 @@ export function defaultQuestion(type: QuestionType): Question {
         type: "name",
         acceptedAnswers: ["New answer"],
       };
+    case "audio-match":
+      return {
+        ...base,
+        type: "audio-match",
+        prompt: "Which scene plays this music?",
+        audioSrc: "",
+        options: [
+          { id: `${id}-opt-a`, label: "Option A" },
+          { id: `${id}-opt-b`, label: "Option B" },
+        ],
+        correctId: `${id}-opt-a`,
+      };
   }
 }

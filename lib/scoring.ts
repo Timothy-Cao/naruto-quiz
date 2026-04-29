@@ -99,5 +99,10 @@ export function scoreQuestion(q: Question, value: AnswerValue): ScoreResult {
       const ok = typeof value === "string" && matchName(value, q.acceptedAnswers);
       return { points: ok ? max : 0, maxPoints: max };
     }
+
+    case "audio-match": {
+      const max = q.scoring?.maxPoints ?? 1;
+      return { points: value === q.correctId ? max : 0, maxPoints: max };
+    }
   }
 }

@@ -172,6 +172,19 @@ describe("scoreQuestion", () => {
     });
   });
 
+  describe("audio-match", () => {
+    const q: Question = { ...base, type: "audio-match",
+      audioSrc: "/music/Hyouhaku.mp3",
+      options: [{ id: "a", label: "Sasuke training" }, { id: "b", label: "Itachi flashback" }],
+      correctId: "a" } as Question;
+    it("full points on correct option", () => {
+      expect(scoreQuestion(q, "a")).toEqual({ points: 1, maxPoints: 1 });
+    });
+    it("zero on wrong option", () => {
+      expect(scoreQuestion(q, "b")).toEqual({ points: 0, maxPoints: 1 });
+    });
+  });
+
   describe("name", () => {
     const q: Question = { ...base, type: "name",
       acceptedAnswers: ["Itachi Uchiha", "Itachi"] } as Question;

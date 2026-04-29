@@ -125,8 +125,20 @@ const Name = z.object({
   scoring: ScoringBase.optional(),
 });
 
+const AudioMatch = z.object({
+  ...QuestionBase,
+  type: z.literal("audio-match"),
+  audioSrc: z.string().min(1),
+  options: z.array(Option).min(2),
+  correctId: z.string().min(1),
+  scoring: ScoringBase.optional(),
+}).refine(
+  (q) => q.options.some((o) => o.id === q.correctId),
+  { message: "correctId must match one of options[].id" },
+);
+
 export const QuestionSchema = z.discriminatedUnion("type", [
-  McSingle, McMulti, Categorize, Order, Slider, Name,
+  McSingle, McMulti, Categorize, Order, Slider, Name, AudioMatch,
 ]);
 
 export const QuizSchema = z.object({
@@ -149,3 +161,4 @@ export type CategorizeQuestion = z.infer<typeof Categorize>;
 export type OrderQuestion = z.infer<typeof Order>;
 export type SliderQuestion = z.infer<typeof Slider>;
 export type NameQuestion = z.infer<typeof Name>;
+export type AudioMatchQuestion = z.infer<typeof AudioMatch>;
