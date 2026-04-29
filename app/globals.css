@@ -116,6 +116,12 @@ html, body {
   min-height: 100vh;
 }
 
+/* Reserve space at the bottom of the viewport for the auto-hiding music
+   pill so content scroll never ends underneath it. */
+body {
+  padding-bottom: 5rem;
+}
+
 * { box-sizing: border-box; }
 
 /* Subtle hover/press feedback on every interactive control. */

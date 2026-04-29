@@ -1,7 +1,15 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { SkipBack, SkipForward, Play, Pause } from "lucide-react";
 import { useAudio } from "@/lib/audio/audio-context";
+import { cn } from "@/lib/utils";
+
+// Reveal the pill when the cursor is within this many pixels of the bottom
+// of the viewport, OR when the cursor is over the pill itself.
+const REVEAL_ZONE_PX = 140;
+// Keep visible for this long after the cursor leaves the reveal zone.
+const HIDE_DELAY_MS = 600;
 
 function decodeTrackName(track: string): string {
   // e.g. "/music/Akatsuki%20Theme%20Song.mp3" → "Akatsuki Theme Song"
@@ -30,6 +38,36 @@ export function NowPlayingPill() {
     seekTo,
   } = useAudio();
 
+  const [revealed, setRevealed] = useState(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    function show() {
+      if (hideTimerRef.current) {
+        clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = null;
+      }
+      setRevealed(true);
+    }
+    function scheduleHide() {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = setTimeout(() => setRevealed(false), HIDE_DELAY_MS);
+    }
+    function onMove(e: MouseEvent) {
+      const fromBottom = window.innerHeight - e.clientY;
+      if (fromBottom <= REVEAL_ZONE_PX) {
+        show();
+      } else {
+        scheduleHide();
+      }
+    }
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
+  }, []);
+
   if (!currentTrack) return null;
 
   const trackName = decodeTrackName(currentTrack);
@@ -39,7 +77,14 @@ export function NowPlayingPill() {
   return (
     <div
       data-no-sfx
-      className="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2.5 rounded-full bg-[var(--color-surface)]/85 backdrop-blur border border-[var(--color-border)] shadow-2xl w-[min(640px,calc(100vw-3rem))]"
+      onMouseEnter={() => setRevealed(true)}
+      className={cn(
+        "hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2.5 rounded-full bg-[var(--color-surface)]/85 backdrop-blur border border-[var(--color-border)] shadow-2xl w-[min(640px,calc(100vw-3rem))]",
+        "transition-all duration-300 ease-out",
+        revealed
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-[120%] pointer-events-none",
+      )}
     >
       <button
         type="button"
