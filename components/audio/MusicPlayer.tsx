@@ -51,7 +51,10 @@ export function MusicPlayer() {
       onPause={onAudioPause}
       onTimeUpdate={(e) => onAudioTimeUpdate(e.currentTarget.currentTime)}
       onLoadedMetadata={(e) => onAudioLoadedMetadata(e.currentTarget.duration)}
-      preload="auto"
+      // 'metadata' fetches just the header (a few KB) so we know duration
+      // for the scrubber. The full file streams when play() actually starts.
+      // 'auto' would eagerly fetch the entire MP3 even if the user never plays.
+      preload="metadata"
     />
   );
 }
