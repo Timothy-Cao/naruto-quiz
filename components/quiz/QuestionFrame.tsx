@@ -29,7 +29,7 @@ export function QuestionFrame({ question, state, onChange }: Props) {
       )}
       <Renderer question={question} state={state} onChange={onChange} />
       {state.status === "confirmed" && (
-        <RevealPanel correct={state.correct} explanation={question.explanation} />
+        <RevealPanel result={state.result} explanation={question.explanation} />
       )}
     </Card>
   );

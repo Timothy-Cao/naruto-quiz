@@ -33,9 +33,9 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
 
   function handleConfirm() {
     if (!currentQuestion || !currentAnswer || currentAnswer.status !== "draft") return;
-    const correct = scoreQuestion(currentQuestion, currentAnswer.value);
-    playSfx(correct ? "correct" : "wrong");
-    dispatch({ type: "confirm", id: currentQuestion.id, correct });
+    const result = scoreQuestion(currentQuestion, currentAnswer.value);
+    playSfx(result.points === result.maxPoints ? "correct" : "wrong");
+    dispatch({ type: "confirm", id: currentQuestion.id, result });
   }
 
   return (
