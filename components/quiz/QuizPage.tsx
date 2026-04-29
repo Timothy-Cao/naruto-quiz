@@ -39,7 +39,7 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
   }
 
   return (
-    <main className="max-w-3xl mx-auto p-6 grid gap-2">
+    <main className="max-w-3xl mx-auto p-4 sm:p-6 grid gap-2">
       <QuizHeader
         title={quiz.title}
         total={total}

@@ -8,6 +8,7 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   useDraggable,
@@ -167,7 +168,10 @@ export function CategorizeQuestionRenderer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.status]);
 
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } }),
+  );
 
   const itemsById: Record<string, Item> = {};
   for (const it of question.items) itemsById[it.id] = it;
