@@ -23,6 +23,17 @@ Beyond "not obvious," the goal is one of three things per question:
 
 If a draft question doesn't do at least one of those three, it's filler. Replace it.
 
+## Multi-media is intentional
+
+MP3 clips, images, and (eventually) video are part of the design, not garnish. Each multi-media question forces the user to **rethink and rewire** their canon knowledge in a fresh sensory context — a character you "know" by their arc feels different when you hear their theme; a scene you summarize from memory reads differently when you see a single frame of it.
+
+Reach for multi-media when:
+- An OST or sound effect *defines* a scene more than the dialogue does → `audio-match`.
+- A visual detail (a hand sign, a clothing change, a background) is the actual answer → image as central image with `mc-single`/`mc-multi`.
+- A short video clip would let you ask "what just happened?" or "spot what's wrong" — pending tooling, but the design is intentional toward video over time.
+
+The combination of multi-media stimulus + logical deduction is the highest-quality pairing in this quiz — leans on canon knowledge AND sensory memory AND reasoning all at once. Lean into it.
+
 ## Quiz-level pacing
 
 Hard questions in a row burn the user out. A good quiz **interleaves cognitive load** so each hard problem is followed by a breather.
@@ -164,6 +175,8 @@ When authoring this style:
 > "Logic questions should have ideally one unique solution, but sometimes it's difficult to verify and that's okay. If a user comes up with another answer, we can correct for it."
 
 Aim for unique. Accept that occasionally a clever user finds a second valid set we didn't anticipate. When reviewing, attempt to find counter-solutions; if you find one, either tighten constraints to exclude it or expand the accepted-answers list.
+
+**Workflow for handling alternate-answer disputes** (the user has confirmed this approach): edit the question's JSON in `data/quizzes/<slug>.json` directly to broaden `acceptedAnswers` (for `name`/`mc-multi`) or accept the alternate `correctId` (for `mc-single`/`audio-match`), commit, push. The user re-takes the quiz to update their localStorage best score. No in-app override UI is planned — the source JSON is the source of truth and is the simplest audit trail. Eventually we may build a logical solver that pre-indexes character connections to verify uniqueness automatically; until then, manual re-edit on dispute is the workflow.
 
 **Distractor strategy:** all distractors should plausibly *resolve* — the user can't dismiss any without doing the work. Wrong ones should be true of two but not the third, or true under a slight misreading of a constraint.
 

@@ -2,6 +2,8 @@
 
 A static-friendly Next.js quiz site for Naruto and Naruto: Shippuden trivia.
 
+See [QUESTION_PHILOSOPHY.md](QUESTION_PHILOSOPHY.md) for what we believe about quiz design and how we author questions.
+
 ## Development
 
 ```bash
