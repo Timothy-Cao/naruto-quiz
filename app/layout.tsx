@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import { AudioRoot } from "@/components/audio/AudioRoot";
@@ -17,6 +17,13 @@ const SITE_URL = "https://naruto-quiz.vercel.app";
 const SITE_TITLE = "Naruto Quiz";
 const SITE_DESCRIPTION =
   "Test your knowledge of Naruto and Naruto: Shippuden across six question types — multiple choice, drag-to-categorize, ordering, slider, and name autocomplete. Dattebayo!";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0c0a09",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

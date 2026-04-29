@@ -15,7 +15,7 @@ export function QuizHeader({ title, total, currentIndex, statusByIndex, onJump }
       <h1 className="font-[family-name:var(--font-display)] text-3xl tracking-wide text-[var(--color-text)]">
         {title}
       </h1>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {Array.from({ length: total }).map((_, i) => {
           const status = statusByIndex[i];
           const isCurrent = i === currentIndex;
