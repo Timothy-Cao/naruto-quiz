@@ -6,9 +6,16 @@ export type AudioSettings = {
 };
 
 export const DEFAULT_AUDIO_SETTINGS: AudioSettings = {
-  musicVolume: 0.25,
-  sfxVolume: 0.5,
+  musicVolume: 0.2,
+  sfxVolume: 0.3,
 };
+
+/**
+ * The slider's displayed value is the user's perceptual setting; we play
+ * music at half that to compensate for our tracks being mastered loud.
+ * SFX (synthesized) doesn't need this adjustment.
+ */
+export const MUSIC_VOLUME_SCALE = 0.5;
 
 function clamp01(n: number): number {
   if (Number.isNaN(n)) return 0;

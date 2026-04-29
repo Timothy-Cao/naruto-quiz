@@ -5,8 +5,8 @@ import { Trophy, Hammer, FolderOpen } from "lucide-react";
 
 const cards = [
   { href: "/quizzes", title: "Quizzes", desc: "Browse quizzes and your top scores.", icon: Trophy, badge: null },
-  { href: "/builder", title: "Quiz builder", desc: "Create a new quiz.", icon: Hammer, badge: "Coming soon" },
-  { href: "/manager", title: "Quiz manager", desc: "Edit and publish quizzes.", icon: FolderOpen, badge: "Coming soon" },
+  { href: "/builder", title: "Quiz builder", desc: "Author a new quiz.", icon: Hammer, badge: "Admin" },
+  { href: "/manager", title: "Quiz manager", desc: "Edit existing quizzes.", icon: FolderOpen, badge: "Admin" },
 ];
 
 export default function Home() {

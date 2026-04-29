@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useAudioAdvance } from "@/lib/audio/audio-context";
 import { getAudioContext } from "@/lib/audio/sfx";
 import { attachAnalyser } from "@/lib/audio/music-analyser";
+import { MUSIC_VOLUME_SCALE } from "@/lib/audio/audio-storage";
 
 export function MusicPlayer() {
   const { audioRef, currentTrack, settings, skipTrack, onAudioPlay, onAudioPause } =
@@ -11,7 +12,7 @@ export function MusicPlayer() {
 
   // Apply volume changes immediately.
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = settings.musicVolume;
+    if (audioRef.current) audioRef.current.volume = settings.musicVolume * MUSIC_VOLUME_SCALE;
   }, [settings.musicVolume, audioRef]);
 
   // Auto-play when track changes.
@@ -20,7 +21,7 @@ export function MusicPlayer() {
     const a = audioRef.current;
     if (!a) return;
     a.src = currentTrack;
-    a.volume = settings.musicVolume;
+    a.volume = settings.musicVolume * MUSIC_VOLUME_SCALE;
     // Wire up the analyser the first time we have a real audio element + ctx.
     const ctx = getAudioContext();
     if (ctx) {
