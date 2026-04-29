@@ -2,6 +2,7 @@
 import type { McSingleQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
+import { inputCls, textareaCls } from "../form-styles";
 
 type Props = {
   question: McSingleQuestion;
@@ -47,7 +48,7 @@ export function McSingleForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={2}
-          className="textarea"
+          className={textareaCls}
         />
       </Field>
 
@@ -57,7 +58,7 @@ export function McSingleForm({ question, onChange }: Props) {
           value={question.image ?? ""}
           onChange={(e) => setImage(e.target.value)}
           placeholder="optional"
-          className="input"
+          className={inputCls}
         />
       </Field>
 
@@ -79,14 +80,14 @@ export function McSingleForm({ question, onChange }: Props) {
               value={opt.label}
               onChange={(e) => setOption(opt.id, { label: e.target.value })}
               placeholder="Label"
-              className="input"
+              className={inputCls}
             />
             <input
               type="text"
               value={opt.thumbnail ?? ""}
               onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
               placeholder="Thumbnail URL (optional)"
-              className="input"
+              className={inputCls}
             />
             <button
               type="button"
@@ -113,32 +114,11 @@ export function McSingleForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => setExplanation(e.target.value)}
           rows={3}
-          className="textarea"
+          className={textareaCls}
         />
       </Field>
 
       <ScoringFields question={question} onChange={(q) => onChange(q as McSingleQuestion)} />
-
-      <style jsx>{`
-        .input, :global(.input) {
-          padding: 0.375rem 0.625rem;
-          border-radius: 6px;
-          border: 1px solid var(--color-border);
-          background: var(--color-bg);
-          color: var(--color-text);
-          font-size: 0.875rem;
-        }
-        .textarea, :global(.textarea) {
-          padding: 0.5rem;
-          border-radius: 6px;
-          border: 1px solid var(--color-border);
-          background: var(--color-bg);
-          color: var(--color-text);
-          font-size: 0.875rem;
-          font-family: inherit;
-          resize: vertical;
-        }
-      `}</style>
     </div>
   );
 }

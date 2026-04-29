@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import type { Quiz } from "@/lib/quiz-schema";
 import { slugify } from "@/lib/builder/slugify";
 import { Edit2 } from "lucide-react";
+import { inputLargeCls } from "./form-styles";
 
 type Props = {
   quiz: Quiz;
@@ -11,9 +12,6 @@ type Props = {
   onDescriptionChange: (description: string | undefined) => void;
   onCoverImageChange: (coverImage: string | undefined) => void;
 };
-
-const inputCls =
-  "px-3 py-2 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm w-full";
 
 export function EditorHeader({
   quiz,
@@ -42,7 +40,7 @@ export function EditorHeader({
           value={quiz.title}
           onChange={(e) => onTitleChange(e.target.value)}
           placeholder="Naruto Knowledge — Sample Quiz"
-          className={`${inputCls} text-lg`}
+          className={`${inputLargeCls} text-lg`}
         />
       </label>
 
@@ -67,7 +65,7 @@ export function EditorHeader({
           }}
           placeholder="kebab-case-slug"
           disabled={autoSlug}
-          className={`${inputCls} font-mono ${autoSlug ? "opacity-60" : ""}`}
+          className={`${inputLargeCls} font-mono ${autoSlug ? "opacity-60" : ""}`}
         />
       </label>
 
@@ -77,7 +75,7 @@ export function EditorHeader({
           value={quiz.description ?? ""}
           onChange={(e) => onDescriptionChange(e.target.value || undefined)}
           rows={2}
-          className={`${inputCls} resize-y font-sans`}
+          className={`${inputLargeCls} resize-y font-sans`}
         />
       </label>
 
@@ -88,7 +86,7 @@ export function EditorHeader({
           value={quiz.coverImage ?? ""}
           onChange={(e) => onCoverImageChange(e.target.value || undefined)}
           placeholder="URL or /quiz-images/..."
-          className={inputCls}
+          className={inputLargeCls}
         />
       </label>
     </div>

@@ -2,14 +2,12 @@
 import type { OrderQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus, ArrowDown, ArrowRight } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
+import { inputCls, textareaCls } from "../form-styles";
 
 type Props = {
   question: OrderQuestion;
   onChange: (q: OrderQuestion) => void;
 };
-
-const inputCls =
-  "px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm";
 
 export function OrderForm({ question, onChange }: Props) {
   function addItem() {
@@ -50,7 +48,7 @@ export function OrderForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm resize-y font-sans"
+          className={textareaCls}
         />
       </label>
 
@@ -176,7 +174,7 @@ export function OrderForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm resize-y font-sans"
+          className={textareaCls}
         />
       </label>
 

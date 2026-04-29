@@ -2,14 +2,12 @@
 import type { CategorizeQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
+import { inputCls, textareaCls } from "../form-styles";
 
 type Props = {
   question: CategorizeQuestion;
   onChange: (q: CategorizeQuestion) => void;
 };
-
-const inputCls =
-  "px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm";
 
 export function CategorizeForm({ question, onChange }: Props) {
   function addBucket() {
@@ -59,7 +57,7 @@ export function CategorizeForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm resize-y font-sans"
+          className={textareaCls}
         />
       </label>
 
@@ -200,7 +198,7 @@ export function CategorizeForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm resize-y font-sans"
+          className={textareaCls}
         />
       </label>
 

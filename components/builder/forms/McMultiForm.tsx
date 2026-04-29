@@ -2,6 +2,7 @@
 import type { McMultiQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
+import { inputCls, textareaCls } from "../form-styles";
 
 type Props = {
   question: McMultiQuestion;
@@ -49,7 +50,7 @@ export function McMultiForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm font-sans resize-y"
+          className={textareaCls}
         />
       </label>
 
@@ -60,7 +61,7 @@ export function McMultiForm({ question, onChange }: Props) {
           value={question.image ?? ""}
           onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
           placeholder="optional"
-          className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm"
+          className={inputCls}
         />
       </label>
 
@@ -81,14 +82,14 @@ export function McMultiForm({ question, onChange }: Props) {
               value={opt.label}
               onChange={(e) => setOption(opt.id, { label: e.target.value })}
               placeholder="Label"
-              className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm"
+              className={inputCls}
             />
             <input
               type="text"
               value={opt.thumbnail ?? ""}
               onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
               placeholder="Thumbnail URL (optional)"
-              className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm"
+              className={inputCls}
             />
             <button
               type="button"
@@ -116,7 +117,7 @@ export function McMultiForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
-          className="px-2 py-1.5 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm font-sans resize-y"
+          className={textareaCls}
         />
       </label>
 

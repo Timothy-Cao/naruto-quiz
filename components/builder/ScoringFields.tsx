@@ -1,5 +1,6 @@
 "use client";
 import type { Question } from "@/lib/quiz-schema";
+import { inputCls } from "./form-styles";
 
 type Props = {
   question: Question;
@@ -91,7 +92,7 @@ export function ScoringFields({ question, onChange }: Props) {
           min={0.5}
           value={max}
           onChange={(e) => setMax(parseFloat(e.target.value) || 1)}
-          className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+          className={inputCls}
         />
       </label>
 
@@ -101,7 +102,7 @@ export function ScoringFields({ question, onChange }: Props) {
           <select
             value={currentScheme}
             onChange={(e) => setScheme(e.target.value)}
-            className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+            className={inputCls}
           >
             {schemes.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -120,7 +121,7 @@ export function ScoringFields({ question, onChange }: Props) {
               step={1}
               value={question.scoring?.tolerance ?? 1}
               onChange={(e) => setTolerance(parseFloat(e.target.value) || 0)}
-              className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+              className={inputCls}
             />
           </label>
           <label className="grid grid-cols-[140px,1fr] gap-3 items-center text-sm">
@@ -132,7 +133,7 @@ export function ScoringFields({ question, onChange }: Props) {
               step={0.05}
               value={question.scoring?.partialCredit ?? 0.5}
               onChange={(e) => setPartialCredit(parseFloat(e.target.value) || 0)}
-              className="px-2 py-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+              className={inputCls}
             />
           </label>
         </>
