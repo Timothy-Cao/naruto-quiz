@@ -75,17 +75,56 @@ export function NowPlayingPill() {
   const progressPct = safeDuration > 0 ? (currentTime / safeDuration) * 100 : 0;
 
   return (
-    <div
-      data-no-sfx
-      onMouseEnter={() => setRevealed(true)}
-      className={cn(
-        "hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2.5 rounded-full bg-[var(--color-surface)]/85 backdrop-blur border border-[var(--color-border)] shadow-2xl w-[min(640px,calc(100vw-3rem))]",
-        "transition-all duration-300 ease-out",
-        revealed
-          ? "opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 translate-y-[120%] pointer-events-none",
-      )}
-    >
+    <>
+      {/* Compact chip — always visible. The "music lives here" indicator.
+          Click toggles play/pause; hovering it triggers reveal of the full pill. */}
+      <div
+        data-no-sfx
+        onMouseEnter={() => setRevealed(true)}
+        className={cn(
+          "hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-2 h-9 px-3 rounded-full bg-[var(--color-surface)]/70 backdrop-blur border border-[var(--color-border)] shadow-lg",
+          "transition-all duration-300 ease-out",
+          revealed
+            ? "opacity-0 translate-y-2 pointer-events-none"
+            : "opacity-100 translate-y-0",
+        )}
+      >
+        <button
+          type="button"
+          aria-label={isPlaying ? "Pause music" : "Play music"}
+          onClick={togglePlay}
+          className="w-5 h-5 flex items-center justify-center text-[var(--color-text-dim)] hover:text-[var(--color-text)]"
+        >
+          {isPlaying ? (
+            <Pause className="w-3.5 h-3.5" />
+          ) : (
+            <Play className="w-3.5 h-3.5 ml-0.5" />
+          )}
+        </button>
+        <span
+          className="text-xs text-[var(--color-text-dim)] truncate max-w-[180px] select-none"
+          title={trackName}
+        >
+          {trackName}
+        </span>
+        {/* Tiny progress dot suggesting more controls live below */}
+        <span className="w-1 h-1 rounded-full bg-[var(--color-accent)] opacity-60 shrink-0" />
+        <span className="w-1 h-1 rounded-full bg-[var(--color-accent)] opacity-60 shrink-0" />
+        <span className="w-1 h-1 rounded-full bg-[var(--color-accent)] opacity-60 shrink-0" />
+      </div>
+
+      {/* Full pill — appears on hover/proximity, replacing the chip. */}
+      <div
+        data-no-sfx
+        onMouseEnter={() => setRevealed(true)}
+        className={cn(
+          "hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2.5 rounded-full bg-[var(--color-surface)]/85 backdrop-blur border border-[var(--color-border)] shadow-2xl w-[min(640px,calc(100vw-3rem))]",
+          "transition-all duration-300 ease-out",
+          revealed
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-3 pointer-events-none",
+        )}
+      >
       <button
         type="button"
         aria-label="Previous track"
@@ -181,6 +220,7 @@ export function NowPlayingPill() {
           cursor: grab;
         }
       `}</style>
-    </div>
+      </div>
+    </>
   );
 }
