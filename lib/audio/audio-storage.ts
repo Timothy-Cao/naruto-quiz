@@ -6,8 +6,8 @@ export type AudioSettings = {
 };
 
 export const DEFAULT_AUDIO_SETTINGS: AudioSettings = {
-  musicVolume: 0.2,
-  sfxVolume: 0.3,
+  musicVolume: 0.4,
+  sfxVolume: 0.4,
 };
 
 /**
