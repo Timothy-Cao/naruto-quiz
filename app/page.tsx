@@ -17,7 +17,7 @@ export default function Home() {
           NARUTO QUIZ
         </h1>
         <p className="text-[var(--color-text-dim)] mt-2">
-          How well do you really know the Hidden Leaf?
+          Do you hate me now?
         </p>
       </header>
       <div className="grid gap-4 md:grid-cols-3">
