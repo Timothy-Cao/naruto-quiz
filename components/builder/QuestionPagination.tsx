@@ -9,6 +9,9 @@ type Props = {
   onSelect: (index: number) => void;
   onMoveLeft?: () => void; // reorder current question one slot earlier
   onMoveRight?: () => void; // reorder current question one slot later
+  // When set, page index 0 renders this label instead of the number "1".
+  // Used to mark the metadata page distinctly.
+  infoLabel?: string;
 };
 
 const WINDOW = 3; // pages on each side of current to show before ellipsis
@@ -39,6 +42,7 @@ export function QuestionPagination({
   onSelect,
   onMoveLeft,
   onMoveRight,
+  infoLabel,
 }: Props) {
   if (total === 0) return null;
   const pages = buildPages(total, current);
@@ -73,13 +77,14 @@ export function QuestionPagination({
               onClick={() => onSelect(p)}
               aria-current={p === current ? "page" : undefined}
               className={cn(
-                "min-w-[28px] px-2 py-1 rounded text-xs font-mono transition-colors",
+                "min-w-[28px] px-2 py-1 rounded text-xs transition-colors",
+                p === 0 && infoLabel ? "font-medium" : "font-mono",
                 p === current
                   ? "bg-[var(--color-accent)] text-white"
                   : "text-[var(--color-text-dim)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-2)]",
               )}
             >
-              {p + 1}
+              {p === 0 && infoLabel ? infoLabel : p + 1}
             </button>
           ),
         )}

@@ -32,9 +32,12 @@ function validate(quiz: Quiz): ZodIssue[] {
 }
 
 export function initialEditorState(quiz: Quiz): EditorState {
+  // Open on the Info page (selectedQuestionId === null). The Info page
+  // shows quiz metadata (title/slug/description/cover); individual questions
+  // are subsequent pages in the paginator.
   return {
     quiz,
-    selectedQuestionId: quiz.questions[0]?.id ?? null,
+    selectedQuestionId: null,
     validation: validate(quiz),
     isDirty: false,
     draftLoadedAt: null,
