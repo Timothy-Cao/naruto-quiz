@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { listDrafts, type DraftMap } from "@/lib/builder/drafts-storage";
-import { Plus, Edit2, FileWarning } from "lucide-react";
+import { Plus, Edit2, FileWarning, Star } from "lucide-react";
 
 type ListItem = {
   slug: string;
@@ -28,12 +28,20 @@ export function ManagerListClient({
 
   return (
     <div className="grid gap-3">
-      <Link
-        href="/builder"
-        className="self-start flex items-center gap-2 px-3 py-2 rounded bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-white text-sm"
-      >
-        <Plus className="w-4 h-4" /> New quiz
-      </Link>
+      <div className="self-start flex flex-wrap items-center gap-2">
+        <Link
+          href="/builder"
+          className="flex items-center gap-2 px-3 py-2 rounded bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-white text-sm"
+        >
+          <Plus className="w-4 h-4" /> New quiz
+        </Link>
+        <Link
+          href="/manager/ratings"
+          className="flex items-center gap-2 px-3 py-2 rounded border border-[var(--color-border)] hover:border-[var(--color-accent)] text-[var(--color-text-dim)] hover:text-[var(--color-text)] text-sm"
+        >
+          <Star className="w-4 h-4" /> Difficulty ratings
+        </Link>
+      </div>
 
       {committed.length === 0 && draftOnlySlugs.length === 0 && (
         <p className="text-[var(--color-text-dim)] text-sm">No quizzes yet.</p>

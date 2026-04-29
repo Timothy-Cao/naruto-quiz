@@ -2,13 +2,18 @@ import { Check, X, CircleDashed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ScoreResult } from "@/lib/scoring";
 import { Markdown } from "./Markdown";
+import { DifficultyRater } from "./DifficultyRater";
 
 export function RevealPanel({
   result,
   explanation,
+  quizSlug,
+  questionId,
 }: {
   result: ScoreResult;
   explanation: string;
+  quizSlug: string;
+  questionId: string;
 }) {
   const fullCredit = result.points === result.maxPoints;
   const partial = result.points > 0 && result.points < result.maxPoints;
@@ -50,6 +55,7 @@ export function RevealPanel({
       <div className="text-sm text-[var(--color-text)] leading-relaxed">
         <Markdown>{explanation}</Markdown>
       </div>
+      <DifficultyRater quizSlug={quizSlug} questionId={questionId} />
     </div>
   );
 }

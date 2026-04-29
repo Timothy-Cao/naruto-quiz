@@ -18,9 +18,11 @@ type Props = {
   question: Question;
   state: AnswerState;
   onChange: (value: AnswerValue) => void;
+  /** Used by the difficulty-rating widget to scope ratings to this quiz. */
+  quizSlug?: string;
 };
 
-export function QuestionFrame({ question, state, onChange }: Props) {
+export function QuestionFrame({ question, state, onChange, quizSlug }: Props) {
   return (
     <Card className="p-6 bg-[var(--color-surface)] border-[var(--color-border)] overflow-visible">
       <div className="text-xl font-medium text-[var(--color-text)] mb-4">
@@ -33,7 +35,12 @@ export function QuestionFrame({ question, state, onChange }: Props) {
       )}
       <Renderer question={question} state={state} onChange={onChange} />
       {state.status === "confirmed" && (
-        <RevealPanel result={state.result} explanation={question.explanation} />
+        <RevealPanel
+          result={state.result}
+          explanation={question.explanation}
+          quizSlug={quizSlug ?? ""}
+          questionId={question.id}
+        />
       )}
     </Card>
   );

@@ -62,6 +62,7 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
               question={currentQuestion}
               state={currentAnswer}
               onChange={handleChange}
+              quizSlug={quiz.slug}
             />
             <NavBar
               canPrev={state.currentIndex > 0}
