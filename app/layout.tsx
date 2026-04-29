@@ -4,6 +4,7 @@ import "./globals.css";
 import { AudioRoot } from "@/components/audio/AudioRoot";
 import { getMusicTracks } from "@/lib/audio/music-list";
 import { AuthControls } from "@/components/auth/AuthControls";
+import { Analytics } from "@vercel/analytics/react";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -12,9 +13,27 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
+const SITE_URL = "https://naruto-quiz.vercel.app";
+const SITE_TITLE = "Naruto Quiz";
+const SITE_DESCRIPTION =
+  "Test your knowledge of Naruto and Naruto: Shippuden across six question types — multiple choice, drag-to-categorize, ordering, slider, and name autocomplete. Dattebayo!";
+
 export const metadata: Metadata = {
-  title: "Naruto Quiz",
-  description: "Test your knowledge of Naruto and Naruto: Shippuden.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_TITLE,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -29,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AuthControls />
           {children}
         </AudioRoot>
+        <Analytics />
       </body>
     </html>
   );

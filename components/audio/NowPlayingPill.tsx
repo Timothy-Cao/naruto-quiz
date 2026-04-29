@@ -76,6 +76,22 @@ export function NowPlayingPill() {
 
   return (
     <>
+      {/* Touch / narrow-screen toggle. Hidden on md+; mobile and tablets get
+          a small floating play-pause button that's always tappable. */}
+      <button
+        type="button"
+        data-no-sfx
+        aria-label={isPlaying ? "Pause music" : "Play music"}
+        onClick={togglePlay}
+        className="md:hidden fixed bottom-4 right-4 z-40 w-11 h-11 rounded-full bg-[var(--color-surface)]/85 backdrop-blur border border-[var(--color-border)] shadow-lg flex items-center justify-center text-[var(--color-text)]"
+      >
+        {isPlaying ? (
+          <Pause className="w-4 h-4" />
+        ) : (
+          <Play className="w-4 h-4 ml-0.5" />
+        )}
+      </button>
+
       {/* Compact chip — always visible. The "music lives here" indicator.
           Click toggles play/pause; hovering it triggers reveal of the full pill. */}
       <div

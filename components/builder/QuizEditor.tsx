@@ -71,10 +71,15 @@ export function QuizEditor({
   }, [authorName, state.quiz.author]);
 
   // Autosave only when the user has actually changed something from the seed.
+  // The 'author' field is auto-stamped from Google SSO on mount; ignore it for
+  // change detection so opening the builder while signed in doesn't create
+  // an empty 'new-quiz' draft just because of the author stamp.
   useEffect(() => {
     if (!state.isDirty) return;
-    const currentJson = JSON.stringify(state.quiz);
-    if (currentJson === seedJsonRef.current) return;
+    const currentJson = JSON.stringify({ ...state.quiz, author: undefined });
+    const seed = JSON.parse(seedJsonRef.current);
+    const seedJsonNoAuthor = JSON.stringify({ ...seed, author: undefined });
+    if (currentJson === seedJsonNoAuthor) return;
     const t = setTimeout(() => {
       saveDraft(state.quiz.slug, state.quiz);
     }, 500);
