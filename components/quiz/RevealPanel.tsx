@@ -1,6 +1,7 @@
 import { Check, X, CircleDashed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ScoreResult } from "@/lib/scoring";
+import { Markdown } from "./Markdown";
 
 export function RevealPanel({
   result,
@@ -46,7 +47,9 @@ export function RevealPanel({
           </span>
         )}
       </div>
-      <p className="text-sm text-[var(--color-text)] leading-relaxed">{explanation}</p>
+      <div className="text-sm text-[var(--color-text)] leading-relaxed">
+        <Markdown>{explanation}</Markdown>
+      </div>
     </div>
   );
 }

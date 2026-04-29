@@ -4,6 +4,7 @@ import type { AnswerState } from "@/lib/player-reducer";
 import type { AnswerValue } from "@/lib/scoring";
 import { Card } from "@/components/ui/card";
 import { ZoomableImage } from "./ZoomableImage";
+import { Markdown } from "./Markdown";
 import { RevealPanel } from "./RevealPanel";
 import { McSingleQuestionRenderer } from "@/components/questions/McSingleQuestion";
 import { McMultiQuestionRenderer } from "@/components/questions/McMultiQuestion";
@@ -21,7 +22,9 @@ type Props = {
 export function QuestionFrame({ question, state, onChange }: Props) {
   return (
     <Card className="p-6 bg-[var(--color-surface)] border-[var(--color-border)] overflow-visible">
-      <h2 className="text-xl font-medium text-[var(--color-text)] mb-4">{question.prompt}</h2>
+      <div className="text-xl font-medium text-[var(--color-text)] mb-4">
+        <Markdown>{question.prompt}</Markdown>
+      </div>
       {question.image && (
         <div className="mb-4 max-w-md mx-auto">
           <ZoomableImage src={question.image} alt={question.prompt} />
