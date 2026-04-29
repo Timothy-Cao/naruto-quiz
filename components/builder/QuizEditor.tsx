@@ -28,6 +28,9 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
   const seed = initialQuiz ?? BLANK_QUIZ;
   const [state, dispatch] = useReducer(editorReducer, seed, initialEditorState);
   const initialDraftCheckedRef = useRef(false);
+  // Snapshot the seed JSON at mount so the autosave can tell "user actually
+  // changed something" from "we just loaded the editor / loaded a draft".
+  const seedJsonRef = useRef<string>(JSON.stringify(seed));
 
   // On mount: check for an existing draft for this slug.
   useEffect(() => {
@@ -41,8 +44,14 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
   }, []);
 
   // Autosave to localStorage on every change (debounced).
+  // Skip the save if the current quiz still equals the seed — i.e. the user
+  // hasn't actually changed anything in this session. This prevents
+  // /builder visits from creating an empty "new-quiz" draft just because
+  // someone opened the page and walked away.
   useEffect(() => {
     if (!state.isDirty) return;
+    const currentJson = JSON.stringify(state.quiz);
+    if (currentJson === seedJsonRef.current) return;
     const t = setTimeout(() => {
       saveDraft(state.quiz.slug, state.quiz);
     }, 500);
@@ -76,7 +85,7 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
 
   // Always side-by-side. Builder is desktop-only per spec.
   return (
-    <div className="grid grid-cols-[1fr,1fr] gap-0 h-[calc(100vh-5rem)] min-h-0">
+    <div className="grid grid-cols-2 gap-0 h-[calc(100vh-5rem)] min-h-0">
       <div className="overflow-auto p-4 grid gap-4 content-start min-w-0">
         {state.draftLoadedAt && (
           <DraftBanner
