@@ -2,6 +2,7 @@
 
 import { AudioSettingsProvider } from "@/lib/audio/audio-context";
 import { MusicPlayer } from "./MusicPlayer";
+import { MusicDisclaimer } from "./MusicDisclaimer";
 import { NowPlayingPill } from "./NowPlayingPill";
 import { SfxListener } from "./SfxListener";
 import { SettingsButton } from "./SettingsButton";
@@ -22,6 +23,7 @@ export function AudioRoot({
       <SfxListener />
       <SettingsButton />
       <NowPlayingPill />
+      <MusicDisclaimer />
     </AudioSettingsProvider>
   );
 }

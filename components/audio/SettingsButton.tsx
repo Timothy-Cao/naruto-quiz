@@ -41,9 +41,6 @@ export function SettingsButton() {
             onChange={setSfxVolume}
           />
         </div>
-        <p className="text-xs text-[var(--color-text-dim)]">
-          Music plays a random track from <code className="text-[var(--color-text)]">public/music/</code> and avoids the last 5 plays.
-        </p>
       </DialogContent>
       </Dialog>
     </>
