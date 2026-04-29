@@ -20,6 +20,9 @@ type Props = {
   onSelect: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  // When true, hides the drag handle (used in paginated mode where dnd
+  // reordering doesn't make sense).
+  hideDragHandle?: boolean;
 };
 
 const TYPE_LABEL: Record<Question["type"], string> = {
@@ -39,6 +42,7 @@ export function QuestionCard({
   onSelect,
   onDuplicate,
   onDelete,
+  hideDragHandle = false,
 }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -60,16 +64,18 @@ export function QuestionCard({
       )}
     >
       <div className="flex items-center gap-2 p-3 border-b border-[var(--color-border)]">
-        <button
-          type="button"
-          {...attributes}
-          {...listeners}
-          className="cursor-grab active:cursor-grabbing text-[var(--color-text-dim)] hover:text-[var(--color-text)]"
-          aria-label="Drag to reorder"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <GripVertical className="w-4 h-4" />
-        </button>
+        {!hideDragHandle && (
+          <button
+            type="button"
+            {...attributes}
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing text-[var(--color-text-dim)] hover:text-[var(--color-text)]"
+            aria-label="Drag to reorder"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <GripVertical className="w-4 h-4" />
+          </button>
+        )}
         <button
           type="button"
           onClick={(e) => {

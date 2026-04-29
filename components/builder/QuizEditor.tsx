@@ -12,13 +12,16 @@ import {
 } from "@/lib/builder/drafts-storage";
 import { downloadQuiz } from "@/lib/builder/download-quiz";
 import { EditorHeader } from "./EditorHeader";
-import { QuestionList } from "./QuestionList";
+import { QuestionCard } from "./QuestionCard";
+import { QuestionPagination } from "./QuestionPagination";
 import { AddQuestionPopover } from "./AddQuestionPopover";
 import { PreviewPane } from "./PreviewPane";
 import { BottomBar } from "./BottomBar";
 import { DraftBanner } from "./DraftBanner";
 import { Pencil, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 
 const BLANK_QUIZ: Quiz = {
   slug: "new-quiz",
@@ -77,9 +80,21 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
     dispatch({ type: "reset", quiz: seed });
   }
 
-  const selectedIndex = state.selectedQuestionId
-    ? state.quiz.questions.findIndex((q) => q.id === state.selectedQuestionId)
+  const questions = state.quiz.questions;
+  const rawSelectedIndex = state.selectedQuestionId
+    ? questions.findIndex((q) => q.id === state.selectedQuestionId)
     : 0;
+  // Clamp into [0, questions.length - 1] for safety after deletes.
+  const selectedIndex = Math.max(0, Math.min(rawSelectedIndex, questions.length - 1));
+  const currentQuestion = questions[selectedIndex];
+
+  function moveCurrent(delta: -1 | 1) {
+    const target = selectedIndex + delta;
+    if (target < 0 || target >= questions.length) return;
+    const ids = questions.map((q) => q.id);
+    [ids[selectedIndex], ids[target]] = [ids[target], ids[selectedIndex]];
+    dispatch({ type: "reorderQuestions", ids });
+  }
 
   return (
     <div className="grid gap-3">
@@ -107,19 +122,58 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
           />
 
           <div className="grid gap-2">
-            <h2 className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Questions</h2>
-            <QuestionList
-              questions={state.quiz.questions}
-              selectedQuestionId={state.selectedQuestionId}
-              onSelect={(id) => dispatch({ type: "selectQuestion", id })}
-              onUpdate={(q) => dispatch({ type: "updateQuestion", question: q })}
-              onDuplicate={(id) => dispatch({ type: "duplicateQuestion", id })}
-              onDelete={(id) => dispatch({ type: "removeQuestion", id })}
-              onReorder={(ids) => dispatch({ type: "reorderQuestions", ids })}
-            />
-            <AddQuestionPopover
-              onAdd={(questionType) => dispatch({ type: "addQuestion", questionType })}
-            />
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
+                Questions{questions.length > 0 && ` (${questions.length})`}
+              </h2>
+              <AddQuestionPopover
+                onAdd={(questionType) => dispatch({ type: "addQuestion", questionType })}
+              />
+            </div>
+
+            {questions.length > 0 && (
+              <QuestionPagination
+                total={questions.length}
+                current={selectedIndex}
+                onSelect={(i) => {
+                  const q = questions[i];
+                  if (q) dispatch({ type: "selectQuestion", id: q.id });
+                }}
+                onMoveLeft={selectedIndex > 0 ? () => moveCurrent(-1) : undefined}
+                onMoveRight={
+                  selectedIndex < questions.length - 1 ? () => moveCurrent(1) : undefined
+                }
+              />
+            )}
+
+            {currentQuestion ? (
+              // Wrap in dnd-kit context just so QuestionCard's useSortable
+              // hook doesn't blow up. Drag-to-reorder is intentionally inert
+              // in paginated mode; reorder happens via the pagination's
+              // Move-left / Move-right buttons.
+              <DndContext>
+                <SortableContext items={[currentQuestion.id]}>
+                  <QuestionCard
+                    question={currentQuestion}
+                    index={selectedIndex}
+                    isSelected
+                    hideDragHandle
+                    onChange={(q) => dispatch({ type: "updateQuestion", question: q })}
+                    onSelect={() => {}}
+                    onDuplicate={() =>
+                      dispatch({ type: "duplicateQuestion", id: currentQuestion.id })
+                    }
+                    onDelete={() =>
+                      dispatch({ type: "removeQuestion", id: currentQuestion.id })
+                    }
+                  />
+                </SortableContext>
+              </DndContext>
+            ) : (
+              <p className="p-4 rounded-lg border border-dashed border-[var(--color-border-2)] text-sm text-[var(--color-text-dim)] text-center">
+                No questions yet. Click <strong>Add question</strong> above to start.
+              </p>
+            )}
           </div>
 
           <BottomBar
