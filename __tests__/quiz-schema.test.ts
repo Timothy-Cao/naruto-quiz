@@ -84,3 +84,106 @@ describe("QuizSchema", () => {
     expect(() => QuizSchema.parse(quiz)).toThrow();
   });
 });
+
+describe("QuizSchema scoring field", () => {
+  it("accepts mc-single with optional maxPoints", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "mc-single",
+        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        correctId: "a",
+        scoring: { maxPoints: 2 },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts mc-multi with per-option scheme", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "mc-multi",
+        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        correctIds: ["a"],
+        scoring: { maxPoints: 1, scheme: "per-option" },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts categorize with per-item scheme", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "categorize",
+        buckets: [{ id: "B1", label: "B1" }],
+        items: [{ id: "i1", label: "Item", correctBucketId: "B1" }],
+        scoring: { maxPoints: 1, scheme: "per-item" },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts order with per-position scheme", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "order",
+        items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }],
+        axis: "horizontal", startLabel: "S", endLabel: "E",
+        correctOrder: ["x", "y"],
+        scoring: { maxPoints: 1, scheme: "per-position" },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts slider with tolerance scheme + required tolerance/partialCredit", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "slider",
+        min: 0, max: 10, step: 1, correctValue: 5,
+        scoring: { maxPoints: 1, scheme: "tolerance", tolerance: 1, partialCredit: 0.5 },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("rejects slider tolerance scheme without tolerance/partialCredit", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "slider",
+        min: 0, max: 10, step: 1, correctValue: 5,
+        scoring: { maxPoints: 1, scheme: "tolerance" },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).toThrow();
+  });
+
+  it("rejects slider with partialCredit > 1", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "slider",
+        min: 0, max: 10, step: 1, correctValue: 5,
+        scoring: { maxPoints: 1, scheme: "tolerance", tolerance: 1, partialCredit: 1.5 },
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).toThrow();
+  });
+
+  it("accepts a question without any scoring field (defaults to all-or-nothing 1pt)", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "mc-single",
+        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        correctId: "a",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+});

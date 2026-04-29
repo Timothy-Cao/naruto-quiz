@@ -15,11 +15,33 @@ const QuestionBase = {
   explanation: z.string().min(1),
 };
 
+const ScoringBase = z.object({
+  maxPoints: z.number().positive().optional(),
+});
+
+const ScoringWithScheme = <T extends [string, ...string[]]>(schemes: T) =>
+  ScoringBase.extend({
+    scheme: z.enum(schemes).optional(),
+  });
+
+const ScoringSlider = ScoringBase.extend({
+  scheme: z.enum(["all-or-nothing", "tolerance"]).optional(),
+  tolerance: z.number().nonnegative().optional(),
+  partialCredit: z.number().min(0).max(1).optional(),
+}).refine(
+  (s) => {
+    if (s.scheme !== "tolerance") return true;
+    return typeof s.tolerance === "number" && typeof s.partialCredit === "number";
+  },
+  { message: "slider scoring with scheme=tolerance requires tolerance and partialCredit" },
+);
+
 const McSingle = z.object({
   ...QuestionBase,
   type: z.literal("mc-single"),
   options: z.array(Option).min(2),
   correctId: z.string().min(1),
+  scoring: ScoringBase.optional(),
 }).refine(
   (q) => q.options.some((o) => o.id === q.correctId),
   { message: "correctId must match one of options[].id" },
@@ -30,6 +52,7 @@ const McMulti = z.object({
   type: z.literal("mc-multi"),
   options: z.array(Option).min(2),
   correctIds: z.array(z.string().min(1)).min(1),
+  scoring: ScoringWithScheme(["all-or-nothing", "per-option"] as const).optional(),
 }).refine(
   (q) => {
     const ids = new Set(q.options.map((o) => o.id));
@@ -50,6 +73,7 @@ const Categorize = z.object({
   type: z.literal("categorize"),
   buckets: z.array(Option).min(1),
   items: z.array(CategorizeItem).min(1),
+  scoring: ScoringWithScheme(["all-or-nothing", "per-item"] as const).optional(),
 }).refine(
   (q) => {
     const bucketIds = new Set(q.buckets.map((b) => b.id));
@@ -66,6 +90,7 @@ const Order = z.object({
   startLabel: z.string().min(1),
   endLabel: z.string().min(1),
   correctOrder: z.array(z.string().min(1)).min(2),
+  scoring: ScoringWithScheme(["all-or-nothing", "per-position"] as const).optional(),
 }).refine(
   (q) => q.correctOrder.length === q.items.length,
   { message: "correctOrder length must equal items length" },
@@ -84,6 +109,7 @@ const Slider = z.object({
   max: z.number().int(),
   step: z.number().int().positive(),
   correctValue: z.number().int(),
+  scoring: ScoringSlider.optional(),
 }).refine(
   (q) => q.min < q.max,
   { message: "min must be < max" },
@@ -96,6 +122,7 @@ const Name = z.object({
   ...QuestionBase,
   type: z.literal("name"),
   acceptedAnswers: z.array(z.string().min(1)).min(1),
+  scoring: ScoringBase.optional(),
 });
 
 export const QuestionSchema = z.discriminatedUnion("type", [
