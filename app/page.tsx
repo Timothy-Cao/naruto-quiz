@@ -40,6 +40,16 @@ export default function Home() {
           </Link>
         ))}
       </div>
+      <footer className="text-center mt-8">
+        <a
+          href="https://timcao.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs uppercase tracking-widest text-[var(--color-text-dim)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          A Tim Cao Site
+        </a>
+      </footer>
     </main>
   );
 }
