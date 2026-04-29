@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import type { Quiz } from "@/lib/quiz-schema";
 import {
   initialEditorState,
@@ -17,6 +17,8 @@ import { AddQuestionPopover } from "./AddQuestionPopover";
 import { PreviewPane } from "./PreviewPane";
 import { BottomBar } from "./BottomBar";
 import { DraftBanner } from "./DraftBanner";
+import { Pencil, Eye } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const BLANK_QUIZ: Quiz = {
   slug: "new-quiz",
@@ -24,15 +26,16 @@ const BLANK_QUIZ: Quiz = {
   questions: [],
 };
 
+type ViewMode = "edit" | "preview";
+
 export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
   const seed = initialQuiz ?? BLANK_QUIZ;
   const [state, dispatch] = useReducer(editorReducer, seed, initialEditorState);
   const initialDraftCheckedRef = useRef(false);
-  // Snapshot the seed JSON at mount so the autosave can tell "user actually
-  // changed something" from "we just loaded the editor / loaded a draft".
+  // Snapshot seed JSON to gate autosave on actual user changes.
   const seedJsonRef = useRef<string>(JSON.stringify(seed));
+  const [viewMode, setViewMode] = useState<ViewMode>("edit");
 
-  // On mount: check for an existing draft for this slug.
   useEffect(() => {
     if (initialDraftCheckedRef.current) return;
     initialDraftCheckedRef.current = true;
@@ -43,11 +46,7 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Autosave to localStorage on every change (debounced).
-  // Skip the save if the current quiz still equals the seed — i.e. the user
-  // hasn't actually changed anything in this session. This prevents
-  // /builder visits from creating an empty "new-quiz" draft just because
-  // someone opened the page and walked away.
+  // Autosave only when the user has actually changed something from the seed.
   useEffect(() => {
     if (!state.isDirty) return;
     const currentJson = JSON.stringify(state.quiz);
@@ -58,7 +57,6 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
     return () => clearTimeout(t);
   }, [state.quiz, state.isDirty]);
 
-  // Warn before unload if dirty.
   useEffect(() => {
     if (!state.isDirty) return;
     function onBeforeUnload(e: BeforeUnloadEvent) {
@@ -83,64 +81,121 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
     ? state.quiz.questions.findIndex((q) => q.id === state.selectedQuestionId)
     : 0;
 
-  // Always side-by-side. Builder is desktop-only per spec.
   return (
-    <div className="grid grid-cols-2 gap-0 h-[calc(100vh-5rem)] min-h-0">
-      <div className="overflow-auto p-4 grid gap-4 content-start min-w-0">
-        {state.draftLoadedAt && (
-          <DraftBanner
-            savedAt={state.draftLoadedAt}
-            onUseDraft={() => dispatch({ type: "discardDraft" })}
-            onDiscard={() => {
-              deleteDraft(state.quiz.slug);
-              dispatch({ type: "reset", quiz: seed });
-            }}
-          />
-        )}
+    <div className="grid gap-3">
+      <ViewToggleBar viewMode={viewMode} onChange={setViewMode} />
 
-        <EditorHeader
-          quiz={state.quiz}
-          onTitleChange={(title) => dispatch({ type: "setTitle", title })}
-          onSlugChange={(slug) => dispatch({ type: "setSlug", slug })}
-          onDescriptionChange={(description) => dispatch({ type: "setDescription", description })}
-          onCoverImageChange={(coverImage) => dispatch({ type: "setCoverImage", coverImage })}
-        />
+      {viewMode === "edit" ? (
+        <div className="grid gap-4">
+          {state.draftLoadedAt && (
+            <DraftBanner
+              savedAt={state.draftLoadedAt}
+              onUseDraft={() => dispatch({ type: "discardDraft" })}
+              onDiscard={() => {
+                deleteDraft(state.quiz.slug);
+                dispatch({ type: "reset", quiz: seed });
+              }}
+            />
+          )}
 
-        <div className="grid gap-2">
-          <h2 className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Questions</h2>
-          <QuestionList
-            questions={state.quiz.questions}
-            selectedQuestionId={state.selectedQuestionId}
-            onSelect={(id) => dispatch({ type: "selectQuestion", id })}
-            onUpdate={(q) => dispatch({ type: "updateQuestion", question: q })}
-            onDuplicate={(id) => dispatch({ type: "duplicateQuestion", id })}
-            onDelete={(id) => dispatch({ type: "removeQuestion", id })}
-            onReorder={(ids) => dispatch({ type: "reorderQuestions", ids })}
+          <EditorHeader
+            quiz={state.quiz}
+            onTitleChange={(title) => dispatch({ type: "setTitle", title })}
+            onSlugChange={(slug) => dispatch({ type: "setSlug", slug })}
+            onDescriptionChange={(description) => dispatch({ type: "setDescription", description })}
+            onCoverImageChange={(coverImage) => dispatch({ type: "setCoverImage", coverImage })}
           />
-          <AddQuestionPopover
-            onAdd={(questionType) => dispatch({ type: "addQuestion", questionType })}
+
+          <div className="grid gap-2">
+            <h2 className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Questions</h2>
+            <QuestionList
+              questions={state.quiz.questions}
+              selectedQuestionId={state.selectedQuestionId}
+              onSelect={(id) => dispatch({ type: "selectQuestion", id })}
+              onUpdate={(q) => dispatch({ type: "updateQuestion", question: q })}
+              onDuplicate={(id) => dispatch({ type: "duplicateQuestion", id })}
+              onDelete={(id) => dispatch({ type: "removeQuestion", id })}
+              onReorder={(ids) => dispatch({ type: "reorderQuestions", ids })}
+            />
+            <AddQuestionPopover
+              onAdd={(questionType) => dispatch({ type: "addQuestion", questionType })}
+            />
+          </div>
+
+          <BottomBar
+            validation={state.validation}
+            isDirty={state.isDirty}
+            hasDraft={state.draftLoadedAt !== null}
+            onDownload={handleDownload}
+            onDiscardDraft={handleDiscardDraft}
           />
         </div>
-
-        <BottomBar
-          validation={state.validation}
-          isDirty={state.isDirty}
-          hasDraft={state.draftLoadedAt !== null}
-          onDownload={handleDownload}
-          onDiscardDraft={handleDiscardDraft}
-        />
-      </div>
-
-      <div className="min-w-0">
-        <PreviewPane
-          questions={state.quiz.questions}
-          selectedIndex={selectedIndex >= 0 ? selectedIndex : 0}
-          onSelectIndex={(i) => {
-            const q = state.quiz.questions[i];
-            if (q) dispatch({ type: "selectQuestion", id: q.id });
-          }}
-        />
-      </div>
+      ) : (
+        <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden min-h-[60vh]">
+          <PreviewPane
+            questions={state.quiz.questions}
+            selectedIndex={selectedIndex >= 0 ? selectedIndex : 0}
+            onSelectIndex={(i) => {
+              const q = state.quiz.questions[i];
+              if (q) dispatch({ type: "selectQuestion", id: q.id });
+            }}
+          />
+        </div>
+      )}
     </div>
+  );
+}
+
+function ViewToggleBar({
+  viewMode,
+  onChange,
+}: {
+  viewMode: ViewMode;
+  onChange: (m: ViewMode) => void;
+}) {
+  return (
+    <div className="flex items-center gap-1 p-1 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] self-center">
+      <ToggleButton
+        active={viewMode === "edit"}
+        onClick={() => onChange("edit")}
+        icon={<Pencil className="w-3.5 h-3.5" />}
+        label="Edit"
+      />
+      <ToggleButton
+        active={viewMode === "preview"}
+        onClick={() => onChange("preview")}
+        icon={<Eye className="w-3.5 h-3.5" />}
+        label="Preview"
+      />
+    </div>
+  );
+}
+
+function ToggleButton({
+  active,
+  onClick,
+  icon,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={cn(
+        "px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5 transition-colors",
+        active
+          ? "bg-[var(--color-accent)] text-white"
+          : "text-[var(--color-text-dim)] hover:text-[var(--color-text)]",
+      )}
+    >
+      {icon}
+      {label}
+    </button>
   );
 }
