@@ -1,10 +1,15 @@
 import type { Quiz } from "@/lib/quiz-schema";
-import type { AnswerValue } from "@/lib/scoring";
+import type { AnswerValue, ScoreResult } from "@/lib/scoring";
 
 export type AnswerState =
   | { status: "unanswered" }
   | { status: "draft"; value: AnswerValue }
-  | { status: "confirmed"; value: AnswerValue; correct: boolean };
+  | {
+      status: "confirmed";
+      value: AnswerValue;
+      result: ScoreResult;
+      correct: boolean;
+    };
 
 export type PlayerState = {
   currentIndex: number;
@@ -13,7 +18,7 @@ export type PlayerState = {
 
 export type PlayerAction =
   | { type: "setDraft"; id: string; value: AnswerValue }
-  | { type: "confirm"; id: string; correct: boolean }
+  | { type: "confirm"; id: string; result: ScoreResult }
   | { type: "next" }
   | { type: "prev" }
   | { type: "jumpTo"; index: number }
@@ -40,11 +45,17 @@ export function playerReducer(state: PlayerState, action: PlayerAction): PlayerS
     case "confirm": {
       const a = state.answers[action.id];
       if (!a || a.status !== "draft") return state;
+      const correct = action.result.points === action.result.maxPoints;
       return {
         ...state,
         answers: {
           ...state.answers,
-          [action.id]: { status: "confirmed", value: a.value, correct: action.correct },
+          [action.id]: {
+            status: "confirmed",
+            value: a.value,
+            result: action.result,
+            correct,
+          },
         },
       };
     }

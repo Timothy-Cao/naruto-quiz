@@ -28,16 +28,31 @@ describe("playerReducer", () => {
     expect(s.answers["q1"]).toEqual({ status: "draft", value: "a" });
   });
 
-  it("confirm moves draft to confirmed with correctness", () => {
+  it("confirm moves draft to confirmed with full credit result", () => {
     let s = initialState(quiz);
     s = playerReducer(s, { type: "setDraft", id: "q1", value: "a" });
-    s = playerReducer(s, { type: "confirm", id: "q1", correct: true });
-    expect(s.answers["q1"]).toEqual({ status: "confirmed", value: "a", correct: true });
+    s = playerReducer(s, { type: "confirm", id: "q1", result: { points: 1, maxPoints: 1 } });
+    expect(s.answers["q1"]).toEqual({
+      status: "confirmed", value: "a",
+      result: { points: 1, maxPoints: 1 },
+      correct: true,
+    });
+  });
+
+  it("confirm with partial points sets correct=false", () => {
+    let s = initialState(quiz);
+    s = playerReducer(s, { type: "setDraft", id: "q1", value: "a" });
+    s = playerReducer(s, { type: "confirm", id: "q1", result: { points: 0.5, maxPoints: 1 } });
+    expect(s.answers["q1"]).toMatchObject({
+      status: "confirmed",
+      result: { points: 0.5, maxPoints: 1 },
+      correct: false,
+    });
   });
 
   it("confirm is a no-op if not in draft", () => {
     let s = initialState(quiz);
-    s = playerReducer(s, { type: "confirm", id: "q1", correct: true });
+    s = playerReducer(s, { type: "confirm", id: "q1", result: { points: 1, maxPoints: 1 } });
     expect(s.answers["q1"]).toEqual({ status: "unanswered" });
   });
 
@@ -73,7 +88,7 @@ describe("playerReducer", () => {
   it("reset returns to initial state", () => {
     let s = initialState(quiz);
     s = playerReducer(s, { type: "setDraft", id: "q1", value: "a" });
-    s = playerReducer(s, { type: "confirm", id: "q1", correct: true });
+    s = playerReducer(s, { type: "confirm", id: "q1", result: { points: 1, maxPoints: 1 } });
     s = playerReducer(s, { type: "next" });
     s = playerReducer(s, { type: "reset", quiz });
     expect(s).toEqual(initialState(quiz));
