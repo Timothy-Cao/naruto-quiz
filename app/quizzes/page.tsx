@@ -1,9 +1,41 @@
 import Link from "next/link";
 import { loadQuizzes } from "@/lib/load-quizzes";
+import { listPublishedQuizzesServer } from "@/lib/quiz/publishing";
 import { QuizListClient } from "@/components/menu/QuizListClient";
 
-export default function QuizzesPage() {
-  const quizzes = loadQuizzes();
+// Lists merge: built-in quizzes (data/quizzes/*.json) + community-published
+// quizzes from Supabase. Built-in slugs win on conflict.
+export const revalidate = 30;
+
+export default async function QuizzesPage() {
+  const builtIn = loadQuizzes();
+  const published = await listPublishedQuizzesServer();
+
+  const builtInItems = builtIn.map((q) => ({
+    slug: q.slug,
+    title: q.title,
+    description: q.description ?? null,
+    questionCount: q.questions.length,
+    coverImage: q.coverImage ?? null,
+    author: q.author ?? null,
+    isCommunity: false,
+  }));
+
+  const seen = new Set(builtInItems.map((q) => q.slug));
+  const publishedItems = published
+    .filter((p) => !seen.has(p.slug))
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      questionCount: p.questionCount,
+      coverImage: p.coverImage,
+      author: p.author,
+      isCommunity: true,
+    }));
+
+  const items = [...builtInItems, ...publishedItems];
+
   return (
     <main className="max-w-3xl mx-auto p-6">
       <Link href="/" className="text-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)]">
@@ -12,16 +44,7 @@ export default function QuizzesPage() {
       <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--color-text)] mt-4 mb-6">
         Quizzes
       </h1>
-      <QuizListClient
-        quizzes={quizzes.map((q) => ({
-          slug: q.slug,
-          title: q.title,
-          description: q.description ?? null,
-          questionCount: q.questions.length,
-          coverImage: q.coverImage ?? null,
-          author: q.author ?? null,
-        }))}
-      />
+      <QuizListClient quizzes={items} />
     </main>
   );
 }

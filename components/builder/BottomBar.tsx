@@ -2,19 +2,26 @@
 import { useState } from "react";
 import type { ZodIssue } from "zod";
 import { Check, AlertCircle, Download, Trash2 } from "lucide-react";
+import type { Quiz } from "@/lib/quiz-schema";
+import { PublishButton } from "./PublishButton";
+import type { PublishContext } from "@/lib/quiz/publishing-client";
 
 type Props = {
+  quiz: Quiz;
   validation: ZodIssue[];
   isDirty: boolean;
   hasDraft: boolean;
+  publishCtx: PublishContext | null;
   onDownload: () => void;
   onDiscardDraft: () => void;
 };
 
 export function BottomBar({
+  quiz,
   validation,
   isDirty,
   hasDraft,
+  publishCtx,
   onDownload,
   onDiscardDraft,
 }: Props) {
@@ -54,10 +61,11 @@ export function BottomBar({
             type="button"
             onClick={onDownload}
             disabled={!valid}
-            className="px-4 py-2 rounded bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-white text-sm font-medium disabled:opacity-40 flex items-center gap-2"
+            className="px-3 py-2 rounded border border-[var(--color-border-2)] text-[var(--color-text)] hover:border-[var(--color-accent)] text-sm disabled:opacity-40 flex items-center gap-2"
           >
             <Download className="w-4 h-4" /> Download JSON
           </button>
+          <PublishButton quiz={quiz} valid={valid} publishCtx={publishCtx} />
         </div>
       </div>
 

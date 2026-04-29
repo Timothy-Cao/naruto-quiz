@@ -11,6 +11,7 @@ type ListItem = {
   questionCount: number;
   coverImage: string | null;
   author: string | null;
+  isCommunity?: boolean;
 };
 
 export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
@@ -47,6 +48,12 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
                     <>
                       {" · "}
                       By <span className="text-[var(--color-text)]">{q.author}</span>
+                    </>
+                  )}
+                  {q.isCommunity && (
+                    <>
+                      {" · "}
+                      <span className="text-[var(--color-accent)]">Community</span>
                     </>
                   )}
                 </p>

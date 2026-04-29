@@ -8,6 +8,10 @@ export default async function BuilderPage() {
   const user = isSupabaseAuthReady() ? await getCurrentAuthUser() : null;
   const isAdmin = Boolean(user?.isAdmin);
   const authorName = user?.displayName ?? user?.email ?? null;
+  const publishCtx =
+    user && user.email
+      ? { email: user.email, displayName: user.displayName, isAdmin }
+      : null;
 
   return (
     <main className="max-w-7xl mx-auto p-4 grid gap-4">
@@ -26,7 +30,11 @@ export default async function BuilderPage() {
           site admin to unlock images and longer quizzes.
         </p>
       )}
-      <QuizEditor isAdmin={isAdmin} authorName={authorName} />
+      <QuizEditor
+        isAdmin={isAdmin}
+        authorName={authorName}
+        publishCtx={publishCtx}
+      />
     </main>
   );
 }

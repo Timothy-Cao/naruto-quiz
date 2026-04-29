@@ -1,7 +1,7 @@
 {
   "slug": "example",
   "title": "Naruto Knowledge — Sample Quiz",
-  "description": "One of every question type. Six questions, six points possible.",
+  "description": "One of every question type. Seven questions, seven points possible.",
   "questions": [
     {
       "id": "q1",
@@ -84,6 +84,20 @@
       "prompt": "Name Sasuke's older brother.",
       "acceptedAnswers": ["Itachi Uchiha", "Itachi"],
       "explanation": "Itachi Uchiha massacred the Uchiha clan under orders from Konoha's leadership to prevent a coup, sparing only his younger brother Sasuke."
+    },
+    {
+      "id": "q7",
+      "type": "audio-match",
+      "prompt": "Listen carefully. Which Naruto: Shippuden OST is playing?",
+      "audioSrc": "/music/naruto-ost/Samidare.mp3",
+      "options": [
+        { "id": "saika", "label": "Saika" },
+        { "id": "hitotsuba-chikara", "label": "Hitotsuba Chikara" },
+        { "id": "gekiha", "label": "Gekiha" },
+        { "id": "samidare", "label": "Samidare" }
+      ],
+      "correctId": "samidare",
+      "explanation": "**Samidare** (early summer rain) — used in many of Shippuden's quieter, somber moments. The four candidates here are all instrumental Shippuden cues; *Saika* is the gentle piano piece, *Hitotsuba Chikara* is more strident, and *Gekiha* is heavier percussion."
     }
   ]
 }

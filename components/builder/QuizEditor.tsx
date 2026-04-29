@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { DndContext } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 import { BuilderPermissionsProvider, NON_ADMIN_LIMITS } from "@/lib/builder/permissions";
+import type { PublishContext } from "@/lib/quiz/publishing-client";
 
 const BLANK_QUIZ: Quiz = {
   slug: "new-quiz",
@@ -36,12 +37,14 @@ export function QuizEditor({
   initialQuiz,
   isAdmin = true,
   authorName = null,
+  publishCtx = null,
 }: {
   initialQuiz?: Quiz;
   isAdmin?: boolean;
   /** Display name of the signed-in user (Google SSO). Auto-stamped onto
    *  the quiz as `author` when empty. Null if user isn't signed in. */
   authorName?: string | null;
+  publishCtx?: PublishContext | null;
 }) {
   const seed = initialQuiz ?? BLANK_QUIZ;
   const [state, dispatch] = useReducer(editorReducer, seed, initialEditorState);
@@ -226,9 +229,11 @@ export function QuizEditor({
           )}
 
           <BottomBar
+            quiz={state.quiz}
             validation={state.validation}
             isDirty={state.isDirty}
             hasDraft={state.draftLoadedAt !== null}
+            publishCtx={publishCtx}
             onDownload={handleDownload}
             onDiscardDraft={handleDiscardDraft}
           />
