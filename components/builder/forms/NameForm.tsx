@@ -3,6 +3,7 @@ import type { NameQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   question: NameQuestion;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function NameForm({ question, onChange }: Props) {
+  const { isAdmin, limit } = usePermissions();
   function setAnswer(idx: number, value: string) {
     const next = [...question.acceptedAnswers];
     next[idx] = value;
@@ -34,20 +36,23 @@ export function NameForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
+          maxLength={limit("questionPrompt")}
           className={textareaCls}
         />
       </label>
 
-      <label className="grid gap-1 text-sm">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
-        <input
-          type="text"
-          value={question.image ?? ""}
-          onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-          placeholder="URL or /quiz-images/... (optional)"
-          className={inputCls}
-        />
-      </label>
+      {isAdmin && (
+        <label className="grid gap-1 text-sm">
+          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
+          <input
+            type="text"
+            value={question.image ?? ""}
+            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
+            placeholder="URL or /quiz-images/... (optional)"
+            className={inputCls}
+          />
+        </label>
+      )}
 
       <fieldset className="grid gap-2">
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
@@ -60,6 +65,7 @@ export function NameForm({ question, onChange }: Props) {
               value={a}
               onChange={(e) => setAnswer(i, e.target.value)}
               placeholder="e.g., Itachi Uchiha"
+              maxLength={limit("acceptedAnswer")}
               className={inputCls}
             />
             <button
@@ -88,6 +94,7 @@ export function NameForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
+          maxLength={limit("questionExplanation")}
           className={textareaCls}
         />
       </label>

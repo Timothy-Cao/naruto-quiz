@@ -3,6 +3,7 @@ import type { McMultiQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   question: McMultiQuestion;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function McMultiForm({ question, onChange }: Props) {
+  const { isAdmin, limit } = usePermissions();
   function setOption(id: string, patch: Partial<{ label: string; thumbnail?: string }>) {
     onChange({
       ...question,
@@ -50,27 +52,37 @@ export function McMultiForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
+          maxLength={limit("questionPrompt")}
           className={textareaCls}
         />
       </label>
 
-      <label className="grid gap-1 text-sm">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image (URL or /quiz-images/...)</span>
-        <input
-          type="text"
-          value={question.image ?? ""}
-          onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-          placeholder="optional"
-          className={inputCls}
-        />
-      </label>
+      {isAdmin && (
+        <label className="grid gap-1 text-sm">
+          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image (URL or /quiz-images/...)</span>
+          <input
+            type="text"
+            value={question.image ?? ""}
+            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
+            placeholder="optional"
+            className={inputCls}
+          />
+        </label>
+      )}
 
       <fieldset className="grid gap-2">
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
           Options (check each correct one)
         </legend>
         {question.options.map((opt) => (
-          <div key={opt.id} className="grid grid-cols-[auto,1fr,1fr,auto] gap-2 items-center">
+          <div
+            key={opt.id}
+            className={
+              isAdmin
+                ? "grid grid-cols-[auto,1fr,1fr,auto] gap-2 items-center"
+                : "grid grid-cols-[auto,1fr,auto] gap-2 items-center"
+            }
+          >
             <input
               type="checkbox"
               checked={question.correctIds.includes(opt.id)}
@@ -82,15 +94,18 @@ export function McMultiForm({ question, onChange }: Props) {
               value={opt.label}
               onChange={(e) => setOption(opt.id, { label: e.target.value })}
               placeholder="Label"
+              maxLength={limit("optionLabel")}
               className={inputCls}
             />
-            <input
-              type="text"
-              value={opt.thumbnail ?? ""}
-              onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
-              placeholder="Thumbnail URL (optional)"
-              className={inputCls}
-            />
+            {isAdmin && (
+              <input
+                type="text"
+                value={opt.thumbnail ?? ""}
+                onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
+                placeholder="Thumbnail URL (optional)"
+                className={inputCls}
+              />
+            )}
             <button
               type="button"
               onClick={() => removeOption(opt.id)}
@@ -117,6 +132,7 @@ export function McMultiForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
+          maxLength={limit("questionExplanation")}
           className={textareaCls}
         />
       </label>

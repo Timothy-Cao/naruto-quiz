@@ -4,6 +4,7 @@ import type { Quiz } from "@/lib/quiz-schema";
 import { slugify } from "@/lib/builder/slugify";
 import { Edit2 } from "lucide-react";
 import { inputLargeCls } from "./form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   quiz: Quiz;
@@ -21,6 +22,7 @@ export function EditorHeader({
   onCoverImageChange,
 }: Props) {
   const [autoSlug, setAutoSlug] = useState(true);
+  const { isAdmin, limit } = usePermissions();
 
   // When auto is on, recompute slug from title.
   useEffect(() => {
@@ -40,6 +42,7 @@ export function EditorHeader({
           value={quiz.title}
           onChange={(e) => onTitleChange(e.target.value)}
           placeholder="Naruto Knowledge — Sample Quiz"
+          maxLength={limit("quizTitle")}
           className={`${inputLargeCls} text-lg`}
         />
       </label>
@@ -75,20 +78,23 @@ export function EditorHeader({
           value={quiz.description ?? ""}
           onChange={(e) => onDescriptionChange(e.target.value || undefined)}
           rows={2}
+          maxLength={limit("quizDescription")}
           className={`${inputLargeCls} resize-y font-sans`}
         />
       </label>
 
-      <label className="grid gap-1">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Cover image (optional)</span>
-        <input
-          type="text"
-          value={quiz.coverImage ?? ""}
-          onChange={(e) => onCoverImageChange(e.target.value || undefined)}
-          placeholder="URL or /quiz-images/..."
-          className={inputLargeCls}
-        />
-      </label>
+      {isAdmin && (
+        <label className="grid gap-1">
+          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Cover image (optional)</span>
+          <input
+            type="text"
+            value={quiz.coverImage ?? ""}
+            onChange={(e) => onCoverImageChange(e.target.value || undefined)}
+            placeholder="URL or /quiz-images/..."
+            className={inputLargeCls}
+          />
+        </label>
+      )}
     </div>
   );
 }

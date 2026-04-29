@@ -16,8 +16,12 @@ const TYPES: { type: QuestionType; label: string; icon: React.ElementType; desc:
 
 export function AddQuestionPopover({
   onAdd,
+  disabled = false,
+  disabledReason,
 }: {
   onAdd: (type: QuestionType) => void;
+  disabled?: boolean;
+  disabledReason?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -25,8 +29,10 @@ export function AddQuestionPopover({
     <div className="relative">
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="px-3 py-2 rounded bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-white text-sm flex items-center gap-2"
+        onClick={() => !disabled && setOpen((o) => !o)}
+        disabled={disabled}
+        title={disabled ? disabledReason : undefined}
+        className="px-3 py-2 rounded bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/90 text-white text-sm flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
       >
         <Plus className="w-4 h-4" /> Add question
       </button>

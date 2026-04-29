@@ -2,6 +2,7 @@
 import type { SliderQuestion } from "@/lib/quiz-schema";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   question: SliderQuestion;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function SliderForm({ question, onChange }: Props) {
+  const { isAdmin, limit } = usePermissions();
   return (
     <div className="grid gap-3">
       <label className="grid gap-1 text-sm">
@@ -17,20 +19,23 @@ export function SliderForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
+          maxLength={limit("questionPrompt")}
           className={textareaCls}
         />
       </label>
 
-      <label className="grid gap-1 text-sm">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
-        <input
-          type="text"
-          value={question.image ?? ""}
-          onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-          placeholder="URL or /quiz-images/... (optional)"
-          className={inputCls}
-        />
-      </label>
+      {isAdmin && (
+        <label className="grid gap-1 text-sm">
+          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
+          <input
+            type="text"
+            value={question.image ?? ""}
+            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
+            placeholder="URL or /quiz-images/... (optional)"
+            className={inputCls}
+          />
+        </label>
+      )}
 
       <div className="grid grid-cols-4 gap-3">
         <label className="grid gap-1 text-sm">
@@ -78,6 +83,7 @@ export function SliderForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
+          maxLength={limit("questionExplanation")}
           className={textareaCls}
         />
       </label>

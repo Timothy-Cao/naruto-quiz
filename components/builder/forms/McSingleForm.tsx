@@ -3,6 +3,7 @@ import type { McSingleQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   question: McSingleQuestion;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function McSingleForm({ question, onChange }: Props) {
+  const { isAdmin, limit } = usePermissions();
   function setOption(id: string, patch: Partial<{ label: string; thumbnail?: string }>) {
     onChange({
       ...question,
@@ -48,26 +50,36 @@ export function McSingleForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={2}
+          maxLength={limit("questionPrompt")}
           className={textareaCls}
         />
       </Field>
 
-      <Field label="Image (URL or /quiz-images/...)">
-        <input
-          type="text"
-          value={question.image ?? ""}
-          onChange={(e) => setImage(e.target.value)}
-          placeholder="optional"
-          className={inputCls}
-        />
-      </Field>
+      {isAdmin && (
+        <Field label="Image (URL or /quiz-images/...)">
+          <input
+            type="text"
+            value={question.image ?? ""}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="optional"
+            className={inputCls}
+          />
+        </Field>
+      )}
 
       <fieldset className="grid gap-2">
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
           Options (pick one as correct)
         </legend>
         {question.options.map((opt) => (
-          <div key={opt.id} className="grid grid-cols-[auto,1fr,1fr,auto] gap-2 items-center">
+          <div
+            key={opt.id}
+            className={
+              isAdmin
+                ? "grid grid-cols-[auto,1fr,1fr,auto] gap-2 items-center"
+                : "grid grid-cols-[auto,1fr,auto] gap-2 items-center"
+            }
+          >
             <input
               type="radio"
               name={`${question.id}-correct`}
@@ -80,15 +92,18 @@ export function McSingleForm({ question, onChange }: Props) {
               value={opt.label}
               onChange={(e) => setOption(opt.id, { label: e.target.value })}
               placeholder="Label"
+              maxLength={limit("optionLabel")}
               className={inputCls}
             />
-            <input
-              type="text"
-              value={opt.thumbnail ?? ""}
-              onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
-              placeholder="Thumbnail URL (optional)"
-              className={inputCls}
-            />
+            {isAdmin && (
+              <input
+                type="text"
+                value={opt.thumbnail ?? ""}
+                onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
+                placeholder="Thumbnail URL (optional)"
+                className={inputCls}
+              />
+            )}
             <button
               type="button"
               onClick={() => removeOption(opt.id)}
@@ -114,6 +129,7 @@ export function McSingleForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => setExplanation(e.target.value)}
           rows={3}
+          maxLength={limit("questionExplanation")}
           className={textareaCls}
         />
       </Field>

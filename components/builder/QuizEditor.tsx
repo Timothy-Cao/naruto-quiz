@@ -22,6 +22,7 @@ import { Pencil, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DndContext } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
+import { BuilderPermissionsProvider, NON_ADMIN_LIMITS } from "@/lib/builder/permissions";
 
 const BLANK_QUIZ: Quiz = {
   slug: "new-quiz",
@@ -31,7 +32,13 @@ const BLANK_QUIZ: Quiz = {
 
 type ViewMode = "edit" | "preview";
 
-export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
+export function QuizEditor({
+  initialQuiz,
+  isAdmin = true,
+}: {
+  initialQuiz?: Quiz;
+  isAdmin?: boolean;
+}) {
   const seed = initialQuiz ?? BLANK_QUIZ;
   const [state, dispatch] = useReducer(editorReducer, seed, initialEditorState);
   const initialDraftCheckedRef = useRef(false);
@@ -111,7 +118,10 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
     dispatch({ type: "reorderQuestions", ids });
   }
 
+  const atQuestionCap = !isAdmin && questions.length >= NON_ADMIN_LIMITS.maxQuestions;
+
   return (
+    <BuilderPermissionsProvider isAdmin={isAdmin}>
     <div className="grid gap-3">
       <ViewToggleBar viewMode={viewMode} onChange={setViewMode} />
 
@@ -136,6 +146,12 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
             </h2>
             <AddQuestionPopover
               onAdd={(questionType) => dispatch({ type: "addQuestion", questionType })}
+              disabled={atQuestionCap}
+              disabledReason={
+                atQuestionCap
+                  ? `Max ${NON_ADMIN_LIMITS.maxQuestions} questions per community quiz.`
+                  : undefined
+              }
             />
           </div>
 
@@ -211,6 +227,7 @@ export function QuizEditor({ initialQuiz }: { initialQuiz?: Quiz }) {
         </div>
       )}
     </div>
+    </BuilderPermissionsProvider>
   );
 }
 

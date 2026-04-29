@@ -3,6 +3,7 @@ import type { OrderQuestion } from "@/lib/quiz-schema";
 import { Trash2, Plus, ArrowDown, ArrowRight } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
+import { usePermissions } from "@/lib/builder/permissions";
 
 type Props = {
   question: OrderQuestion;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function OrderForm({ question, onChange }: Props) {
+  const { isAdmin, limit } = usePermissions();
   function addItem() {
     const newId = `${question.id}-item-${Date.now().toString(36)}`;
     onChange({
@@ -48,20 +50,23 @@ export function OrderForm({ question, onChange }: Props) {
           value={question.prompt}
           onChange={(e) => onChange({ ...question, prompt: e.target.value })}
           rows={2}
+          maxLength={limit("questionPrompt")}
           className={textareaCls}
         />
       </label>
 
-      <label className="grid gap-1 text-sm">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
-        <input
-          type="text"
-          value={question.image ?? ""}
-          onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-          placeholder="URL or /quiz-images/... (optional)"
-          className={inputCls}
-        />
-      </label>
+      {isAdmin && (
+        <label className="grid gap-1 text-sm">
+          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
+          <input
+            type="text"
+            value={question.image ?? ""}
+            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
+            placeholder="URL or /quiz-images/... (optional)"
+            className={inputCls}
+          />
+        </label>
+      )}
 
       <div className="grid grid-cols-[1fr,1fr,1fr] gap-3">
         <label className="grid gap-1 text-sm">
@@ -81,6 +86,7 @@ export function OrderForm({ question, onChange }: Props) {
             type="text"
             value={question.startLabel}
             onChange={(e) => onChange({ ...question, startLabel: e.target.value })}
+            maxLength={limit("axisLabel")}
             className={inputCls}
           />
         </label>
@@ -90,6 +96,7 @@ export function OrderForm({ question, onChange }: Props) {
             type="text"
             value={question.endLabel}
             onChange={(e) => onChange({ ...question, endLabel: e.target.value })}
+            maxLength={limit("axisLabel")}
             className={inputCls}
           />
         </label>
@@ -100,7 +107,14 @@ export function OrderForm({ question, onChange }: Props) {
           Items in correct order {question.axis === "vertical" ? <ArrowDown className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
         </legend>
         {orderedItems.map((it, i) => (
-          <div key={it.id} className="grid grid-cols-[auto,1fr,1fr,auto,auto,auto] gap-2 items-center">
+          <div
+            key={it.id}
+            className={
+              isAdmin
+                ? "grid grid-cols-[auto,1fr,1fr,auto,auto,auto] gap-2 items-center"
+                : "grid grid-cols-[auto,1fr,auto,auto,auto] gap-2 items-center"
+            }
+          >
             <span className="font-mono text-xs text-[var(--color-text-dim)] w-6 text-right">#{i + 1}</span>
             <input
               type="text"
@@ -114,22 +128,25 @@ export function OrderForm({ question, onChange }: Props) {
                 })
               }
               placeholder="Item label"
+              maxLength={limit("itemLabel")}
               className={inputCls}
             />
-            <input
-              type="text"
-              value={it.thumbnail ?? ""}
-              onChange={(e) =>
-                onChange({
-                  ...question,
-                  items: question.items.map((x) =>
-                    x.id === it.id ? { ...x, thumbnail: e.target.value || undefined } : x,
-                  ),
-                })
-              }
-              placeholder="Thumbnail URL (optional)"
-              className={inputCls}
-            />
+            {isAdmin && (
+              <input
+                type="text"
+                value={it.thumbnail ?? ""}
+                onChange={(e) =>
+                  onChange({
+                    ...question,
+                    items: question.items.map((x) =>
+                      x.id === it.id ? { ...x, thumbnail: e.target.value || undefined } : x,
+                    ),
+                  })
+                }
+                placeholder="Thumbnail URL (optional)"
+                className={inputCls}
+              />
+            )}
             <button
               type="button"
               onClick={() => moveItem(it.id, -1)}
@@ -174,6 +191,7 @@ export function OrderForm({ question, onChange }: Props) {
           value={question.explanation}
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
+          maxLength={limit("questionExplanation")}
           className={textareaCls}
         />
       </label>
