@@ -7,8 +7,16 @@ import { attachAnalyser } from "@/lib/audio/music-analyser";
 import { MUSIC_VOLUME_SCALE } from "@/lib/audio/audio-storage";
 
 export function MusicPlayer() {
-  const { audioRef, currentTrack, settings, skipTrack, onAudioPlay, onAudioPause } =
-    useAudioAdvance();
+  const {
+    audioRef,
+    currentTrack,
+    settings,
+    skipTrack,
+    onAudioPlay,
+    onAudioPause,
+    onAudioTimeUpdate,
+    onAudioLoadedMetadata,
+  } = useAudioAdvance();
 
   // Apply volume changes immediately.
   useEffect(() => {
@@ -41,8 +49,9 @@ export function MusicPlayer() {
       onEnded={skipTrack}
       onPlay={onAudioPlay}
       onPause={onAudioPause}
+      onTimeUpdate={(e) => onAudioTimeUpdate(e.currentTarget.currentTime)}
+      onLoadedMetadata={(e) => onAudioLoadedMetadata(e.currentTarget.duration)}
       preload="auto"
-      // The element is invisible — it's just an audio source.
     />
   );
 }
