@@ -9,25 +9,29 @@ import {
 } from "@/lib/audio/audio-storage";
 import { playSfx as rawPlaySfx, unlockAudio, type SfxName } from "@/lib/audio/sfx";
 import { pickNext } from "@/lib/audio/play-queue";
+import { PACKS, DEFAULT_PACK_ID, getPack, type Pack } from "@/lib/audio/packs";
 
 type AudioContextValue = {
   settings: AudioSettings;
   setMusicVolume: (v: number) => void;
   setSfxVolume: (v: number) => void;
   playSfx: (name: SfxName) => void;
+  // Pack selection
+  packs: Pack[];
+  activePack: Pack;
+  setActivePack: (id: string) => void;
   // Music playback state
   currentTrack: string | null;
   isPlaying: boolean;
-  currentTime: number; // seconds within the current track
-  duration: number; // seconds; 0 until loadedmetadata fires
+  currentTime: number;
+  duration: number;
   skipTrack: () => void;
   prevTrack: () => void;
   hasPrev: boolean;
   togglePlay: () => void;
   seekTo: (time: number) => void;
-  // Internal refs for MusicPlayer to bind the <audio> element
+  // Internal refs / event sync (consumed by <MusicPlayer>)
   audioRef: React.RefObject<HTMLAudioElement | null>;
-  // Called by MusicPlayer audio element events to sync state
   onAudioPlay: () => void;
   onAudioPause: () => void;
   onAudioTimeUpdate: (time: number) => void;
@@ -36,24 +40,41 @@ type AudioContextValue = {
 
 const Ctx = createContext<AudioContextValue | null>(null);
 
-const HISTORY_AVOID = 5; // avoid replaying any of the last 5 tracks when picking fresh
+const HISTORY_AVOID = 5;
+const PACK_KEY = "naruto-quiz:active-pack";
+
+function loadActivePackId(): string {
+  if (typeof window === "undefined") return DEFAULT_PACK_ID;
+  const saved = window.localStorage.getItem(PACK_KEY);
+  if (saved && PACKS.some((p) => p.id === saved)) return saved;
+  return DEFAULT_PACK_ID;
+}
+
+function buildOpenerUrl(pack: Pack, tracks: string[]): string | null {
+  // The opening track filename in pack.openingTrack must match a real file
+  // in tracks[]; we compare against the URL-encoded suffix.
+  const target = `/${pack.id}/${encodeURIComponent(pack.openingTrack)}`;
+  const exact = tracks.find((t) => t.endsWith(target));
+  if (exact) return exact;
+  // Fall back to a random track if the named opener is missing.
+  return pickNext(tracks, []);
+}
 
 export function AudioSettingsProvider({
-  tracks,
+  tracksByPack,
   children,
 }: {
-  tracks: string[];
+  /** All packs' tracks, indexed by pack id. Built at server startup. */
+  tracksByPack: Record<string, string[]>;
   children: React.ReactNode;
 }) {
   const [settings, setSettings] = useState<AudioSettings>(DEFAULT_AUDIO_SETTINGS);
+  const [activePackId, setActivePackId] = useState<string>(DEFAULT_PACK_ID);
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  // History of plays + a cursor pointing at currentTrack within it.
-  // historyRef.tracks is ordered oldest -> newest; cursor === tracks.length-1
-  // means we're at the latest track. Cursor < length-1 means we navigated back.
   const historyRef = useRef<{ tracks: string[]; cursor: number }>({
     tracks: [],
     cursor: -1,
@@ -64,12 +85,14 @@ export function AudioSettingsProvider({
   const startedRef = useRef(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Hydrate from localStorage on mount.
+  const activePack = getPack(activePackId);
+  const tracks = tracksByPack[activePackId] ?? [];
+
   useEffect(() => {
     setSettings(loadAudioSettings());
+    setActivePackId(loadActivePackId());
   }, []);
 
-  // Pause/resume on tab visibility change.
   useEffect(() => {
     function onVisChange() {
       const a = audioRef.current;
@@ -95,23 +118,26 @@ export function AudioSettingsProvider({
     setCurrentTrack(t);
   }
 
-  // Start on first user gesture (browser autoplay policy).
+  function playOpenerForPack(pack: Pack, packTracks: string[]) {
+    const opener = buildOpenerUrl(pack, packTracks);
+    if (!opener) {
+      setCurrentTrack(null);
+      historyRef.current = { tracks: [], cursor: -1 };
+      setHasPrev(false);
+      return;
+    }
+    historyRef.current = { tracks: [opener], cursor: 0 };
+    setHasPrev(false);
+    setCurrentTrack(opener);
+  }
+
+  // First user gesture unlocks autoplay; we open with the pack's opener.
   useEffect(() => {
     function onFirstGesture() {
       if (startedRef.current) return;
       if (tracks.length === 0) return;
       startedRef.current = true;
-      // Always open with Hyouhaku.mp3 if it's in the library; otherwise
-      // fall back to a random pick. The match is precise so the standalone
-      // Hyouhaku track wins over "Sasuke Theme Song - Hyouhaku.mp3".
-      const opener =
-        tracks.find((t) => /\/Hyouhaku\.[a-z0-9]+$/i.test(decodeURIComponent(t))) ??
-        pickNext(tracks, []);
-      if (opener) {
-        historyRef.current = { tracks: [opener], cursor: 0 };
-        setHasPrev(false);
-        setCurrentTrack(opener);
-      }
+      playOpenerForPack(activePack, tracks);
     }
     window.addEventListener("pointerdown", onFirstGesture, { once: true, passive: true });
     window.addEventListener("keydown", onFirstGesture, { once: true });
@@ -119,16 +145,15 @@ export function AudioSettingsProvider({
       window.removeEventListener("pointerdown", onFirstGesture);
       window.removeEventListener("keydown", onFirstGesture);
     };
-  }, [tracks]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePackId]);
 
   const skipTrack = useCallback(() => {
     const h = historyRef.current;
-    // If we navigated back earlier, "next" first walks forward through history
     if (h.cursor < h.tracks.length - 1) {
       playAtCursor(h.cursor + 1);
       return;
     }
-    // At the head of history — pick a fresh track avoiding the last N.
     const recent = h.tracks.slice(-HISTORY_AVOID);
     const next = pickNext(tracks, recent);
     if (!next) return;
@@ -178,6 +203,24 @@ export function AudioSettingsProvider({
     });
   }, []);
 
+  const setActivePack = useCallback(
+    (id: string) => {
+      const pack = PACKS.find((p) => p.id === id);
+      if (!pack) return;
+      setActivePackId(id);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(PACK_KEY, id);
+      }
+      // Switch playback immediately to the new pack's opener so the user
+      // gets audible feedback that the pack changed.
+      const newTracks = tracksByPack[id] ?? [];
+      if (newTracks.length > 0 && startedRef.current) {
+        playOpenerForPack(pack, newTracks);
+      }
+    },
+    [tracksByPack],
+  );
+
   const playSfx = useCallback(
     (name: SfxName) => {
       unlockAudio();
@@ -196,6 +239,9 @@ export function AudioSettingsProvider({
     setMusicVolume,
     setSfxVolume,
     playSfx,
+    packs: PACKS,
+    activePack,
+    setActivePack,
     currentTrack,
     isPlaying,
     currentTime,
@@ -212,15 +258,11 @@ export function AudioSettingsProvider({
     onAudioLoadedMetadata,
   };
 
-  return (
-    <Ctx.Provider value={value}>
-      {children}
-    </Ctx.Provider>
-  );
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
-// Internal hook — exposes the audio element ref and event-sync callbacks.
-// Only the MusicPlayer needs this; everything else uses useAudio().
+// MusicPlayer needs access to the audio element ref + event-sync callbacks;
+// nothing else does.
 export function useAudioAdvance() {
   const v = useContext(Ctx);
   if (!v) throw new Error("useAudioAdvance must be used inside <AudioSettingsProvider>");

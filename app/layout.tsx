@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import { AudioRoot } from "@/components/audio/AudioRoot";
-import { getMusicTracks } from "@/lib/audio/music-list";
+import { getAllTracks } from "@/lib/audio/music-list";
 import { AuthControls } from "@/components/auth/AuthControls";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -13,10 +13,13 @@ const bebas = Bebas_Neue({
   display: "swap",
 });
 
+// Static metadata stays generic so the architecture supports future packs
+// (Avatar, JJK, etc.) without needing a redeploy or per-pack route. Visible
+// branding comes from the active pack via <MainHeader>.
 const SITE_URL = "https://naruto-quiz.vercel.app";
-const SITE_TITLE = "Naruto Quiz";
+const SITE_TITLE = "Themed Quiz";
 const SITE_DESCRIPTION =
-  "Test your knowledge of Naruto and Naruto: Shippuden across six question types — multiple choice, drag-to-categorize, ordering, slider, and name autocomplete. Dattebayo!";
+  "Anime quiz packs with logical, deductive, and sensory questions. Currently shipping the Naruto OST pack — more to come.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -44,14 +47,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // getMusicTracks() runs at build time (fs scan of public/music/), not per
-  // request. AuthControls hydrates its own session client-side via Supabase,
+  // getAllTracks() runs at build time (fs scan of public/music/<pack>/) per
+  // pack, not per request. AuthControls hydrates its own session client-side,
   // so the layout has no dynamic dependencies and stays fully static.
-  const tracks = getMusicTracks();
+  const tracksByPack = getAllTracks();
   return (
     <html lang="en" className={`${bebas.variable} dark`}>
       <body>
-        <AudioRoot tracks={tracks}>
+        <AudioRoot tracksByPack={tracksByPack}>
           <AuthControls />
           {children}
         </AudioRoot>

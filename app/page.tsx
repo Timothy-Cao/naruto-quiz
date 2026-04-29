@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Hammer, FolderOpen } from "lucide-react";
+import { MainHeader } from "@/components/menu/MainHeader";
 
 const cards = [
   { href: "/quizzes", title: "Quizzes", desc: "Browse quizzes and your top scores.", icon: Trophy, badge: null },
@@ -12,14 +13,7 @@ const cards = [
 export default function Home() {
   return (
     <main className="max-w-3xl mx-auto p-6 grid gap-6">
-      <header className="text-center py-8">
-        <h1 className="font-[family-name:var(--font-display)] text-6xl tracking-wider text-[var(--color-text)]">
-          NARUTO QUIZ
-        </h1>
-        <p className="text-[var(--color-text-dim)] mt-2">
-          Dattebayo!
-        </p>
-      </header>
+      <MainHeader />
       <div className="grid gap-4 md:grid-cols-3">
         {cards.map((c) => (
           <Link key={c.href} href={c.href}>

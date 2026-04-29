@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Settings, Music, Volume2 } from "lucide-react";
+import { Settings, Music, Volume2, Package } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Slider } from "@/components/ui/slider";
 import { useAudio } from "@/lib/audio/audio-context";
 
 export function SettingsButton() {
-  const { settings, setMusicVolume, setSfxVolume } = useAudio();
+  const { settings, setMusicVolume, setSfxVolume, packs, activePack, setActivePack } = useAudio();
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,6 +28,32 @@ export function SettingsButton() {
           </DialogTitle>
         </DialogHeader>
         <div className="grid gap-6 py-4">
+          <div className="grid gap-2" data-no-sfx>
+            <div className="flex items-center justify-between text-sm">
+              <span className="flex items-center gap-2 text-[var(--color-text)]">
+                <span className="text-[var(--color-text-dim)]">
+                  <Package className="w-4 h-4" />
+                </span>
+                Music pack
+              </span>
+            </div>
+            <select
+              value={activePack.id}
+              onChange={(e) => setActivePack(e.target.value)}
+              className="px-3 py-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] text-sm"
+            >
+              {packs.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.displayName}
+                </option>
+              ))}
+            </select>
+            {packs.length === 1 && (
+              <p className="text-[10px] text-[var(--color-text-dim)]">
+                More packs coming soon.
+              </p>
+            )}
+          </div>
           <VolumeRow
             icon={<Music className="w-4 h-4" />}
             label="Music"

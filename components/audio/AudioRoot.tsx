@@ -9,14 +9,15 @@ import { SettingsButton } from "./SettingsButton";
 import { Visualizer } from "./Visualizer";
 
 export function AudioRoot({
-  tracks,
+  tracksByPack,
   children,
 }: {
-  tracks: string[];
+  /** All packs' tracks indexed by pack id; built at server startup. */
+  tracksByPack: Record<string, string[]>;
   children: React.ReactNode;
 }) {
   return (
-    <AudioSettingsProvider tracks={tracks}>
+    <AudioSettingsProvider tracksByPack={tracksByPack}>
       <Visualizer />
       {children}
       <MusicPlayer />
