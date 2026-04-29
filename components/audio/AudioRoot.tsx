@@ -2,6 +2,7 @@
 
 import { AudioSettingsProvider } from "@/lib/audio/audio-context";
 import { MusicPlayer } from "./MusicPlayer";
+import { NowPlayingPill } from "./NowPlayingPill";
 import { SfxListener } from "./SfxListener";
 import { SettingsButton } from "./SettingsButton";
 import { Visualizer } from "./Visualizer";
@@ -14,12 +15,13 @@ export function AudioRoot({
   children: React.ReactNode;
 }) {
   return (
-    <AudioSettingsProvider>
+    <AudioSettingsProvider tracks={tracks}>
       <Visualizer />
       {children}
-      <MusicPlayer tracks={tracks} />
+      <MusicPlayer />
       <SfxListener />
       <SettingsButton />
+      <NowPlayingPill />
     </AudioSettingsProvider>
   );
 }

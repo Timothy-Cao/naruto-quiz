@@ -1,59 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { pickNext, appendHistory } from "@/lib/audio/play-queue";
-import { useAudio } from "@/lib/audio/audio-context";
+import { useEffect } from "react";
+import { useAudioAdvance } from "@/lib/audio/audio-context";
 import { getAudioContext } from "@/lib/audio/sfx";
 import { attachAnalyser } from "@/lib/audio/music-analyser";
 
-export function MusicPlayer({ tracks }: { tracks: string[] }) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const historyRef = useRef<string[]>([]);
-  const wasPlayingBeforeHideRef = useRef(false);
-  const startedRef = useRef(false);
-  const [currentTrack, setCurrentTrack] = useState<string | null>(null);
-  const { settings } = useAudio();
+export function MusicPlayer() {
+  const { audioRef, currentTrack, settings, skipTrack, onAudioPlay, onAudioPause } =
+    useAudioAdvance();
 
   // Apply volume changes immediately.
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = settings.musicVolume;
-  }, [settings.musicVolume]);
-
-  // Pause/resume on tab visibility change.
-  useEffect(() => {
-    function onVisChange() {
-      const a = audioRef.current;
-      if (!a) return;
-      if (document.hidden) {
-        wasPlayingBeforeHideRef.current = !a.paused;
-        a.pause();
-      } else if (wasPlayingBeforeHideRef.current) {
-        a.play().catch(() => {});
-      }
-    }
-    document.addEventListener("visibilitychange", onVisChange);
-    return () => document.removeEventListener("visibilitychange", onVisChange);
-  }, []);
-
-  // Start on first user gesture (browser autoplay policy).
-  useEffect(() => {
-    function onFirstGesture() {
-      if (startedRef.current) return;
-      if (tracks.length === 0) return;
-      startedRef.current = true;
-      const first = pickNext(tracks, []);
-      if (first) {
-        historyRef.current = appendHistory(historyRef.current, first);
-        setCurrentTrack(first);
-      }
-    }
-    window.addEventListener("pointerdown", onFirstGesture, { once: true, passive: true });
-    window.addEventListener("keydown", onFirstGesture, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", onFirstGesture);
-      window.removeEventListener("keydown", onFirstGesture);
-    };
-  }, [tracks]);
+  }, [settings.musicVolume, audioRef]);
 
   // Auto-play when track changes.
   useEffect(() => {
@@ -75,19 +34,12 @@ export function MusicPlayer({ tracks }: { tracks: string[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTrack]);
 
-  function advance() {
-    const next = pickNext(tracks, historyRef.current);
-    if (!next) return;
-    historyRef.current = appendHistory(historyRef.current, next);
-    setCurrentTrack(next);
-  }
-
-  if (tracks.length === 0) return null;
-
   return (
     <audio
       ref={audioRef}
-      onEnded={advance}
+      onEnded={skipTrack}
+      onPlay={onAudioPlay}
+      onPause={onAudioPause}
       preload="auto"
       // The element is invisible — it's just an audio source.
     />
