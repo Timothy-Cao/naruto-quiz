@@ -101,11 +101,16 @@ export function AudioSettingsProvider({
       if (startedRef.current) return;
       if (tracks.length === 0) return;
       startedRef.current = true;
-      const first = pickNext(tracks, []);
-      if (first) {
-        historyRef.current = { tracks: [first], cursor: 0 };
+      // Always open with Hyouhaku.mp3 if it's in the library; otherwise
+      // fall back to a random pick. The match is precise so the standalone
+      // Hyouhaku track wins over "Sasuke Theme Song - Hyouhaku.mp3".
+      const opener =
+        tracks.find((t) => /\/Hyouhaku\.[a-z0-9]+$/i.test(decodeURIComponent(t))) ??
+        pickNext(tracks, []);
+      if (opener) {
+        historyRef.current = { tracks: [opener], cursor: 0 };
         setHasPrev(false);
-        setCurrentTrack(first);
+        setCurrentTrack(opener);
       }
     }
     window.addEventListener("pointerdown", onFirstGesture, { once: true, passive: true });
