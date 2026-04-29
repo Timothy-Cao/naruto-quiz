@@ -35,9 +35,13 @@ type ViewMode = "edit" | "preview";
 export function QuizEditor({
   initialQuiz,
   isAdmin = true,
+  authorName = null,
 }: {
   initialQuiz?: Quiz;
   isAdmin?: boolean;
+  /** Display name of the signed-in user (Google SSO). Auto-stamped onto
+   *  the quiz as `author` when empty. Null if user isn't signed in. */
+  authorName?: string | null;
 }) {
   const seed = initialQuiz ?? BLANK_QUIZ;
   const [state, dispatch] = useReducer(editorReducer, seed, initialEditorState);
@@ -55,6 +59,16 @@ export function QuizEditor({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Auto-stamp the author from Google SSO once we have a signed-in user.
+  // Don't overwrite an author already present (so reopening someone else's
+  // quiz doesn't claim it).
+  useEffect(() => {
+    if (!authorName) return;
+    if (state.quiz.author) return;
+    dispatch({ type: "setAuthor", author: authorName });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authorName, state.quiz.author]);
 
   // Autosave only when the user has actually changed something from the seed.
   useEffect(() => {

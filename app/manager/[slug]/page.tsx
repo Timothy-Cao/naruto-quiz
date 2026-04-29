@@ -16,6 +16,7 @@ export default async function ManagerEditPage({
 }) {
   const { slug } = await params;
   const user = isSupabaseAuthReady() ? await getCurrentAuthUser() : null;
+  const authorName = user?.displayName ?? user?.email ?? null;
   const quiz = loadQuizzes().find((q) => q.slug === slug);
   if (!quiz) notFound();
 
@@ -28,7 +29,7 @@ export default async function ManagerEditPage({
         Editing: {quiz.title}
       </h1>
       <AdminGate user={user}>
-        <QuizEditor initialQuiz={quiz} />
+        <QuizEditor initialQuiz={quiz} authorName={authorName} />
       </AdminGate>
     </main>
   );

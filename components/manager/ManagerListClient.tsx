@@ -9,6 +9,7 @@ type ListItem = {
   slug: string;
   title: string;
   questionCount: number;
+  author: string | null;
 };
 
 export function ManagerListClient({
@@ -48,7 +49,18 @@ export function ManagerListClient({
                   {q.title}
                 </h3>
                 <p className="text-xs text-[var(--color-text-dim)]">
-                  {q.questionCount} questions {hasDraft && <span className="text-[var(--color-accent)] ml-2">• Edited locally</span>}
+                  {q.questionCount} questions
+                  {q.author && (
+                    <>
+                      {" · "}
+                      By <span className="text-[var(--color-text)]">{q.author}</span>
+                    </>
+                  )}
+                  {hasDraft && (
+                    <span className="text-[var(--color-accent)] ml-2">
+                      • Edited locally
+                    </span>
+                  )}
                 </p>
               </div>
               <Edit2 className="w-4 h-4 text-[var(--color-text-dim)]" />
@@ -68,7 +80,14 @@ export function ManagerListClient({
                   {d.quiz.title} <span className="text-xs text-[var(--color-text-dim)]">(draft only)</span>
                 </h3>
                 <p className="text-xs text-[var(--color-text-dim)]">
-                  {d.quiz.questions.length} questions • Not yet committed
+                  {d.quiz.questions.length} questions
+                  {d.quiz.author && (
+                    <>
+                      {" · "}
+                      By <span className="text-[var(--color-text)]">{d.quiz.author}</span>
+                    </>
+                  )}
+                  {" • Not yet committed"}
                 </p>
               </div>
               <Edit2 className="w-4 h-4 text-[var(--color-text-dim)]" />

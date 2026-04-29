@@ -134,6 +134,10 @@ export const QuizSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   coverImage: ImageRef.optional(),
+  // Auto-populated from Google SSO display name when the quiz is authored
+  // in the builder. Optional so legacy quizzes (and the seeded example)
+  // continue to validate.
+  author: z.string().min(1).max(120).optional(),
   questions: z.array(QuestionSchema).min(1),
 });
 

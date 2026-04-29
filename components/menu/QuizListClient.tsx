@@ -10,6 +10,7 @@ type ListItem = {
   description: string | null;
   questionCount: number;
   coverImage: string | null;
+  author: string | null;
 };
 
 export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
@@ -42,6 +43,12 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
                 )}
                 <p className="text-xs text-[var(--color-text-dim)] mt-1">
                   {q.questionCount} questions
+                  {q.author && (
+                    <>
+                      {" · "}
+                      By <span className="text-[var(--color-text)]">{q.author}</span>
+                    </>
+                  )}
                 </p>
               </div>
               <div className="text-right shrink-0">

@@ -15,6 +15,7 @@ export type EditorAction =
   | { type: "setSlug"; slug: string }
   | { type: "setDescription"; description: string | undefined }
   | { type: "setCoverImage"; coverImage: string | undefined }
+  | { type: "setAuthor"; author: string | undefined }
   | { type: "addQuestion"; questionType: Question["type"] }
   | { type: "removeQuestion"; id: string }
   | { type: "duplicateQuestion"; id: string }
@@ -63,6 +64,8 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       return withQuiz(state, { ...state.quiz, description: action.description });
     case "setCoverImage":
       return withQuiz(state, { ...state.quiz, coverImage: action.coverImage });
+    case "setAuthor":
+      return withQuiz(state, { ...state.quiz, author: action.author });
 
     case "addQuestion": {
       const newQ = defaultQuestion(action.questionType);

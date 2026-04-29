@@ -95,6 +95,13 @@ export function EditorHeader({
           />
         </label>
       )}
+
+      {quiz.author && (
+        <p className="text-xs text-[var(--color-text-dim)]">
+          Authored by{" "}
+          <span className="text-[var(--color-text)]">{quiz.author}</span>
+        </p>
+      )}
     </div>
   );
 }

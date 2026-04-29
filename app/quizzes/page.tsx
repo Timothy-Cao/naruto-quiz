@@ -19,6 +19,7 @@ export default function QuizzesPage() {
           description: q.description ?? null,
           questionCount: q.questions.length,
           coverImage: q.coverImage ?? null,
+          author: q.author ?? null,
         }))}
       />
     </main>

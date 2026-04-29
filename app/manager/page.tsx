@@ -22,6 +22,7 @@ export default async function ManagerPage() {
             slug: q.slug,
             title: q.title,
             questionCount: q.questions.length,
+            author: q.author ?? null,
           }))}
         />
       </AdminGate>

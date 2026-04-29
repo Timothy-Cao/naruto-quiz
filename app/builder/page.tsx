@@ -7,6 +7,7 @@ export default async function BuilderPage() {
   // from Supabase if signed in) determines whether limits + restrictions apply.
   const user = isSupabaseAuthReady() ? await getCurrentAuthUser() : null;
   const isAdmin = Boolean(user?.isAdmin);
+  const authorName = user?.displayName ?? user?.email ?? null;
 
   return (
     <main className="max-w-7xl mx-auto p-4 grid gap-4">
@@ -25,7 +26,7 @@ export default async function BuilderPage() {
           site admin to unlock images and longer quizzes.
         </p>
       )}
-      <QuizEditor isAdmin={isAdmin} />
+      <QuizEditor isAdmin={isAdmin} authorName={authorName} />
     </main>
   );
 }
