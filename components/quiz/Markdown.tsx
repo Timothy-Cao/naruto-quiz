@@ -1,8 +1,33 @@
 "use client";
 
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
+import { buildGlossaryPattern, lookupGlossary } from "@/lib/glossary";
+import { GlossaryTerm } from "./GlossaryTerm";
+
+/**
+ * Walk a tree of React children and replace any string segments that match
+ * a glossary key with a <GlossaryTerm> element. Non-string children pass
+ * through unchanged — react-markdown's component overrides handle each
+ * level (p, li, strong, em, etc.), so nested formatting is preserved
+ * because each level recurses through the same helper.
+ */
+function applyGlossary(children: React.ReactNode): React.ReactNode {
+  const pattern = buildGlossaryPattern();
+  if (!pattern) return children;
+  return React.Children.map(children, (child) => {
+    if (typeof child !== "string") return child;
+    const parts = child.split(pattern);
+    if (parts.length === 1) return child;
+    return parts.map((part, i) => {
+      const def = lookupGlossary(part);
+      if (def) return <GlossaryTerm key={i} surface={part} definition={def} />;
+      return part;
+    });
+  });
+}
 
 /**
  * Constrained markdown renderer for quiz prompts and explanations.
@@ -25,12 +50,27 @@ export function Markdown({
   /** When true, renders without paragraph wrappers (for one-line use). */
   inline?: boolean;
 }) {
+  // Component overrides that run text through applyGlossary at every
+  // nestable level, so glossary terms get wrapped regardless of inline
+  // formatting (bold, italic, lists, etc.).
+  const components = {
+    p: ({ children }: { children?: React.ReactNode }) => <p>{applyGlossary(children)}</p>,
+    li: ({ children }: { children?: React.ReactNode }) => <li>{applyGlossary(children)}</li>,
+    strong: ({ children }: { children?: React.ReactNode }) => <strong>{applyGlossary(children)}</strong>,
+    em: ({ children }: { children?: React.ReactNode }) => <em>{applyGlossary(children)}</em>,
+    h1: ({ children }: { children?: React.ReactNode }) => <h1>{applyGlossary(children)}</h1>,
+    h2: ({ children }: { children?: React.ReactNode }) => <h2>{applyGlossary(children)}</h2>,
+    h3: ({ children }: { children?: React.ReactNode }) => <h3>{applyGlossary(children)}</h3>,
+    h4: ({ children }: { children?: React.ReactNode }) => <h4>{applyGlossary(children)}</h4>,
+  };
+
   if (inline) {
     return (
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          p: ({ children }) => <>{children}</>,
+          ...components,
+          p: ({ children }) => <>{applyGlossary(children)}</>,
         }}
       >
         {children}
@@ -40,7 +80,7 @@ export function Markdown({
 
   return (
     <div className={cn("md-content", className)}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{children}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{children}</ReactMarkdown>
       <style jsx>{`
         .md-content :global(p) {
           margin: 0 0 0.75em;

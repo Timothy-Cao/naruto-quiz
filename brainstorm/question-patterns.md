@@ -25,6 +25,8 @@ Every "labeled slot" — the prompt, every option, every categorize item/bucket,
 
 Audio and image attachments work on **prompts and options** alike — so a single `mc-single` covers OST→scene (audio on prompt), scene→OST (audio on options), spot-the-modified (images on options), silhouette ID (image on prompt), and so on.
 
+**Glossary terms.** Recurring jargon ("sibling-student", "sibling-teacher", future canon terms) is registered in `lib/glossary.ts`. Anywhere a registered term appears in quiz Markdown — prompt, option, item, bucket, hint, explanation — it auto-renders with a dotted underline + hover tooltip. No per-quiz config; add a term in code and every quiz that uses it picks it up.
+
 ---
 
 ## Knowledge — spanning

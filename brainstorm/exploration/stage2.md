@@ -2,7 +2,7 @@
 
 Curated set picked from `all-questions.txt`. Two sections: **Logic** (constraint chains, deductions, multi-hop) vs **Fact** (canon recall + association).
 
-51 questions total — 12 logic, 39 fact.
+64 questions total — 18 logic, 46 fact (Quiz 7 picks added in a second pass after the URL mix-up was fixed).
 
 Source labels are `<quiz>-<question>` matching the master transcript.
 
@@ -46,9 +46,27 @@ Source labels are `<quiz>-<question>` matching the master transcript.
 ### 5-20. PERSON A's partner's teacher's son's killer's son's rival's student's crush's crush's brother is person B. Select all true statements.
     They have fought each other | Person B is younger | There exists a person that has defeated both of them | They are from the same village
 
+### 7-4. [VERY HARD 5pt] Character A's spouse's killer's leader killed Character B whose family member killed the son of Character C. Which statement could not be said by any of A, B, C?
+    Every known member of my clan has a famous nickname | I've sealed a tailed beast into someone before | I've fought the current leader of a hidden village | I specialize in genjutsu | I am the only one of us 3 who has fought 2 or more Uchiha in the past | I've known Character A since I was young
+
+### 7-7. Person A and Person B are sibling-students. Person A and Person C are sibling-students of Person B. What is true?
+    Person B taught Person A first | The teacher of Person A and B has never died | None of them are from the same clan | Person C could be multiple people
+
+### 7-8. Person A and Person B are sibling-teachers of Person C. 3 of the options below are correct, select them.
+    Person A or B is a kage | Two of them are Uchiha | They have all participated in the 3rd war | Person A and B have met before death
+
+### 7-13. Person A and Person B both wanted to fight Person C. There is only one false statement below. Select it
+    2 of A, B, C have died | A and B are from different villages | All of them have fought each other | C never lost against A or B | At least 2 of them are missing nin
+
+### 7-21. How many degrees of separation is BETWEEN the 2nd Raikage and Yugito Nii. Two characters are connected if they have met (on panel or stated) before they died.
+    1 | 2 | 3 | 4 | 5 | 6+
+
+### 7-22. [VERY HARD 5pt] Ignoring all instances of Edo Tensei, no more than 1 of Characters A, B, C, D have been alive at once. Exactly 5 statements are true, select them.
+    They each have a different hair color | Two of them share the same starting letter | 3 of them have been a Jinchūriki | At least 2 of them are kage | 3 of them has had children | When sorted by birth, they are also sorted by strength (quite agreed upon)
+
 ---
 
-## Fact — 39
+## Fact — 46
 
 ### 1-2. Which major military force never employed the Akatsuki
     Kumogakure (cloud) | Kirigakure (mist) | Konohagakure (leaf) | Iwagakure (stone)
@@ -166,3 +184,24 @@ Source labels are `<quiz>-<question>` matching the master transcript.
 
 ### 5-23. What was the first thing Kamui was ever used to pass through?
     Sword | Kunai | Wall | Punch | Rasengan | Other
+
+### 7-12. Select the first four quotes when in chronological order (last-ish words)
+    "Our pain will only last an instant, unlike yours." | "listen to your motor mouth mother" | "Yes, that has a nice ring to it" | "I know I cannot be, but I wish I could go to where you have gone... How I wish..." | "Farewell, disciple. May we meet again in the next world." | "It seems that in the end.. I wasn't a worthless human after all..." | "Cower in awe, cry your heart out!" | "Admist this shinobi world created by us foolish old people, I'm glad that a per..."
+
+### 7-14. "If Itachi really wanted to kill you, you would most certainly be dead." Said person A to B. What is their relationship?
+    Same village of birth | Same organization | Same clan | Siblings
+
+### 7-16. Order their deaths episode-wise and select the odd placement deaths (1st, 3rd, etc.)
+    Manda | Asuma | Dosu | Chiyo | Jiraiya | Gato | Hayate | Rasa
+
+### 7-17. How many people have casted reincarnation ninjutsu?
+    [numeric]
+
+### 7-18. Of the quotes speakers, select the 4 youngest characters.
+    "This jutsu's risk and weakness is my existence" | "I'll deal with you later" | "I'm telling you this because you don't get it. You think you get it, which is n..." | "Naruto, that jutsu symbolizes your weakness." | "Do you hate me now?" | "When a man learns to love, he must bear the risk of hatred" | "I've finally caught up to you two" | "When did you all forsake yourselves"
+
+### 7-19. Which chakra types have been seen infused into a blade?
+    Wind | Lightning | Water | Yin | Yang | Earth | Fire
+
+### 7-24. For the following missing words, select the ones that are an odd number of letters.
+    The six paths of pain, in _____. | _____! | Yours is still a _____ from Itachi's. | We're not a good _____. | I _____. | I am now a _____.
