@@ -54,8 +54,8 @@
         { "id": "rivals", "text": "Rivals" },
         { "id": "team", "text": "Same team" }
       ],
-      "correctId": "family",
-      "explanation": { "text": "If A = Sasuke: brother = Itachi → best friend = Shisui → boss = Hiruzen → rival = Danzo → killer = Sasuke → student = Sarada. A and B are **family** (father and daughter)." }
+      "correctId": "self",
+      "explanation": { "text": "Walking the chain: A = **Sasuke** → bro = **Itachi** → best friend = **Shisui** → boss = **Danzo** (Shisui's Anbu chain of command, the one who tried to take his eye) → rival = **Hiruzen** → killer = **Orochimaru** (Reaper Death Seal during the invasion) → student = **Sasuke** = B. A and B are **themselves** — the chain loops back." }
     },
     {
       "id": "q5",
