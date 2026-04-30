@@ -1,16 +1,16 @@
 {
   "slug": "example",
-  "title": "Naruto Knowledge — Sample Quiz",
-  "description": "One of every question type. Seven questions, seven points possible.",
+  "title": "Themed Quiz — Sample",
+  "description": "One of every question type, plus the new media-on-prompt and media-on-options shapes.",
   "questions": [
     {
       "id": "q1",
       "type": "mc-single",
-      "prompt": "Who is the Fourth Hokage of the Hidden Leaf Village?",
+      "prompt": { "text": "Who is the **Fourth Hokage** of the Hidden Leaf Village?" },
       "options": [
-        { "id": "minato", "label": "Minato Namikaze" },
-        { "id": "tobirama", "label": "Tobirama Senju" },
-        { "id": "hiruzen", "label": "Hiruzen Sarutobi" }
+        { "id": "minato", "text": "Minato Namikaze" },
+        { "id": "tobirama", "text": "Tobirama Senju" },
+        { "id": "hiruzen", "text": "Hiruzen Sarutobi" }
       ],
       "correctId": "minato",
       "explanation": "Minato Namikaze, the Yellow Flash, served as the Fourth Hokage. He sealed the Nine-Tails into his newborn son Naruto, dying in the process."
@@ -18,14 +18,14 @@
     {
       "id": "q2",
       "type": "mc-multi",
-      "prompt": "Which of the following are members of the Akatsuki?",
+      "prompt": { "text": "Which of the following are members of the **Akatsuki**?" },
       "options": [
-        { "id": "itachi", "label": "Itachi Uchiha" },
-        { "id": "kisame", "label": "Kisame Hoshigaki" },
-        { "id": "jiraiya", "label": "Jiraiya" },
-        { "id": "pain", "label": "Pain" },
-        { "id": "kakashi", "label": "Kakashi Hatake" },
-        { "id": "konan", "label": "Konan" }
+        { "id": "itachi", "text": "Itachi Uchiha" },
+        { "id": "kisame", "text": "Kisame Hoshigaki" },
+        { "id": "jiraiya", "text": "Jiraiya" },
+        { "id": "pain", "text": "Pain" },
+        { "id": "kakashi", "text": "Kakashi Hatake" },
+        { "id": "konan", "text": "Konan" }
       ],
       "correctIds": ["itachi", "kisame", "pain", "konan"],
       "explanation": "Itachi, Kisame, Pain, and Konan were all Akatsuki members. Jiraiya was a Sannin and infiltrated Akatsuki only as a spy. Kakashi was never a member."
@@ -33,45 +33,45 @@
     {
       "id": "q3",
       "type": "categorize",
-      "prompt": "Place each character in their village or organization.",
+      "prompt": { "text": "Place each character in their village or organization." },
       "buckets": [
-        { "id": "konoha", "label": "Konoha" },
-        { "id": "suna", "label": "Sunagakure" },
-        { "id": "akatsuki", "label": "Akatsuki" }
+        { "id": "konoha", "text": "Konoha" },
+        { "id": "suna", "text": "Sunagakure" },
+        { "id": "akatsuki", "text": "Akatsuki" }
       ],
       "items": [
-        { "id": "naruto", "label": "Naruto Uzumaki", "correctBucketId": "konoha" },
-        { "id": "sasuke", "label": "Sasuke Uchiha", "correctBucketId": "konoha" },
-        { "id": "sakura", "label": "Sakura Haruno", "correctBucketId": "konoha" },
-        { "id": "gaara", "label": "Gaara", "correctBucketId": "suna" },
-        { "id": "temari", "label": "Temari", "correctBucketId": "suna" },
-        { "id": "itachi", "label": "Itachi Uchiha", "correctBucketId": "akatsuki" },
-        { "id": "pain", "label": "Pain", "correctBucketId": "akatsuki" },
-        { "id": "konan", "label": "Konan", "correctBucketId": "akatsuki" }
+        { "id": "naruto", "text": "Naruto Uzumaki", "correctBucketId": "konoha" },
+        { "id": "sasuke", "text": "Sasuke Uchiha", "correctBucketId": "konoha" },
+        { "id": "sakura", "text": "Sakura Haruno", "correctBucketId": "konoha" },
+        { "id": "gaara", "text": "Gaara", "correctBucketId": "suna" },
+        { "id": "temari", "text": "Temari", "correctBucketId": "suna" },
+        { "id": "itachi", "text": "Itachi Uchiha", "correctBucketId": "akatsuki" },
+        { "id": "pain", "text": "Pain", "correctBucketId": "akatsuki" },
+        { "id": "konan", "text": "Konan", "correctBucketId": "akatsuki" }
       ],
-      "explanation": "Naruto, Sasuke, and Sakura are all genin of Konoha (Team 7). Gaara and Temari are siblings from the Sand Village. Itachi, Pain, and Konan are Akatsuki members — Itachi defected from Konoha, Pain led the Hidden Rain, and Konan was Pain's partner."
+      "explanation": "Naruto, Sasuke, and Sakura are all genin of Konoha (Team 7). Gaara and Temari are siblings from the Sand Village. Itachi, Pain, and Konan are Akatsuki members."
     },
     {
       "id": "q4",
       "type": "order",
-      "prompt": "Order these Hokage from earliest reign to latest.",
+      "prompt": { "text": "Order these Hokage from earliest reign to latest." },
       "items": [
-        { "id": "hashirama", "label": "Hashirama Senju" },
-        { "id": "tobirama", "label": "Tobirama Senju" },
-        { "id": "hiruzen", "label": "Hiruzen Sarutobi" },
-        { "id": "minato", "label": "Minato Namikaze" },
-        { "id": "tsunade", "label": "Tsunade" }
+        { "id": "hashirama", "text": "Hashirama Senju" },
+        { "id": "tobirama", "text": "Tobirama Senju" },
+        { "id": "hiruzen", "text": "Hiruzen Sarutobi" },
+        { "id": "minato", "text": "Minato Namikaze" },
+        { "id": "tsunade", "text": "Tsunade" }
       ],
       "axis": "vertical",
       "startLabel": "Earliest",
       "endLabel": "Latest",
       "correctOrder": ["hashirama", "tobirama", "hiruzen", "minato", "tsunade"],
-      "explanation": "Hashirama (1st) → Tobirama (2nd) → Hiruzen (3rd) → Minato (4th) → Tsunade (5th). Hiruzen returned briefly between Minato and Tsunade but his second term doesn't count as a separate Hokage seat."
+      "explanation": "Hashirama (1st) → Tobirama (2nd) → Hiruzen (3rd) → Minato (4th) → Tsunade (5th)."
     },
     {
       "id": "q5",
       "type": "slider",
-      "prompt": "How many tailed beasts are there in total?",
+      "prompt": { "text": "How many tailed beasts are there in total?" },
       "min": 0,
       "max": 10,
       "step": 1,
@@ -81,23 +81,40 @@
     {
       "id": "q6",
       "type": "name",
-      "prompt": "Name Sasuke's older brother.",
+      "prompt": { "text": "Name **Sasuke's** older brother." },
       "acceptedAnswers": ["Itachi Uchiha", "Itachi"],
       "explanation": "Itachi Uchiha massacred the Uchiha clan under orders from Konoha's leadership to prevent a coup, sparing only his younger brother Sasuke."
     },
     {
       "id": "q7",
-      "type": "audio-match",
-      "prompt": "Listen carefully. Which Naruto: Shippuden OST is playing?",
-      "audioSrc": "/music/naruto-ost/Samidare.mp3",
+      "type": "mc-single",
+      "prompt": {
+        "text": "Listen carefully. Which Naruto: Shippuden OST is playing?",
+        "audioSrc": "/music/naruto-ost/Samidare.mp3"
+      },
       "options": [
-        { "id": "saika", "label": "Saika" },
-        { "id": "hitotsuba-chikara", "label": "Hitotsuba Chikara" },
-        { "id": "gekiha", "label": "Gekiha" },
-        { "id": "samidare", "label": "Samidare" }
+        { "id": "saika", "text": "Saika" },
+        { "id": "hitotsuba-chikara", "text": "Hitotsuba Chikara" },
+        { "id": "gekiha", "text": "Gekiha" },
+        { "id": "samidare", "text": "Samidare" }
       ],
       "correctId": "samidare",
       "explanation": "**Samidare** (early summer rain) — used in many of Shippuden's quieter, somber moments. The four candidates here are all instrumental Shippuden cues; *Saika* is the gentle piano piece, *Hitotsuba Chikara* is more strident, and *Gekiha* is heavier percussion."
+    },
+    {
+      "id": "q8",
+      "type": "mc-single",
+      "prompt": {
+        "text": "**Samidare** is one of the iconic somber Shippuden cues. Tap each clip below — which one is *Samidare*?"
+      },
+      "options": [
+        { "id": "a", "audioSrc": "/music/naruto-ost/Saika.mp3" },
+        { "id": "b", "audioSrc": "/music/naruto-ost/Gekiha.mp3" },
+        { "id": "c", "audioSrc": "/music/naruto-ost/Samidare.mp3" },
+        { "id": "d", "audioSrc": "/music/naruto-ost/Hitotsuba Chikara.mp3" }
+      ],
+      "correctId": "c",
+      "explanation": "Clip C is **Samidare** — soft strings and gentle piano. The others are *Saika* (delicate piano), *Gekiha* (driving percussion), and *Hitotsuba Chikara* (strident, layered)."
     }
   ]
 }

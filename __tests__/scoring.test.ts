@@ -2,12 +2,12 @@ import { describe, it, expect } from "vitest";
 import { scoreQuestion } from "@/lib/scoring";
 import type { Question } from "@/lib/quiz-schema";
 
-const base = { id: "q", prompt: "p", explanation: "e" };
+const base = { id: "q", prompt: { text: "p" }, explanation: "e" };
 
 describe("scoreQuestion", () => {
   describe("mc-single", () => {
     const q: Question = { ...base, type: "mc-single",
-      options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+      options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
       correctId: "a" } as Question;
 
     it("full points on correct", () => {
@@ -25,7 +25,7 @@ describe("scoreQuestion", () => {
 
   describe("mc-multi all-or-nothing (default)", () => {
     const q: Question = { ...base, type: "mc-multi",
-      options: [{ id: "a", label: "A" }, { id: "b", label: "B" }, { id: "c", label: "C" }],
+      options: [{ id: "a", text: "A" }, { id: "b", text: "B" }, { id: "c", text: "C" }],
       correctIds: ["a", "c"] } as Question;
 
     it("full points when set matches", () => {
@@ -41,7 +41,7 @@ describe("scoreQuestion", () => {
 
   describe("mc-multi per-option", () => {
     const q: Question = { ...base, type: "mc-multi",
-      options: [{ id: "a", label: "A" }, { id: "b", label: "B" }, { id: "c", label: "C" }, { id: "d", label: "D" }],
+      options: [{ id: "a", text: "A" }, { id: "b", text: "B" }, { id: "c", text: "C" }, { id: "d", text: "D" }],
       correctIds: ["a", "c"],
       scoring: { maxPoints: 1, scheme: "per-option" },
     } as Question;
@@ -70,10 +70,10 @@ describe("scoreQuestion", () => {
 
   describe("categorize all-or-nothing (default)", () => {
     const q: Question = { ...base, type: "categorize",
-      buckets: [{ id: "B1", label: "B1" }, { id: "B2", label: "B2" }],
+      buckets: [{ id: "B1", text: "B1" }, { id: "B2", text: "B2" }],
       items: [
-        { id: "i1", label: "i1", correctBucketId: "B1" },
-        { id: "i2", label: "i2", correctBucketId: "B2" },
+        { id: "i1", text: "i1", correctBucketId: "B1" },
+        { id: "i2", text: "i2", correctBucketId: "B2" },
       ],
     } as Question;
 
@@ -87,12 +87,12 @@ describe("scoreQuestion", () => {
 
   describe("categorize per-item", () => {
     const q: Question = { ...base, type: "categorize",
-      buckets: [{ id: "B1", label: "B1" }, { id: "B2", label: "B2" }],
+      buckets: [{ id: "B1", text: "B1" }, { id: "B2", text: "B2" }],
       items: [
-        { id: "i1", label: "i1", correctBucketId: "B1" },
-        { id: "i2", label: "i2", correctBucketId: "B2" },
-        { id: "i3", label: "i3", correctBucketId: "B1" },
-        { id: "i4", label: "i4", correctBucketId: "B1" },
+        { id: "i1", text: "i1", correctBucketId: "B1" },
+        { id: "i2", text: "i2", correctBucketId: "B2" },
+        { id: "i3", text: "i3", correctBucketId: "B1" },
+        { id: "i4", text: "i4", correctBucketId: "B1" },
       ],
       scoring: { maxPoints: 1, scheme: "per-item" },
     } as Question;
@@ -111,7 +111,7 @@ describe("scoreQuestion", () => {
 
   describe("order all-or-nothing (default)", () => {
     const q: Question = { ...base, type: "order",
-      items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }, { id: "z", label: "Z" }],
+      items: [{ id: "x", text: "X" }, { id: "y", text: "Y" }, { id: "z", text: "Z" }],
       axis: "horizontal", startLabel: "S", endLabel: "E",
       correctOrder: ["x", "y", "z"],
     } as Question;
@@ -126,7 +126,7 @@ describe("scoreQuestion", () => {
 
   describe("order per-position", () => {
     const q: Question = { ...base, type: "order",
-      items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }, { id: "z", label: "Z" }, { id: "w", label: "W" }],
+      items: [{ id: "x", text: "X" }, { id: "y", text: "Y" }, { id: "z", text: "Z" }, { id: "w", text: "W" }],
       axis: "horizontal", startLabel: "S", endLabel: "E",
       correctOrder: ["x", "y", "z", "w"],
       scoring: { maxPoints: 1, scheme: "per-position" },
@@ -172,10 +172,11 @@ describe("scoreQuestion", () => {
     });
   });
 
-  describe("audio-match", () => {
-    const q: Question = { ...base, type: "audio-match",
-      audioSrc: "/music/Hyouhaku.mp3",
-      options: [{ id: "a", label: "Sasuke training" }, { id: "b", label: "Itachi flashback" }],
+  describe("mc-single with audio prompt (former audio-match shape)", () => {
+    const q: Question = { ...base,
+      prompt: { text: "Which scene plays this?", audioSrc: "/music/Hyouhaku.mp3" },
+      type: "mc-single",
+      options: [{ id: "a", text: "Sasuke training" }, { id: "b", text: "Itachi flashback" }],
       correctId: "a" } as Question;
     it("full points on correct option", () => {
       expect(scoreQuestion(q, "a")).toEqual({ points: 1, maxPoints: 1 });

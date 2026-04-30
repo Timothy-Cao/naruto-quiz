@@ -1,9 +1,11 @@
 "use client";
-import type { McSingleQuestion } from "@/lib/quiz-schema";
+import type { McSingleQuestion, MediaBlockT, OptionT } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
-import { inputCls, textareaCls } from "../form-styles";
+import { textareaCls } from "../form-styles";
 import { usePermissions } from "@/lib/builder/permissions";
+import { MediaBlockEditor } from "../MediaBlockEditor";
+import { cn } from "@/lib/utils";
 
 type Props = {
   question: McSingleQuestion;
@@ -11,8 +13,9 @@ type Props = {
 };
 
 export function McSingleForm({ question, onChange }: Props) {
-  const { isAdmin, limit } = usePermissions();
-  function setOption(id: string, patch: Partial<{ label: string; thumbnail?: string }>) {
+  const { limit } = usePermissions();
+
+  function setOption(id: string, patch: Partial<OptionT>) {
     onChange({
       ...question,
       options: question.options.map((o) => (o.id === id ? { ...o, ...patch } : o)),
@@ -23,12 +26,12 @@ export function McSingleForm({ question, onChange }: Props) {
     const newId = `${question.id}-opt-${Date.now().toString(36)}`;
     onChange({
       ...question,
-      options: [...question.options, { id: newId, label: "New option" }],
+      options: [...question.options, { id: newId, text: "New option" }],
     });
   }
 
   function removeOption(id: string) {
-    if (question.options.length <= 2) return; // schema requires min 2
+    if (question.options.length <= 2) return;
     const next = question.options.filter((o) => o.id !== id);
     onChange({
       ...question,
@@ -37,84 +40,45 @@ export function McSingleForm({ question, onChange }: Props) {
     });
   }
 
-  function setPrompt(prompt: string) { onChange({ ...question, prompt }); }
-  function setImage(image: string) {
-    onChange({ ...question, image: image || undefined });
+  function setPrompt(prompt: MediaBlockT) {
+    onChange({ ...question, prompt });
   }
-  function setExplanation(explanation: string) { onChange({ ...question, explanation }); }
+
+  function setExplanation(explanation: string) {
+    onChange({ ...question, explanation });
+  }
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-4">
       <Field label="Prompt">
-        <textarea
-          value={question.prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          rows={2}
-          maxLength={limit("questionPrompt")}
-          className={textareaCls}
+        <MediaBlockEditor
+          block={question.prompt}
+          onChange={setPrompt}
+          textRows={2}
+          textPlaceholder="Type the question prompt…"
+          textMaxLength={limit("questionPrompt")}
         />
       </Field>
 
-      {isAdmin && (
-        <Field label="Image (URL or /quiz-images/...)">
-          <input
-            type="text"
-            value={question.image ?? ""}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="optional"
-            className={inputCls}
-          />
-        </Field>
-      )}
-
       <fieldset className="grid gap-2">
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
-          Options (pick one as correct)
+          Options — pick the correct one
         </legend>
-        {question.options.map((opt) => (
-          <div
-            key={opt.id}
-            className={
-              isAdmin
-                ? "grid grid-cols-[auto,1fr,1fr,auto] gap-2 items-center"
-                : "grid grid-cols-[auto,1fr,auto] gap-2 items-center"
-            }
-          >
-            <input
-              type="radio"
-              name={`${question.id}-correct`}
-              checked={question.correctId === opt.id}
-              onChange={() => onChange({ ...question, correctId: opt.id })}
-              className="accent-[var(--color-accent)]"
-            />
-            <input
-              type="text"
-              value={opt.label}
-              onChange={(e) => setOption(opt.id, { label: e.target.value })}
-              placeholder="Label"
+        <div className="grid gap-2 grid-cols-1 md:grid-cols-2">
+          {question.options.map((opt) => (
+            <OptionCard
+              key={opt.id}
+              option={opt}
+              isCorrect={question.correctId === opt.id}
+              onSelectCorrect={() => onChange({ ...question, correctId: opt.id })}
+              onChange={(patch) => setOption(opt.id, patch)}
+              onRemove={() => removeOption(opt.id)}
+              canRemove={question.options.length > 2}
               maxLength={limit("optionLabel")}
-              className={inputCls}
+              textOptional
             />
-            {isAdmin && (
-              <input
-                type="text"
-                value={opt.thumbnail ?? ""}
-                onChange={(e) => setOption(opt.id, { thumbnail: e.target.value || undefined })}
-                placeholder="Thumbnail URL (optional)"
-                className={inputCls}
-              />
-            )}
-            <button
-              type="button"
-              onClick={() => removeOption(opt.id)}
-              disabled={question.options.length <= 2}
-              className="p-1.5 rounded text-[var(--color-text-dim)] hover:text-[var(--color-incorrect)] disabled:opacity-40"
-              aria-label="Remove option"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
         <button
           type="button"
           onClick={addOption}
@@ -130,7 +94,7 @@ export function McSingleForm({ question, onChange }: Props) {
           onChange={(e) => setExplanation(e.target.value)}
           rows={3}
           maxLength={limit("questionExplanation")}
-          className={textareaCls}
+          className={cn(textareaCls, "w-full")}
         />
       </Field>
 
@@ -145,5 +109,81 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
       <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">{label}</span>
       {children}
     </label>
+  );
+}
+
+/**
+ * One option as a tile in the option card grid. Holds its own MediaBlockEditor
+ * so authors can attach an image or audio to any individual option (the new
+ * shape: e.g. audio-on-options for "which clip is X?").
+ */
+export function OptionCard({
+  option,
+  isCorrect,
+  onSelectCorrect,
+  onChange,
+  onRemove,
+  canRemove,
+  maxLength,
+  textOptional = false,
+  showCorrectToggle = true,
+}: {
+  option: OptionT;
+  isCorrect?: boolean;
+  onSelectCorrect?: () => void;
+  onChange: (patch: Partial<OptionT>) => void;
+  onRemove: () => void;
+  canRemove: boolean;
+  maxLength?: number;
+  textOptional?: boolean;
+  showCorrectToggle?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "rounded-md border p-3 grid gap-2 bg-[var(--color-surface)]",
+        isCorrect
+          ? "border-[var(--color-correct)]"
+          : "border-[var(--color-border)]",
+      )}
+    >
+      <div className="flex items-center gap-2">
+        {showCorrectToggle && onSelectCorrect && (
+          <button
+            type="button"
+            onClick={onSelectCorrect}
+            className={cn(
+              "text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full border",
+              isCorrect
+                ? "bg-[var(--color-correct)] text-white border-[var(--color-correct)]"
+                : "border-[var(--color-border-2)] text-[var(--color-text-dim)] hover:border-[var(--color-correct)]",
+            )}
+          >
+            {isCorrect ? "Correct" : "Mark correct"}
+          </button>
+        )}
+        <span className="ml-auto text-[10px] font-mono text-[var(--color-text-dim)]">
+          {option.id}
+        </span>
+        <button
+          type="button"
+          onClick={onRemove}
+          disabled={!canRemove}
+          className="p-1 rounded text-[var(--color-text-dim)] hover:text-[var(--color-incorrect)] disabled:opacity-40"
+          aria-label="Remove option"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      </div>
+      <MediaBlockEditor
+        block={option}
+        onChange={(patch) => onChange(patch)}
+        textRows={1}
+        textPlaceholder="Option text"
+        textMaxLength={maxLength}
+        compact
+        textOptional={textOptional}
+      />
+    </div>
   );
 }

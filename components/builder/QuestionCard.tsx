@@ -10,7 +10,6 @@ import { CategorizeForm } from "./forms/CategorizeForm";
 import { OrderForm } from "./forms/OrderForm";
 import { SliderForm } from "./forms/SliderForm";
 import { NameForm } from "./forms/NameForm";
-import { AudioMatchForm } from "./forms/AudioMatchForm";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -33,7 +32,6 @@ const TYPE_LABEL: Record<Question["type"], string> = {
   order: "Order",
   slider: "Slider",
   name: "Name",
-  "audio-match": "Audio match",
 };
 
 export function QuestionCard({
@@ -94,7 +92,7 @@ export function QuestionCard({
           {TYPE_LABEL[question.type]}
         </span>
         <span className="text-sm text-[var(--color-text)] truncate flex-1">
-          {question.prompt || <span className="italic text-[var(--color-text-dim)]">untitled question</span>}
+          {question.prompt.text || <span className="italic text-[var(--color-text-dim)]">untitled question</span>}
         </span>
         <button
           type="button"
@@ -149,7 +147,5 @@ function Form({
       return <SliderForm question={question} onChange={onChange} />;
     case "name":
       return <NameForm question={question} onChange={onChange} />;
-    case "audio-match":
-      return <AudioMatchForm question={question} onChange={onChange} />;
   }
 }

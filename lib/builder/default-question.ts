@@ -12,7 +12,7 @@ export function defaultQuestion(type: QuestionType): Question {
   const id = genId("q");
   const base = {
     id,
-    prompt: "New question",
+    prompt: { text: "New question" },
     explanation: "Explanation goes here.",
   };
   switch (type) {
@@ -21,8 +21,8 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "mc-single",
         options: [
-          { id: `${id}-opt-a`, label: "Option A" },
-          { id: `${id}-opt-b`, label: "Option B" },
+          { id: `${id}-opt-a`, text: "Option A" },
+          { id: `${id}-opt-b`, text: "Option B" },
         ],
         correctId: `${id}-opt-a`,
       };
@@ -31,9 +31,9 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "mc-multi",
         options: [
-          { id: `${id}-opt-a`, label: "Option A" },
-          { id: `${id}-opt-b`, label: "Option B" },
-          { id: `${id}-opt-c`, label: "Option C" },
+          { id: `${id}-opt-a`, text: "Option A" },
+          { id: `${id}-opt-b`, text: "Option B" },
+          { id: `${id}-opt-c`, text: "Option C" },
         ],
         correctIds: [`${id}-opt-a`],
       };
@@ -42,12 +42,12 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "categorize",
         buckets: [
-          { id: `${id}-bucket-1`, label: "Bucket 1" },
-          { id: `${id}-bucket-2`, label: "Bucket 2" },
+          { id: `${id}-bucket-1`, text: "Bucket 1" },
+          { id: `${id}-bucket-2`, text: "Bucket 2" },
         ],
         items: [
-          { id: `${id}-item-1`, label: "Item 1", correctBucketId: `${id}-bucket-1` },
-          { id: `${id}-item-2`, label: "Item 2", correctBucketId: `${id}-bucket-2` },
+          { id: `${id}-item-1`, text: "Item 1", correctBucketId: `${id}-bucket-1` },
+          { id: `${id}-item-2`, text: "Item 2", correctBucketId: `${id}-bucket-2` },
         ],
       };
     case "order":
@@ -55,8 +55,8 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "order",
         items: [
-          { id: `${id}-item-1`, label: "First" },
-          { id: `${id}-item-2`, label: "Second" },
+          { id: `${id}-item-1`, text: "First" },
+          { id: `${id}-item-2`, text: "Second" },
         ],
         axis: "vertical",
         startLabel: "Start",
@@ -77,18 +77,6 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "name",
         acceptedAnswers: ["New answer"],
-      };
-    case "audio-match":
-      return {
-        ...base,
-        type: "audio-match",
-        prompt: "Which scene plays this music?",
-        audioSrc: "",
-        options: [
-          { id: `${id}-opt-a`, label: "Option A" },
-          { id: `${id}-opt-b`, label: "Option B" },
-        ],
-        correctId: `${id}-opt-a`,
       };
   }
 }

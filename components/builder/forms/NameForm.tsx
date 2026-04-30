@@ -1,9 +1,11 @@
 "use client";
-import type { NameQuestion } from "@/lib/quiz-schema";
+import type { NameQuestion, MediaBlockT } from "@/lib/quiz-schema";
 import { Trash2, Plus } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
 import { usePermissions } from "@/lib/builder/permissions";
+import { MediaBlockEditor } from "../MediaBlockEditor";
+import { cn } from "@/lib/utils";
 
 type Props = {
   question: NameQuestion;
@@ -11,7 +13,8 @@ type Props = {
 };
 
 export function NameForm({ question, onChange }: Props) {
-  const { isAdmin, limit } = usePermissions();
+  const { limit } = usePermissions();
+
   function setAnswer(idx: number, value: string) {
     const next = [...question.acceptedAnswers];
     next[idx] = value;
@@ -27,32 +30,21 @@ export function NameForm({ question, onChange }: Props) {
       acceptedAnswers: question.acceptedAnswers.filter((_, i) => i !== idx),
     });
   }
+  function setPrompt(prompt: MediaBlockT) {
+    onChange({ ...question, prompt });
+  }
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-4">
       <label className="grid gap-1 text-sm">
         <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Prompt</span>
-        <textarea
-          value={question.prompt}
-          onChange={(e) => onChange({ ...question, prompt: e.target.value })}
-          rows={2}
-          maxLength={limit("questionPrompt")}
-          className={textareaCls}
+        <MediaBlockEditor
+          block={question.prompt}
+          onChange={setPrompt}
+          textRows={2}
+          textMaxLength={limit("questionPrompt")}
         />
       </label>
-
-      {isAdmin && (
-        <label className="grid gap-1 text-sm">
-          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
-          <input
-            type="text"
-            value={question.image ?? ""}
-            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-            placeholder="URL or /quiz-images/... (optional)"
-            className={inputCls}
-          />
-        </label>
-      )}
 
       <fieldset className="grid gap-2">
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
@@ -95,7 +87,7 @@ export function NameForm({ question, onChange }: Props) {
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
           maxLength={limit("questionExplanation")}
-          className={textareaCls}
+          className={cn(textareaCls, "w-full")}
         />
       </label>
 

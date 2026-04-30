@@ -1,17 +1,64 @@
 import { z } from "zod";
 
-const ImageRef = z.string().min(1);
+/**
+ * Media model
+ *
+ * Every "labeled slot" in a quiz — the prompt of a question, every multiple-
+ * choice option, every categorize item/bucket, every order item — is a
+ * MediaBlock. A MediaBlock carries optional text plus AT MOST ONE local
+ * media file (image OR audio, never both, no remote URLs in v1).
+ *
+ * The block must have at least one of {text, imageSrc, audioSrc} to be valid.
+ *
+ * The previous `audio-match` question type is gone — that shape is now just
+ * `mc-single` with an audioSrc on the prompt MediaBlock.
+ */
+const MediaShape = {
+  text: z.string().min(1).optional(),
+  imageSrc: z.string().min(1).optional(),
+  audioSrc: z.string().min(1).optional(),
+};
 
-const Option = z.object({
-  id: z.string().min(1),
-  label: z.string().min(1),
-  thumbnail: ImageRef.optional(),
-});
+function refineMedia<T extends z.ZodObject<z.ZodRawShape>>(schema: T) {
+  return schema.superRefine((val, ctx) => {
+    const v = val as { text?: string; imageSrc?: string; audioSrc?: string };
+    const mediaCount = [v.imageSrc, v.audioSrc].filter(Boolean).length;
+    if (mediaCount > 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "at most one media file per block (image OR audio, not both)",
+      });
+    }
+    if (!v.text && !v.imageSrc && !v.audioSrc) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "block must have text, imageSrc, or audioSrc",
+      });
+    }
+  });
+}
+
+export const MediaBlock = refineMedia(z.object(MediaShape));
+export type MediaBlockT = z.infer<typeof MediaBlock>;
+
+const Option = refineMedia(
+  z.object({
+    id: z.string().min(1),
+    ...MediaShape,
+  }),
+);
+
+const CategorizeItem = refineMedia(
+  z.object({
+    id: z.string().min(1),
+    ...MediaShape,
+    correctBucketId: z.string().min(1),
+  }),
+);
 
 const QuestionBase = {
   id: z.string().min(1),
-  prompt: z.string().min(1),
-  image: ImageRef.optional(),
+  prompt: MediaBlock,
   explanation: z.string().min(1),
 };
 
@@ -60,13 +107,6 @@ const McMulti = z.object({
   },
   { message: "every correctIds entry must match an option id" },
 );
-
-const CategorizeItem = z.object({
-  id: z.string().min(1),
-  label: z.string().min(1),
-  thumbnail: ImageRef.optional(),
-  correctBucketId: z.string().min(1),
-});
 
 const Categorize = z.object({
   ...QuestionBase,
@@ -125,40 +165,31 @@ const Name = z.object({
   scoring: ScoringBase.optional(),
 });
 
-const AudioMatch = z.object({
-  ...QuestionBase,
-  type: z.literal("audio-match"),
-  audioSrc: z.string().min(1),
-  options: z.array(Option).min(2),
-  correctId: z.string().min(1),
-  scoring: ScoringBase.optional(),
-}).refine(
-  (q) => q.options.some((o) => o.id === q.correctId),
-  { message: "correctId must match one of options[].id" },
-);
-
 export const QuestionSchema = z.discriminatedUnion("type", [
-  McSingle, McMulti, Categorize, Order, Slider, Name, AudioMatch,
+  McSingle, McMulti, Categorize, Order, Slider, Name,
 ]);
 
 export const QuizSchema = z.object({
   slug: z.string().min(1).regex(/^[a-z0-9-]+$/, "slug must be kebab-case"),
   title: z.string().min(1),
   description: z.string().optional(),
-  coverImage: ImageRef.optional(),
-  // Auto-populated from Google SSO display name when the quiz is authored
-  // in the builder. Optional so legacy quizzes (and the seeded example)
-  // continue to validate.
+  coverImage: z.string().min(1).optional(),
   author: z.string().min(1).max(120).optional(),
   questions: z.array(QuestionSchema).min(1),
 });
 
 export type Quiz = z.infer<typeof QuizSchema>;
 export type Question = z.infer<typeof QuestionSchema>;
+export type OptionT = z.infer<typeof Option>;
+export type CategorizeItemT = z.infer<typeof CategorizeItem>;
 export type McSingleQuestion = z.infer<typeof McSingle>;
 export type McMultiQuestion = z.infer<typeof McMulti>;
 export type CategorizeQuestion = z.infer<typeof Categorize>;
 export type OrderQuestion = z.infer<typeof Order>;
 export type SliderQuestion = z.infer<typeof Slider>;
 export type NameQuestion = z.infer<typeof Name>;
-export type AudioMatchQuestion = z.infer<typeof AudioMatch>;
+
+/** Helper to extract the primary text of a media block, falling back to a placeholder. */
+export function mediaText(m: MediaBlockT | undefined): string {
+  return m?.text ?? "";
+}

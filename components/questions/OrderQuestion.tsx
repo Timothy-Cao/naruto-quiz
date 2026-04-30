@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { OrderQuestion } from "@/lib/quiz-schema";
+import type { OrderQuestion, OptionT } from "@/lib/quiz-schema";
 import type { QuestionProps } from "./types";
-import { ZoomableImage } from "@/components/quiz/ZoomableImage";
+import { MediaBlock } from "@/components/quiz/MediaBlock";
 import { cn } from "@/lib/utils";
 import {
   DndContext,
@@ -26,19 +26,15 @@ import { CSS } from "@dnd-kit/utilities";
 import { ArrowRight, GripVertical } from "lucide-react";
 
 function SortableItem({
-  id,
-  label,
-  thumbnail,
+  item,
   axis,
   borderClass,
 }: {
-  id: string;
-  label: string;
-  thumbnail?: string;
+  item: OptionT;
   axis: "horizontal" | "vertical";
   borderClass: string;
 }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -58,8 +54,9 @@ function SortableItem({
       )}
     >
       <GripVertical className="w-4 h-4 text-[var(--color-text-dim)] shrink-0" />
-      {thumbnail && <ZoomableImage src={thumbnail} alt={label} className="w-8 h-8 shrink-0" />}
-      <span className="text-sm">{label}</span>
+      <div className="text-sm flex-1">
+        <MediaBlock block={item} size="chip" inlineText />
+      </div>
     </div>
   );
 }
@@ -132,8 +129,8 @@ export function OrderQuestionRenderer({
     onChange(next);
   }
 
-  const labelById: Record<string, { label: string; thumbnail?: string }> = {};
-  for (const item of question.items) labelById[item.id] = item;
+  const itemById: Record<string, OptionT> = {};
+  for (const item of question.items) itemById[item.id] = item;
 
   const isVertical = question.axis === "vertical";
 
@@ -147,13 +144,11 @@ export function OrderQuestionRenderer({
       {order.map((id, i) => {
         const correctAtI = locked && question.correctOrder[i] === id;
         const wrongAtI = locked && !correctAtI;
-        const item = labelById[id];
+        const item = itemById[id];
         return (
           <SortableItem
             key={id}
-            id={id}
-            label={item.label}
-            thumbnail={item.thumbnail}
+            item={item}
             axis={question.axis}
             borderClass={cn(
               "border-[var(--color-border)]",

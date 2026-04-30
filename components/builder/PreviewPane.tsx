@@ -175,12 +175,6 @@ function generateExampleOutcomes(q: Question): { label: string; points: number; 
       out.push({ label: "Wrong name", ...scoreQuestion(q, "Definitely Not Right") });
       break;
     }
-    case "audio-match": {
-      out.push({ label: "Correct option", ...scoreQuestion(q, q.correctId) });
-      const wrong = q.options.find((o) => o.id !== q.correctId);
-      if (wrong) out.push({ label: "Wrong option", ...scoreQuestion(q, wrong.id) });
-      break;
-    }
   }
   return out;
 }

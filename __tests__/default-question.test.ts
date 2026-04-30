@@ -28,14 +28,6 @@ describe("defaultQuestion", () => {
     const q = defaultQuestion("name");
     expect(QuestionSchema.safeParse(q).success).toBe(true);
   });
-  it("creates audio-match shell (author fills audioSrc later)", () => {
-    const q = defaultQuestion("audio-match");
-    expect(q.type).toBe("audio-match");
-    if (q.type === "audio-match") {
-      expect(q.options.length).toBeGreaterThanOrEqual(2);
-      expect(q.options.some((o) => o.id === q.correctId)).toBe(true);
-    }
-  });
   it("each call generates a unique id", () => {
     const a = defaultQuestion("mc-single");
     const b = defaultQuestion("mc-single");

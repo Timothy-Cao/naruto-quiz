@@ -1,11 +1,34 @@
 import { describe, it, expect } from "vitest";
-import { QuizSchema } from "@/lib/quiz-schema";
+import { QuizSchema, MediaBlock } from "@/lib/quiz-schema";
 
 const baseQuestion = {
   id: "q1",
-  prompt: "Sample prompt?",
+  prompt: { text: "Sample prompt?" },
   explanation: "Because so.",
 };
+
+describe("MediaBlock", () => {
+  it("accepts text-only", () => {
+    expect(() => MediaBlock.parse({ text: "hi" })).not.toThrow();
+  });
+  it("accepts image-only", () => {
+    expect(() => MediaBlock.parse({ imageSrc: "/img/foo.png" })).not.toThrow();
+  });
+  it("accepts audio-only", () => {
+    expect(() => MediaBlock.parse({ audioSrc: "/audio/foo.mp3" })).not.toThrow();
+  });
+  it("accepts text + image", () => {
+    expect(() => MediaBlock.parse({ text: "hi", imageSrc: "/img/foo.png" })).not.toThrow();
+  });
+  it("rejects empty", () => {
+    expect(() => MediaBlock.parse({})).toThrow();
+  });
+  it("rejects image + audio together", () => {
+    expect(() =>
+      MediaBlock.parse({ imageSrc: "/img/foo.png", audioSrc: "/audio/foo.mp3" }),
+    ).toThrow();
+  });
+});
 
 describe("QuizSchema", () => {
   it("accepts a valid mc-single quiz", () => {
@@ -16,8 +39,8 @@ describe("QuizSchema", () => {
         ...baseQuestion,
         type: "mc-single",
         options: [
-          { id: "a", label: "A" },
-          { id: "b", label: "B" },
+          { id: "a", text: "A" },
+          { id: "b", text: "B" },
         ],
         correctId: "a",
       }],
@@ -32,11 +55,47 @@ describe("QuizSchema", () => {
       questions: [{
         ...baseQuestion,
         type: "mc-single",
-        options: [{ id: "a", label: "A" }],
+        options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
         correctId: "z",
       }],
     };
     expect(() => QuizSchema.parse(quiz)).toThrow();
+  });
+
+  it("accepts mc-single with audio on the prompt (former audio-match shape)", () => {
+    const quiz = {
+      slug: "ex",
+      title: "Example",
+      questions: [{
+        ...baseQuestion,
+        prompt: { text: "Which OST plays?", audioSrc: "/music/foo.mp3" },
+        type: "mc-single",
+        options: [
+          { id: "a", text: "A" },
+          { id: "b", text: "B" },
+        ],
+        correctId: "a",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts mc-single with audio on each option", () => {
+    const quiz = {
+      slug: "ex",
+      title: "Example",
+      questions: [{
+        ...baseQuestion,
+        prompt: { text: "Which clip is Samidare?" },
+        type: "mc-single",
+        options: [
+          { id: "a", audioSrc: "/music/a.mp3" },
+          { id: "b", audioSrc: "/music/b.mp3" },
+        ],
+        correctId: "a",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
   });
 
   it("accepts every supported question type", () => {
@@ -45,20 +104,20 @@ describe("QuizSchema", () => {
       title: "All",
       questions: [
         { ...baseQuestion, id: "q1", type: "mc-single",
-          options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+          options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
           correctId: "a" },
         { ...baseQuestion, id: "q2", type: "mc-multi",
-          options: [{ id: "a", label: "A" }, { id: "b", label: "B" }, { id: "c", label: "C" }],
+          options: [{ id: "a", text: "A" }, { id: "b", text: "B" }, { id: "c", text: "C" }],
           correctIds: ["a", "c"] },
         { ...baseQuestion, id: "q3", type: "categorize",
-          buckets: [{ id: "B1", label: "B1" }, { id: "B2", label: "B2" }],
+          buckets: [{ id: "B1", text: "B1" }, { id: "B2", text: "B2" }],
           items: [
-            { id: "i1", label: "Item 1", correctBucketId: "B1" },
-            { id: "i2", label: "Item 2", correctBucketId: "B2" },
-            { id: "i3", label: "Item 3", correctBucketId: "B1" },
+            { id: "i1", text: "Item 1", correctBucketId: "B1" },
+            { id: "i2", text: "Item 2", correctBucketId: "B2" },
+            { id: "i3", text: "Item 3", correctBucketId: "B1" },
           ] },
         { ...baseQuestion, id: "q4", type: "order",
-          items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }],
+          items: [{ id: "x", text: "X" }, { id: "y", text: "Y" }],
           axis: "horizontal", startLabel: "Start", endLabel: "End",
           correctOrder: ["x", "y"] },
         { ...baseQuestion, id: "q5", type: "slider",
@@ -77,8 +136,39 @@ describe("QuizSchema", () => {
       questions: [{
         ...baseQuestion,
         type: "categorize",
-        buckets: [{ id: "B1", label: "B1" }],
-        items: [{ id: "i1", label: "Item 1", correctBucketId: "GHOST" }],
+        buckets: [{ id: "B1", text: "B1" }],
+        items: [{ id: "i1", text: "Item 1", correctBucketId: "GHOST" }],
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).toThrow();
+  });
+
+  it("rejects an option that has both image and audio", () => {
+    const quiz = {
+      slug: "ex",
+      title: "Ex",
+      questions: [{
+        ...baseQuestion,
+        type: "mc-single",
+        options: [
+          { id: "a", imageSrc: "/img/a.png", audioSrc: "/audio/a.mp3" },
+          { id: "b", text: "B" },
+        ],
+        correctId: "a",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).toThrow();
+  });
+
+  it("rejects an option with no text or media", () => {
+    const quiz = {
+      slug: "ex",
+      title: "Ex",
+      questions: [{
+        ...baseQuestion,
+        type: "mc-single",
+        options: [{ id: "a" }, { id: "b", text: "B" }],
+        correctId: "a",
       }],
     };
     expect(() => QuizSchema.parse(quiz)).toThrow();
@@ -91,7 +181,7 @@ describe("QuizSchema scoring field", () => {
       slug: "ex", title: "Ex",
       questions: [{
         ...baseQuestion, type: "mc-single",
-        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
         correctId: "a",
         scoring: { maxPoints: 2 },
       }],
@@ -104,7 +194,7 @@ describe("QuizSchema scoring field", () => {
       slug: "ex", title: "Ex",
       questions: [{
         ...baseQuestion, type: "mc-multi",
-        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
         correctIds: ["a"],
         scoring: { maxPoints: 1, scheme: "per-option" },
       }],
@@ -117,8 +207,8 @@ describe("QuizSchema scoring field", () => {
       slug: "ex", title: "Ex",
       questions: [{
         ...baseQuestion, type: "categorize",
-        buckets: [{ id: "B1", label: "B1" }],
-        items: [{ id: "i1", label: "Item", correctBucketId: "B1" }],
+        buckets: [{ id: "B1", text: "B1" }],
+        items: [{ id: "i1", text: "Item", correctBucketId: "B1" }],
         scoring: { maxPoints: 1, scheme: "per-item" },
       }],
     };
@@ -130,7 +220,7 @@ describe("QuizSchema scoring field", () => {
       slug: "ex", title: "Ex",
       questions: [{
         ...baseQuestion, type: "order",
-        items: [{ id: "x", label: "X" }, { id: "y", label: "Y" }],
+        items: [{ id: "x", text: "X" }, { id: "y", text: "Y" }],
         axis: "horizontal", startLabel: "S", endLabel: "E",
         correctOrder: ["x", "y"],
         scoring: { maxPoints: 1, scheme: "per-position" },
@@ -180,7 +270,7 @@ describe("QuizSchema scoring field", () => {
       slug: "ex", title: "Ex",
       questions: [{
         ...baseQuestion, type: "mc-single",
-        options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+        options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
         correctId: "a",
       }],
     };

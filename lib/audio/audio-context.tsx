@@ -30,6 +30,12 @@ type AudioContextValue = {
   hasPrev: boolean;
   togglePlay: () => void;
   seekTo: (time: number) => void;
+  // Media clip playback (single-active across the whole app — clicking
+  // any <MediaBlock> audio button stops other clips and ducks the
+  // background music. Used by question prompts and per-option audio.)
+  mediaClipSrc: string | null;
+  playMediaClip: (src: string) => void;
+  stopMediaClip: () => void;
   // Internal refs / event sync (consumed by <MusicPlayer>)
   audioRef: React.RefObject<HTMLAudioElement | null>;
   onAudioPlay: () => void;
@@ -37,6 +43,9 @@ type AudioContextValue = {
   onAudioTimeUpdate: (time: number) => void;
   onAudioLoadedMetadata: (duration: number) => void;
 };
+
+/** Volume multiplier applied to background music while a media clip plays. */
+export const MEDIA_CLIP_DUCK = 0.2;
 
 const Ctx = createContext<AudioContextValue | null>(null);
 
@@ -80,6 +89,7 @@ export function AudioSettingsProvider({
     cursor: -1,
   });
   const [hasPrev, setHasPrev] = useState(false);
+  const [mediaClipSrc, setMediaClipSrc] = useState<string | null>(null);
 
   const wasPlayingBeforeHideRef = useRef(false);
   const startedRef = useRef(false);
@@ -229,6 +239,14 @@ export function AudioSettingsProvider({
     [settings.sfxVolume],
   );
 
+  const playMediaClip = useCallback((src: string) => {
+    setMediaClipSrc(src);
+  }, []);
+
+  const stopMediaClip = useCallback(() => {
+    setMediaClipSrc(null);
+  }, []);
+
   const onAudioPlay = useCallback(() => setIsPlaying(true), []);
   const onAudioPause = useCallback(() => setIsPlaying(false), []);
   const onAudioTimeUpdate = useCallback((t: number) => setCurrentTime(t), []);
@@ -251,6 +269,9 @@ export function AudioSettingsProvider({
     hasPrev,
     togglePlay,
     seekTo,
+    mediaClipSrc,
+    playMediaClip,
+    stopMediaClip,
     audioRef,
     onAudioPlay,
     onAudioPause,

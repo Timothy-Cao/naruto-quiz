@@ -17,8 +17,8 @@ const validQuiz = {
   slug: "x",
   title: "X",
   questions: [{
-    id: "q1", type: "mc-single", prompt: "p", explanation: "e",
-    options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+    id: "q1", type: "mc-single", prompt: { text: "p" }, explanation: "e",
+    options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
     correctId: "a",
   }],
 };

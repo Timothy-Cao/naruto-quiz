@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 type ListedQuiz = {
   slug: string;
   title: string;
-  questions: Array<{ id: string; prompt: string; type: string }>;
+  questions: Array<{ id: string; prompt: { text?: string }; type: string }>;
 };
 
 const STAR_LABELS: Record<number, string> = {
@@ -25,7 +25,6 @@ const TYPE_LABEL: Record<string, string> = {
   order: "Order",
   slider: "Slider",
   name: "Name",
-  "audio-match": "Audio match",
 };
 
 export function RatingsViewer({ quizzes }: { quizzes: ListedQuiz[] }) {
@@ -92,7 +91,7 @@ export function RatingsViewer({ quizzes }: { quizzes: ListedQuiz[] }) {
                         {TYPE_LABEL[q.type] ?? q.type}
                       </span>
                       <p className="text-sm text-[var(--color-text)] truncate">
-                        {q.prompt}
+                        {q.prompt.text ?? q.id}
                       </p>
                     </div>
                     {r && r.count > 0 ? (

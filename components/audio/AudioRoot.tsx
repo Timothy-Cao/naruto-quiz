@@ -2,6 +2,7 @@
 
 import { AudioSettingsProvider } from "@/lib/audio/audio-context";
 import { MusicPlayer } from "./MusicPlayer";
+import { MediaClipPlayer } from "@/components/quiz/MediaBlock";
 import { MusicDisclaimer } from "./MusicDisclaimer";
 import { NowPlayingPill } from "./NowPlayingPill";
 import { SfxListener } from "./SfxListener";
@@ -21,6 +22,7 @@ export function AudioRoot({
       <Visualizer />
       {children}
       <MusicPlayer />
+      <MediaClipPlayer />
       <SfxListener />
       <SettingsButton />
       <NowPlayingPill />

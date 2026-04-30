@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { CategorizeQuestion } from "@/lib/quiz-schema";
+import type { CategorizeQuestion, CategorizeItemT, OptionT } from "@/lib/quiz-schema";
 import type { QuestionProps } from "./types";
-import { ZoomableImage } from "@/components/quiz/ZoomableImage";
+import { MediaBlock } from "@/components/quiz/MediaBlock";
 import { cn } from "@/lib/utils";
 import {
   DndContext,
@@ -20,15 +20,13 @@ import { GripVertical } from "lucide-react";
 
 const TRAY_ID = "__tray__";
 
-type Item = { id: string; label: string; thumbnail?: string; correctBucketId: string };
-
 function DraggableChip({
   item,
   disabled,
   isDragging,
   hint,
 }: {
-  item: Item;
+  item: CategorizeItemT;
   disabled: boolean;
   isDragging?: boolean;
   hint?: "correct" | "incorrect" | null;
@@ -49,32 +47,25 @@ function DraggableChip({
       )}
     >
       {!disabled && <GripVertical className="w-3.5 h-3.5 text-[var(--color-text-dim)] opacity-60 group-hover:opacity-100" />}
-      {item.thumbnail && (
-        <ZoomableImage src={item.thumbnail} alt={item.label} className="w-7 h-7 shrink-0" />
-      )}
-      <span>{item.label}</span>
+      <MediaBlock block={item} size="chip" inlineText />
     </div>
   );
 }
 
 function Bucket({
-  id,
-  label,
-  thumbnail,
+  bucket,
   contents,
   disabled,
   highlight,
   itemHint,
 }: {
-  id: string;
-  label: string;
-  thumbnail?: string;
-  contents: Item[];
+  bucket: OptionT;
+  contents: CategorizeItemT[];
   disabled: boolean;
   highlight: boolean;
   itemHint: (itemId: string) => "correct" | "incorrect" | null;
 }) {
-  const { setNodeRef, isOver } = useDroppable({ id });
+  const { setNodeRef, isOver } = useDroppable({ id: bucket.id });
   return (
     <div
       ref={setNodeRef}
@@ -86,10 +77,9 @@ function Bucket({
       )}
     >
       <div className="flex items-center gap-2 px-3 py-2 border-b border-[var(--color-border)]">
-        {thumbnail && <ZoomableImage src={thumbnail} alt={label} className="w-6 h-6 shrink-0" />}
-        <span className="font-[family-name:var(--font-display)] text-lg tracking-wide text-[var(--color-text)]">
-          {label}
-        </span>
+        <div className="font-[family-name:var(--font-display)] text-lg tracking-wide text-[var(--color-text)]">
+          <MediaBlock block={bucket} size="chip" inlineText />
+        </div>
         <span className="ml-auto text-xs text-[var(--color-text-dim)] font-mono">
           {contents.length}
         </span>
@@ -118,7 +108,7 @@ function Tray({
   items,
   disabled,
 }: {
-  items: Item[];
+  items: CategorizeItemT[];
   disabled: boolean;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: TRAY_ID });
@@ -173,11 +163,11 @@ export function CategorizeQuestionRenderer({
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } }),
   );
 
-  const itemsById: Record<string, Item> = {};
+  const itemsById: Record<string, CategorizeItemT> = {};
   for (const it of question.items) itemsById[it.id] = it;
 
   const trayItems = question.items.filter((it) => !placement[it.id]);
-  const bucketContents: Record<string, Item[]> = {};
+  const bucketContents: Record<string, CategorizeItemT[]> = {};
   for (const b of question.buckets) bucketContents[b.id] = [];
   for (const it of question.items) {
     const b = placement[it.id];
@@ -226,9 +216,7 @@ export function CategorizeQuestionRenderer({
           {question.buckets.map((b) => (
             <Bucket
               key={b.id}
-              id={b.id}
-              label={b.label}
-              thumbnail={b.thumbnail}
+              bucket={b}
               contents={bucketContents[b.id]}
               disabled={locked}
               highlight={locked}
@@ -242,14 +230,7 @@ export function CategorizeQuestionRenderer({
         <DragOverlay dropAnimation={{ duration: 180, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)" }}>
           {activeItem ? (
             <div className="inline-flex items-center gap-2 px-3 py-2 rounded-md border bg-[var(--color-surface-2)] text-[var(--color-text)] text-sm shadow-2xl scale-105 border-[var(--color-accent)] cursor-grabbing">
-              {activeItem.thumbnail && (
-                <ZoomableImage
-                  src={activeItem.thumbnail}
-                  alt={activeItem.label}
-                  className="w-7 h-7 shrink-0"
-                />
-              )}
-              <span>{activeItem.label}</span>
+              <MediaBlock block={activeItem} size="chip" inlineText />
             </div>
           ) : null}
         </DragOverlay>
@@ -266,9 +247,9 @@ export function CategorizeQuestionRenderer({
               const correctBucket = question.buckets.find((b) => b.id === it.correctBucketId);
               return (
                 <p key={it.id} className="text-sm text-[var(--color-text)]">
-                  <span className="text-[var(--color-incorrect)]">{it.label}</span>
+                  <span className="text-[var(--color-incorrect)]">{it.text ?? it.id}</span>
                   <span className="text-[var(--color-text-dim)]"> → should be in </span>
-                  <span className="text-[var(--color-correct)]">{correctBucket?.label}</span>
+                  <span className="text-[var(--color-correct)]">{correctBucket?.text ?? correctBucket?.id}</span>
                 </p>
               );
             })}

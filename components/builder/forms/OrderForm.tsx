@@ -1,9 +1,11 @@
 "use client";
-import type { OrderQuestion } from "@/lib/quiz-schema";
+import type { OrderQuestion, OptionT, MediaBlockT } from "@/lib/quiz-schema";
 import { Trash2, Plus, ArrowDown, ArrowRight } from "lucide-react";
 import { ScoringFields } from "../ScoringFields";
 import { inputCls, textareaCls } from "../form-styles";
 import { usePermissions } from "@/lib/builder/permissions";
+import { MediaBlockEditor } from "../MediaBlockEditor";
+import { cn } from "@/lib/utils";
 
 type Props = {
   question: OrderQuestion;
@@ -11,12 +13,13 @@ type Props = {
 };
 
 export function OrderForm({ question, onChange }: Props) {
-  const { isAdmin, limit } = usePermissions();
+  const { limit } = usePermissions();
+
   function addItem() {
     const newId = `${question.id}-item-${Date.now().toString(36)}`;
     onChange({
       ...question,
-      items: [...question.items, { id: newId, label: "New item" }],
+      items: [...question.items, { id: newId, text: "New item" }],
       correctOrder: [...question.correctOrder, newId],
     });
   }
@@ -36,37 +39,32 @@ export function OrderForm({ question, onChange }: Props) {
     [next[idx], next[target]] = [next[target], next[idx]];
     onChange({ ...question, correctOrder: next });
   }
+  function patchItem(id: string, patch: Partial<OptionT>) {
+    onChange({
+      ...question,
+      items: question.items.map((x) => (x.id === id ? { ...x, ...patch } : x)),
+    });
+  }
 
-  // Render in correctOrder order so the form mirrors the "answer".
+  function setPrompt(prompt: MediaBlockT) {
+    onChange({ ...question, prompt });
+  }
+
   const orderedItems = question.correctOrder
     .map((id) => question.items.find((it) => it.id === id))
     .filter((x): x is NonNullable<typeof x> => x !== undefined);
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-4">
       <label className="grid gap-1 text-sm">
         <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Prompt</span>
-        <textarea
-          value={question.prompt}
-          onChange={(e) => onChange({ ...question, prompt: e.target.value })}
-          rows={2}
-          maxLength={limit("questionPrompt")}
-          className={textareaCls}
+        <MediaBlockEditor
+          block={question.prompt}
+          onChange={setPrompt}
+          textRows={2}
+          textMaxLength={limit("questionPrompt")}
         />
       </label>
-
-      {isAdmin && (
-        <label className="grid gap-1 text-sm">
-          <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Image</span>
-          <input
-            type="text"
-            value={question.image ?? ""}
-            onChange={(e) => onChange({ ...question, image: e.target.value || undefined })}
-            placeholder="URL or /quiz-images/... (optional)"
-            className={inputCls}
-          />
-        </label>
-      )}
 
       <div className="grid grid-cols-[1fr,1fr,1fr] gap-3">
         <label className="grid gap-1 text-sm">
@@ -106,76 +104,54 @@ export function OrderForm({ question, onChange }: Props) {
         <legend className="text-xs uppercase tracking-wide text-[var(--color-text-dim)] flex items-center gap-1">
           Items in correct order {question.axis === "vertical" ? <ArrowDown className="w-3 h-3" /> : <ArrowRight className="w-3 h-3" />}
         </legend>
-        {orderedItems.map((it, i) => (
-          <div
-            key={it.id}
-            className={
-              isAdmin
-                ? "grid grid-cols-[auto,1fr,1fr,auto,auto,auto] gap-2 items-center"
-                : "grid grid-cols-[auto,1fr,auto,auto,auto] gap-2 items-center"
-            }
-          >
-            <span className="font-mono text-xs text-[var(--color-text-dim)] w-6 text-right">#{i + 1}</span>
-            <input
-              type="text"
-              value={it.label}
-              onChange={(e) =>
-                onChange({
-                  ...question,
-                  items: question.items.map((x) =>
-                    x.id === it.id ? { ...x, label: e.target.value } : x,
-                  ),
-                })
-              }
-              placeholder="Item label"
-              maxLength={limit("itemLabel")}
-              className={inputCls}
-            />
-            {isAdmin && (
-              <input
-                type="text"
-                value={it.thumbnail ?? ""}
-                onChange={(e) =>
-                  onChange({
-                    ...question,
-                    items: question.items.map((x) =>
-                      x.id === it.id ? { ...x, thumbnail: e.target.value || undefined } : x,
-                    ),
-                  })
-                }
-                placeholder="Thumbnail URL (optional)"
-                className={inputCls}
+        <div className="grid gap-2">
+          {orderedItems.map((it, i) => (
+            <div
+              key={it.id}
+              className="rounded-md border border-[var(--color-border)] p-3 bg-[var(--color-surface)] grid gap-2"
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-[var(--color-accent)] w-6 text-right">#{i + 1}</span>
+                <span className="ml-auto text-[10px] font-mono text-[var(--color-text-dim)]">{it.id}</span>
+                <button
+                  type="button"
+                  onClick={() => moveItem(it.id, -1)}
+                  disabled={i === 0}
+                  className="p-1 text-[var(--color-text-dim)] hover:text-[var(--color-text)] disabled:opacity-30"
+                  aria-label="Move up"
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveItem(it.id, 1)}
+                  disabled={i === orderedItems.length - 1}
+                  className="p-1 text-[var(--color-text-dim)] hover:text-[var(--color-text)] disabled:opacity-30"
+                  aria-label="Move down"
+                >
+                  ↓
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeItem(it.id)}
+                  disabled={question.items.length <= 2}
+                  className="p-1 rounded text-[var(--color-text-dim)] hover:text-[var(--color-incorrect)] disabled:opacity-40"
+                  aria-label="Remove item"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <MediaBlockEditor
+                block={it}
+                onChange={(patch) => patchItem(it.id, patch)}
+                textRows={1}
+                textPlaceholder="Item label"
+                textMaxLength={limit("itemLabel")}
+                compact
               />
-            )}
-            <button
-              type="button"
-              onClick={() => moveItem(it.id, -1)}
-              disabled={i === 0}
-              className="p-1 text-[var(--color-text-dim)] hover:text-[var(--color-text)] disabled:opacity-30"
-              aria-label="Move up"
-            >
-              ↑
-            </button>
-            <button
-              type="button"
-              onClick={() => moveItem(it.id, 1)}
-              disabled={i === orderedItems.length - 1}
-              className="p-1 text-[var(--color-text-dim)] hover:text-[var(--color-text)] disabled:opacity-30"
-              aria-label="Move down"
-            >
-              ↓
-            </button>
-            <button
-              type="button"
-              onClick={() => removeItem(it.id)}
-              disabled={question.items.length <= 2}
-              className="p-1.5 rounded text-[var(--color-text-dim)] hover:text-[var(--color-incorrect)] disabled:opacity-40"
-              aria-label="Remove item"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
         <button
           type="button"
           onClick={addItem}
@@ -192,7 +168,7 @@ export function OrderForm({ question, onChange }: Props) {
           onChange={(e) => onChange({ ...question, explanation: e.target.value })}
           rows={3}
           maxLength={limit("questionExplanation")}
-          className={textareaCls}
+          className={cn(textareaCls, "w-full")}
         />
       </label>
 

@@ -78,7 +78,9 @@ export function Results({ quiz, answers, onRetry, onJumpTo }: Props) {
                 className="w-full flex items-center gap-3 p-3 rounded-md border border-[var(--color-border)] bg-[var(--color-surface-2)] hover:border-[var(--color-border-2)] text-left"
               >
                 <Icon className={`w-5 h-5 shrink-0 ${iconColor}`} />
-                <span className="text-sm text-[var(--color-text)] flex-1">{q.prompt}</span>
+                <span className="text-sm text-[var(--color-text)] flex-1 truncate">
+                  {q.prompt.text ?? `Question ${i + 1}`}
+                </span>
                 <span className="text-xs text-[var(--color-text-dim)] font-mono">
                   {confirmed ? `${fmt(a.result.points)} / ${fmt(a.result.maxPoints)}` : "—"}
                 </span>

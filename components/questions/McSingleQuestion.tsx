@@ -1,7 +1,7 @@
 "use client";
 import type { McSingleQuestion } from "@/lib/quiz-schema";
 import type { QuestionProps } from "./types";
-import { ZoomableImage } from "@/components/quiz/ZoomableImage";
+import { MediaBlock } from "@/components/quiz/MediaBlock";
 import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 
@@ -28,7 +28,7 @@ export function McSingleQuestionRenderer({
             disabled={locked}
             onClick={() => onChange(opt.id)}
             className={cn(
-              "flex items-center gap-3 p-3 rounded-md border text-left transition-colors",
+              "flex items-start gap-3 p-3 rounded-md border text-left transition-colors",
               "bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text)]",
               !locked && "hover:border-[var(--color-border-2)]",
               isSelected && !locked && "border-[var(--color-accent)] bg-[var(--color-surface-2)]",
@@ -36,16 +36,11 @@ export function McSingleQuestionRenderer({
               showWrong && "border-[var(--color-incorrect)]",
             )}
           >
-            {opt.thumbnail && (
-              <ZoomableImage
-                src={opt.thumbnail}
-                alt={opt.label}
-                className="w-12 h-12 shrink-0"
-              />
-            )}
-            <span className="flex-1">{opt.label}</span>
-            {showCorrect && <Check className="w-5 h-5 text-[var(--color-correct)]" />}
-            {showWrong && <X className="w-5 h-5 text-[var(--color-incorrect)]" />}
+            <span className="flex-1">
+              <MediaBlock block={opt} size="option" />
+            </span>
+            {showCorrect && <Check className="w-5 h-5 text-[var(--color-correct)] shrink-0 mt-1" />}
+            {showWrong && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0 mt-1" />}
           </button>
         );
       })}

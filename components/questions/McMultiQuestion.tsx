@@ -1,7 +1,7 @@
 "use client";
 import type { McMultiQuestion } from "@/lib/quiz-schema";
 import type { QuestionProps } from "./types";
-import { ZoomableImage } from "@/components/quiz/ZoomableImage";
+import { MediaBlock } from "@/components/quiz/MediaBlock";
 import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 
@@ -59,11 +59,10 @@ export function McMultiQuestionRenderer({
             >
               {isSelected && <Check className="w-3 h-3 text-white" />}
             </span>
-            {opt.thumbnail && (
-              <ZoomableImage src={opt.thumbnail} alt={opt.label} className="w-12 h-12 shrink-0" />
-            )}
-            <span className="flex-1">{opt.label}</span>
-            {showWrongPick && <X className="w-5 h-5 text-[var(--color-incorrect)]" />}
+            <span className="flex-1">
+              <MediaBlock block={opt} size="option" />
+            </span>
+            {showWrongPick && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0 mt-1" />}
             {showMissed && (
               <span className="text-xs text-[var(--color-correct)]">Missed</span>
             )}

@@ -14,9 +14,9 @@ const sampleQuiz: Quiz = {
     {
       id: "q1",
       type: "mc-single",
-      prompt: "p",
+      prompt: { text: "p" },
       explanation: "e",
-      options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+      options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
       correctId: "a",
     },
   ],

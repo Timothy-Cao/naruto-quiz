@@ -19,9 +19,9 @@ const seeded: Quiz = {
     {
       id: "q1",
       type: "mc-single",
-      prompt: "p",
+      prompt: { text: "p" },
       explanation: "e",
-      options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+      options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
       correctId: "a",
     },
   ],
@@ -77,7 +77,7 @@ describe("editorReducer", () => {
     s = editorReducer(s, { type: "duplicateQuestion", id: "q1" });
     expect(s.quiz.questions).toHaveLength(2);
     expect(s.quiz.questions[1].id).not.toBe("q1");
-    expect(s.quiz.questions[1].prompt).toBe("p");
+    expect(s.quiz.questions[1].prompt).toEqual({ text: "p" });
   });
 
   it("reorderQuestions rearranges by id list", () => {
@@ -88,9 +88,9 @@ describe("editorReducer", () => {
         {
           id: "q2",
           type: "mc-single",
-          prompt: "p2",
+          prompt: { text: "p2" },
           explanation: "e2",
-          options: [{ id: "x", label: "X" }, { id: "y", label: "Y" }],
+          options: [{ id: "x", text: "X" }, { id: "y", text: "Y" }],
           correctId: "x",
         },
       ],
@@ -102,9 +102,9 @@ describe("editorReducer", () => {
 
   it("updateQuestion replaces a question by id", () => {
     let s = initialEditorState(seeded);
-    const updated = { ...seeded.questions[0], prompt: "new prompt" };
+    const updated = { ...seeded.questions[0], prompt: { text: "new prompt" } };
     s = editorReducer(s, { type: "updateQuestion", question: updated });
-    expect(s.quiz.questions[0].prompt).toBe("new prompt");
+    expect(s.quiz.questions[0].prompt).toEqual({ text: "new prompt" });
   });
 
   it("selectQuestion sets selectedQuestionId", () => {
@@ -139,9 +139,9 @@ describe("editorReducer", () => {
       questions: [{
         id: "q1",
         type: "mc-single",
-        prompt: "",
+        prompt: { text: "p" },
         explanation: "",
-        options: [{ id: "a", label: "A" }],
+        options: [{ id: "a", text: "A" }],
         correctId: "z",
       }],
     };

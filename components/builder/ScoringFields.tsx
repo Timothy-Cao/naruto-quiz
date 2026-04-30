@@ -26,7 +26,6 @@ const SCHEMES_BY_TYPE: Record<Question["type"], { value: string; label: string }
     { value: "tolerance", label: "Tolerance bands" },
   ],
   name: [{ value: "all-or-nothing", label: "All or nothing" }],
-  "audio-match": [{ value: "all-or-nothing", label: "All or nothing" }],
 };
 
 export function ScoringFields({ question, onChange }: Props) {
