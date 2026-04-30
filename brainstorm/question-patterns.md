@@ -11,7 +11,7 @@ Costume puzzles (logic puzzles in Naruto cosplay) are not on this list. Canon mu
 
 ---
 
-## The six question types (schema primitives)
+## The seven question types (schema primitives)
 
 Every "labeled slot" — the prompt, every option, every categorize item/bucket, every order item — is a **MediaBlock**: text + at most one media (image or audio, local files only). The old `audio-match` type is gone; that shape is now `mc-single` with audio on the prompt.
 
@@ -21,6 +21,7 @@ Every "labeled slot" — the prompt, every option, every categorize item/bucket,
 - **Order**: arrange items along an axis.
 - **Slider**: pick a number.
 - **Name**: type the answer (autocomplete on character names).
+- **Letters**: crossword-style — type into a fixed number of letter boxes with a hint above. Author specifies the canonical answer + the hint.
 
 Audio and image attachments work on **prompts and options** alike — so a single `mc-single` covers OST→scene (audio on prompt), scene→OST (audio on options), spot-the-modified (images on options), silhouette ID (image on prompt), and so on.
 

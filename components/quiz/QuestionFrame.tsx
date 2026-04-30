@@ -11,6 +11,7 @@ import { CategorizeQuestionRenderer } from "@/components/questions/CategorizeQue
 import { OrderQuestionRenderer } from "@/components/questions/OrderQuestion";
 import { SliderQuestionRenderer } from "@/components/questions/SliderQuestion";
 import { NameQuestionRenderer } from "@/components/questions/NameQuestion";
+import { LettersQuestionRenderer } from "@/components/questions/LettersQuestion";
 
 type Props = {
   question: Question;
@@ -53,5 +54,7 @@ function Renderer({ question, state, onChange }: Props) {
       return <SliderQuestionRenderer question={question} state={state} onChange={onChange as (v: number) => void} />;
     case "name":
       return <NameQuestionRenderer question={question} state={state} onChange={onChange as (v: string) => void} />;
+    case "letters":
+      return <LettersQuestionRenderer question={question} state={state} onChange={onChange as (v: string) => void} />;
   }
 }

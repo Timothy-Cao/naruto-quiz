@@ -99,5 +99,12 @@ export function scoreQuestion(q: Question, value: AnswerValue): ScoreResult {
       const ok = typeof value === "string" && matchName(value, q.acceptedAnswers);
       return { points: ok ? max : 0, maxPoints: max };
     }
+
+    case "letters": {
+      const max = q.scoring?.maxPoints ?? 1;
+      if (typeof value !== "string") return { points: 0, maxPoints: max };
+      const norm = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+      return { points: norm(value) === norm(q.answer) ? max : 0, maxPoints: max };
+    }
   }
 }

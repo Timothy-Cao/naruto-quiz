@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { scoreQuestion } from "@/lib/scoring";
 import type { Question } from "@/lib/quiz-schema";
 
-const base = { id: "q", prompt: { text: "p" }, explanation: "e" };
+const base = { id: "q", prompt: { text: "p" }, explanation: { text: "e" } };
 
 describe("scoreQuestion", () => {
   describe("mc-single", () => {
@@ -183,6 +183,26 @@ describe("scoreQuestion", () => {
     });
     it("zero on wrong option", () => {
       expect(scoreQuestion(q, "b")).toEqual({ points: 0, maxPoints: 1 });
+    });
+  });
+
+  describe("letters", () => {
+    const q: Question = { ...base, type: "letters",
+      answer: "ITACHI", hint: "Sasuke's older brother" } as Question;
+    it("full points on exact match", () => {
+      expect(scoreQuestion(q, "ITACHI").points).toBe(1);
+    });
+    it("full points on case-insensitive match", () => {
+      expect(scoreQuestion(q, "itachi").points).toBe(1);
+    });
+    it("full points ignoring whitespace", () => {
+      expect(scoreQuestion(q, " I T A C H I ").points).toBe(1);
+    });
+    it("zero points on wrong answer", () => {
+      expect(scoreQuestion(q, "SASUKE").points).toBe(0);
+    });
+    it("zero points on partial answer", () => {
+      expect(scoreQuestion(q, "ITACH").points).toBe(0);
     });
   });
 

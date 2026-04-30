@@ -44,10 +44,6 @@ export function McSingleForm({ question, onChange }: Props) {
     onChange({ ...question, prompt });
   }
 
-  function setExplanation(explanation: string) {
-    onChange({ ...question, explanation });
-  }
-
   return (
     <div className="grid gap-4">
       <Field label="Prompt">
@@ -88,13 +84,12 @@ export function McSingleForm({ question, onChange }: Props) {
         </button>
       </fieldset>
 
-      <Field label="Explanation">
-        <textarea
-          value={question.explanation}
-          onChange={(e) => setExplanation(e.target.value)}
-          rows={3}
-          maxLength={limit("questionExplanation")}
-          className={cn(textareaCls, "w-full")}
+      <Field label="Explanation (post-confirm answer key — supports media)">
+        <MediaBlockEditor
+          block={question.explanation}
+          onChange={(explanation) => onChange({ ...question, explanation })}
+          textRows={3}
+          textMaxLength={limit("questionExplanation")}
         />
       </Field>
 

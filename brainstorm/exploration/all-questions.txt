@@ -1,0 +1,362 @@
+Old quizzes from quiz-maker.com — flat parseable transcript.
+Format: <quiz>-<n>. <prompt>
+        <option> | <option> | ...
+Special cases: [numeric] [text] [image only] [matching: Left=... | Right=...] [ranking]
+Correct answers are not visible to a casual visitor on any of these.
+
+==============================
+Quiz 1 — Dodoman's Ultimate NARUTO QUIZ (QTQKD4JX8)
+==============================
+
+1-1. When Juzo asked about Itachi's specialties, which one did Itachi not list?
+    Genjutsu | Dojutsu | Fire Release | Shurikenjutsu
+1-2. Which major military force never employed the Akatsuki
+    Kumogakure (cloud) | Kirigakure (mist) | Konohagakure (leaf) | Iwagakure (stone)
+1-3. Which is a nature release not required in Dust Release
+    Fire | Earth | Wind | Lightning
+1-4. Who says "I will say one thing… From now on walk your own path not in the footsteps of your brother."
+    One of the Kages | Danzo | An Uchiha Clan member | A Senju clan member
+1-5. Who possesses an ethereal shield that can change its nature depending on the incoming attack?
+    A Senju Clan Member | An Uchiha Clan Member | One of the Kages | None of the Above
+1-6. Where did adult Kakashi meet his dad?
+    The Pure Land | Limbo | Stomach of the Shinigami | 4th War via Edo Tensei
+1-7. How many Giant Animal summons have been shown by the Animal Path?
+    6 | 7 | 8 | 9
+1-8. Which half of Kurama was sealed in Naruto
+    Ying | Yang
+1-9. Which Hand seal is most associated with the Nara Clan
+    Tatsu (Dragon) | Inu (Dog) | Ne (Rat) | Saru (Monkey)
+1-10. Who is the only known person to hold both the Will of Fire and Curse of Hatred?
+    [no options visible]
+1-11. Which of the following is not one of Jiraiya's erotic novels?
+    Icha Icha Violence | Icha Icha Tactics | Icha Icha Ferocity | Icha Icha Paradise
+1-12. Which of the Chikamatsu puppets wielded two large broad swords?
+    [no options visible]
+1-13. Who has been shown to open the inner gates?
+    Naruto | Hashirama | Kakashi | Hiruzen
+1-14. Which clan was most notable for their Fuinjutsu (Sealing techniques)
+    Otsutsuki Clan | Nara Clan | Senju Clan | Uzamaki clan
+1-15. Minato is (think back on fight scenes)
+    Left-handed | Ambidextrous | Right-handed
+1-16. Who was the first person to awaken the Rinnegan
+    Nagato | Madara | Hagoromo | Kaguya
+1-17. Who holds the record for the 2nd fastest Forest of Death Chunin exam finish?
+    Itachi | Minato | Gaara | Hashirama
+1-18. Who holds the record for the second highest Chunin written exam score?
+    Itachi | Minato | Gaara | Shikamaru
+1-19. How many akatsuki members took their own life?
+    2 | 3 | 4 | 5
+1-20. To whom was this said "You're a man with a true skill… an example we should all follow..."
+    Naruto | Hashirama | Jiraiya | Nagato | Hiruzen | Killer Bee
+1-21. Which of the following is largest in size
+    True Several Thousand Hands | Perfect Susanoo | Genbu (Island Turtle) | 10 tails
+1-22. Who is Hinata's husband's dad's sensei's sensei's son's wife's specialty?
+    Medical ninjutsu | Genjutsu | Taijutsu | Not a ninja
+1-23. Who possesses this sharingan? [image]
+    Shisui Uchiha | Fugaku Uchiha | Izuna Uchiha | Indra Otsutsuki | Tajima Uchiha (Madara's father) | None of the above
+1-24. The explosion corps belongs to which village?
+    Iwagakure (stone) | Konohagakure (leaf) | Kirigakure (mist) | Kumogakure (cloud) | Sunagakure (sand)
+1-25. Who predates the others?
+    The great toad sage | Onoki | Black Zetsu | Kurama | Indra | The first hokage
+
+==============================
+Quiz 2 — Dodomans Ultimate NARUTO QUIZ 2 (Q7YPGXB4S)
+==============================
+
+2-1. Who is not known to have been a Bingo Book entry?
+    Sasuke | Kakashi | Ao | Minato
+2-2. Who was the following jutsu used on: Barrier: Canopy Method Formation?
+    An Uzumaki member | An Uchiha member | Iwagakure member | None of the above
+2-3. Which nature transformations are required for the Rubber Kekkei Genkai?
+    Fire | Water | Wind | Lightning | Earth
+2-4. Without being able to open any gates, a user can only use __ % of the body's full potential.
+    [numeric / fill in blank]
+2-5. Which jutsu(s) has never been declared a Kinjutsu (forbidden)
+    Rinne Rebirth | Rasenshuriken | Shinra Tensei | Reverse Lotus
+2-6. PERSON A's son's murderer's controller's manipulator's manipulator's rival's granddaughter is a healer. How did person A die?
+    Suicide | Killed in battle | Still alive | Old age
+2-7. A pervert's student's student's crush's murderer's rival's student's crush is PERSON A. What color is their hair?
+    Pink | Black | Yellow | Blue | Green | Other
+2-8. PERSON A's bro's best friend's boss' rival's killer's student is PERSON B. What is the relationship between them?
+    Family | Themselves | Rivals | Same team
+2-9. Which is farthest from Konohagakure?
+    Kirigakure (Mist) | Kannabi Bridge | Amegakure (Rain) | Otogakure (Sound)
+2-10. Which of the following is yang release related to? (as opposed to yin)
+    Minato's Kurama half | Genjutsu | Senju Clan | Life force
+2-11. How many tomoe does a rinne sharingan have?
+    [numeric]
+2-12. Which nature transformations are confirmed known by the Demon Brothers?
+    Fire | Water | Wind | Lightning | Earth | None
+2-13. "Hmm… As for my hobbies… I have lots of hobbies…". What would prevent them from enjoying these hobbies?
+    Blindness | Deafness | Laziness | No hobby
+2-14. How many shinobi have had the ability to fly?
+    7 or less | 8-9 | 10-11 | 12+
+2-15. Who has not shown to have a water affinity?
+    Yahiko | Gamabunta | Ao | Sasori
+2-16. How many ninja have summoned either a rashomon gate, or a toad?
+    [numeric]
+2-17. Who was the first person to summon the Shinigami
+    [text]
+2-18. How many anbu watched Hiruzen vs Orochimaru?
+    2 | 3 | 4 | 5
+2-19. In which order did the events occur: A. Itachi uses tsukuyomi B. Sasuke uses rigged shuriken C. Itachi steals Sasuke's eye. D. shuriken battle
+    C D A B | D C A B | C A B D | A C D B | A D C B | A B D C | C D B A | D B A C
+2-20. Who has not worn an akatsuki ring on their thumb?
+    Tobi | Sasori | Kakazu | Pain
+2-21. Who was alive in Hashirama's lifetime?
+    Tsunade | Mu | Kinkaku | Fugaku
+2-22. Which of the following is not a normal reaction chakra paper? The paper will
+    turn to ash | split in two | turn to stone and crumble | become damp | None of the above
+2-23. Which mask was destroyed first by kakashi?
+    Wind | Fire | Lighting | Water
+2-24. The Puppet Brigade was known to be most active in
+    The first shinobi war | The second shinobi war | The third shinobi war | The fourth shinobi war | Warring states period
+
+==============================
+Quiz 3 — Dodomans Ultimate NARUTO QUIZ 3 (QFTWCH4K1)
+==============================
+
+3-1. Where is DNA applied during the Edo Tensei Process?
+    On a sacrificial body | On a scroll | On the hands of the caster | On the tomb used to summon it
+3-2. At least how many users must have opened one of the 8 gates? [2 pts]
+    [numeric]
+3-3. Which is not a step required in constructing a Rasenshuriken
+    Rotation | Power | Containment | Apply nature transformation | Apply senjutsu | None of the above
+3-4. What percent of a tailed beast bomb is negative chakra?
+    20 | 80 | 50 | 33 | 40 | 60
+3-5. A test subject's captain's student's crush's crush's teammate's brother's birthplace's first-kage's student's rival's student's nature transformation(s) is/are:
+    Wind | Water | Fire | Lightning | Earth | None
+3-6. What was the cause of the First Shinobi World War?
+    Resources | Territory | Assassination | Tailed Beasts
+3-7. Which of the following events occurred during the 3rd Shinobi World War? [3 pts]
+    Sasori gained the nickname "Sasori of the Red Sand" | The Legendary Sanin gets their nickname | Madara's death | Minato gets his nickname "The Yellow Flash" | 3rd Raikage's death | Tsunade's lover's death
+3-8. Who is looking through this leaf? [image] (Bonus: what were they doing?)
+    A hokage | An uchiha | Danzo | A sanin
+3-9. The mission of stopping Gaara and finding Sasuke:
+    A class mission | B class mission | S class mission | Assigned by Kakashi | Assigned by Guy | Assigned by Asuma
+3-10. How many degrees of separation is between Sakura and Kaguya at the start of Shippuden? (State answer as number of people in between)
+    2-3 | 4-5 | 6-20 | 21+ | There is no connection | Unknown
+3-11. How many ninja are in the Sound Four?
+    [numeric]
+3-12. How many total frogs have directly battled against pain?
+    [numeric]
+3-13. PERSON A's wife's father's impersonator's sensei's son's killer's partner is PERSON B. PERSON C's mother's successor's husband's sensei is PERSON D whom is a writer. Who is the oldest? [2pts]
+    A | B | C | D
+3-14. Which of the following facts are incorrect? [2 pts]
+    Summoning contracts expire at death | Otogakure (Sound Village) has had an even number of kages | Hidan is right handed | The only known Kekkei Tota is Dust release
+3-15. Which of the following are true?
+    The kamui dimension is made from earthen materials | Obito attacked the Uchiha Police force during the Uchiha incident | Shikamaru was invited to join the 12 guardian ninjas | Traditionally, the minimum age to join the ANBU is 16
+3-16. What is the name of the Sequel to "Tale of Jiraiya the Gallant"
+    [text]
+3-17. What is the purpose of Hanzo of the Salamander's mask?
+    To protect others from himself | To protect himself from himself | No explicit reason | To protect himself from the polluted air | Allergies | None of the above
+3-18. Which of the following people don't wear their forehead protector on their head?
+    Might Guy | Konan | Hinata | Chōjūrō | Gaara | Sakura
+3-19. How many people witnessed Sasuke vs Itachi? (Including themselves) (In the anime)
+    [numeric]
+3-20. Who says "...People live their lives bound by what they accept as correct and true…"
+    A kage | An Akatsuki member | An Uchiha | Someone else
+3-21. What OST was playing during this scene? [image/audio]
+    Midaregami | Itachi's theme | Kakazu's Theme | Narukami
+3-22. Which of the following division-leader pairs were created for the 4th shinobi war?
+    Long-Range Division - Gaara | Mid-Range Division - Darui | Sensory Divison - Inoichi | Medical Division - Tsunade
+3-23. PERSON A's rival saved PERSON B whom's partner's sensei's sensei's summoner's sensei's sensei's sensei's father is PERSON C. What is the relationship between PERSON A and C?
+    Themselves | Family | Same Village | Victim/Killer
+3-24. What is about to happen? [image]
+    The smoke is about to ignite | Someone is about to get kicked | Someone is going run through that smoke | Someone is about to get hit by ninjutsu going through the smoke
+3-25. How did Sasuke find out that this was an imposter?
+    Face | Upper body | Lower body | Handedness | Not acting like naruto | Other
+3-26. Who says Guy's name in this scene? [image/audio]
+    Naruto | Guy | Kakashi | Minato | Lee | Madara
+3-27. Who was the one who first figured out that pain's eyes are linked?
+    Fukasaku | Shima | Jiraiya | Naruto | Kakashi
+3-28. "Stand still. These ninja have poison in their claws. We need to take it out of you quickly". What was the character who said this holding?
+    Weaponry | Jutsu(s) | People | Healing Equipment | Scroll | Nothing
+3-29. Who is the only person who has shown to be able to activate and deactivate a transplanted dojutsu at will?
+    [text]
+
+==============================
+Quiz 4 — Dodomans Ultimate NARUTO QUIZ 4 (Q62OXFG2L)
+==============================
+
+4-1. All but one summoning jutsu cast below share a key characteristic. Select the odd one out.
+    Pain summons other Pains | Naruto summons Gamabunta for the first time | Sarutobi summons Emma vs Orochimaru | Sasuke summons Garuda vs Danzo | Gai summons tortoise chasing Kisame
+4-2. Where are the location(s) of Shisui's eyes at the time of Neji's death?
+    Sealed away | Obito's possession | Incinerated | Naruto's possession | Itachi's possession | In a crow
+4-3. How was the 8 Tails sealed into Killer Bee?
+    4 Symbols Seal | Iron Armour Seal | 8 Trigrams Seal | Phantom Dragons Nine Consuming Seals | Amber Purifying Pot Tailed-beast sealing | Unknown
+4-4. How many Jinjurikis were also Kages?
+    [numeric]
+4-5. How many people wielded a perfect Susanoo who aren't reincarnates of Indra?
+    [numeric]
+4-6. Select the 3 tallest people
+    Fourth Raikage | Jiraiya | Might Guy | Sasuke | Han (5 Tails Jinchūriki) | Minato
+4-7. What is Kakashi looking at? [image only]
+4-8. What is the minimum number of non-Ōtsutsukis needed to evolve an Eternal Mangekyo Sharingan and Rinnegan?
+    [numeric]
+4-9. Select all the True statements
+    Sage art existed before Hagoromo distributed chakra | Rain genin were killed by Gaara's sand coffin in the forest of death | The first person Nagato killed was a hidden rain shinobi | Itachi has been shown to perform non-dojutsu genjutsu | Only one person has been the sensei of two kages | Pain can absorb particle style
+4-10. How many people have been shown to kill a toad from Mount Myōboku?
+    [numeric]
+4-11. How many people endured the Heavenly Transfer Technique?
+    [numeric]
+4-12. Which techniques have ever been deemed an 'Absolute Defense' (verbally)?
+    1000 Healings | Eight Trigrams Palms Revolving Heaven | Gaara's Shield of Sand | Susanoo
+4-13. How many opponents have tried to kamikaze sasuke with ninjutsu?
+    [numeric]
+4-14. Who is the first person to speak after this frame? [image]
+    An Akatuski member | A Kage | An Uchiha member | One of the rookie 9
+4-15. What is the next attack that is about to land on sasuke? [image]
+    Lariat | Sword stab(s) | Sweeping Kick | Sword slash(es)
+4-16. What is the hair color of the owner of this Kunai? [image]
+    Yellow | Black | Light Gray | Blue
+4-17. Which of the following people has been shown killing an uchiha?
+    Obito | Itachi | Hashirama | Tobirama | Sasuke | Kaguya
+4-18. How many people have walked into Kakashi's Chidori intentionally?
+    1 | 2 | 3 | 4+
+4-19. Character A is a character (NOT BELOW) that has battled against more of the characters below than anyone else. Select all such characters below that have fought A.
+    Naruto | Sasuke | Itachi | Jiraiya | Orochimaru | Kakashi | Kushina | Minato | Madara | Obito | Hashirama | Matatabi (Two Tails)
+4-20. Order the characters by how early they discovered that Tobi is NOT Madara.
+    A C B D | A B C D | B A C D | B A D C | B C A D | A C D B
+4-21. Father's murderer's murderer's sensei's teammate's savior's brother's murderer's father's rival's clan is clan A. How many people in this chain are from this clan?
+    [numeric]
+4-22. How many times has an arm/hand got detached/destroyed?
+    3 | 4-5 | 6-7 | 8+
+4-23. Fill in the blank: 'We believe that human beings cannot simply understand each other, and they never will, the shinobi world of ours is ruled by ________ and ...'
+    [text]
+4-24. What are things konan has created with her paper?
+    Wings | A sea | Butterflies | Birds | Kunai | Shuriken | Tree | Rock
+4-25. 'How many shinobi will ever get to this level?' — Person A talking about Person B. What is true about these two?
+    They are born in the same village | They are the same generation (roughly) | One of them is an incarnate of Indra/Ashura | They have only one sibling between the two of them
+4-26. How many opponents verbally recognized Kakashi when meeting him for the first time of which was during battle?
+    [numeric]
+4-27. Select the 2 characters that are currently physically closest to an Uchiha
+    [image only]
+4-28. Which character has fought 2 characters who succumbed to illness during a battle?
+    [text]
+4-29. Akatsuki superlatives! (time: at Obito's declaration of war)
+    [matching: Left = Oldest, Youngest, Killed the most Akatsuki's, Largest base chakra reserve, Largest summoning, Most screen time | Right = Nagato, Itachi, Kakazu, Deidara, Obito, Zetsu, Sasori, Sasuke, Kisame]
+4-30 to 4-35. Select the order of occurrences (1 = earliest)
+    [image-based ordering — six items, no text labels extracted]
+4-36 to 4-41. Which scene was not in slow motion?
+    [image-based selection — six items, no text labels extracted]
+4-42 to 4-45.
+    [not extracted — beyond fetch truncation]
+
+==============================
+Quiz 5 — Dodomans Ultimate NARUTO QUIZ 5 (QSQLDBXP8)
+==============================
+
+(Note: the platform has a leading "name for leaderboards" field; numbering below skips it.)
+
+5-1. Of all the Hokage that will ever be on the Hokage Rock, what is the most number of them alive at once? (Not edo)
+    [numeric]
+5-2. A leaf and a cloud ninja are the only known users of the ___ clone. What is true about these two?
+    One of them refers to Kakashi as senpai | One of them has fought one of the first 5 hokages | The leaf ninja is taller | One of them has wind release
+5-3. Great nation specialist teams
+    [matching: Teams = Kinkaku Force, 12 Guardian Ninja, 7 Swordsmen, Puppet Brigade, Explosion Corps | Villages = Hidden Leaf, Sand, Cloud, Stone, Mist | Categories = "Had the most number of members at one time" / "Most number of missing nin"]
+5-4. PERSON A's sons' student's student's student's student's godfather's rival's student's brother's killer. How many unique first names are in this chain?
+    [numeric]
+5-5. What is Naruto's favorite ramen?
+    Tonkotsu Ramen | Miso Pork Ramen | Shoyu Ramen | Shio Pork Ramen
+5-6. Who has not been shown to be able to perform summonings without blood?
+    Tsunade | Guy | Nagato (Animal Path) | Naruto
+5-7. Catch Phrases!
+    [matching: Characters = Shikamaru, Sakura, Killer B, Deidara, Itachi, Naruto | Phrases = Shannarō, Mata Kondo Da, Mendokusē, Dattebayo, Bakayarō! Konoyarō!, Geijutsu wa bakuhatsu da]
+5-8. Who has been shown to cast a Juinjutsu? (Cursed Seals)
+    Hiashi Hyuga | Danzo Shimura | Orochimaru | Hiruzen Sarutobi | Fū Yamanaka | Nagato
+5-9. How many instructors have been shown using the bell test?
+    [numeric]
+5-10. How many unique ninja tool weapons were used in the fights between Team 7 and Zabuza?
+    [numeric]
+5-11. A person's dad is PERSON A who saved the tutor of PERSON B whose rival's master's sensei is PERSON C whom knows all basic nature transformations. What is true?
+    They are of 3 different generations | None of them share a lastname | All of them have met Naruto | None of them participated in the 4th war
+5-12. How many in-between degrees of separation connect Kisame and Choza? (Before the 9 Tails attack)
+    2 | 3 | 4 | 5 | 6 | 7+
+5-13. The first Naruto Popularity Poll (Taken during Chunin Exams) [0.25 ea]
+    [ranking 1-10: Gaara, Rock Lee, Sakura, Haku, Zabuza, Naruto, Sasuke, Hinata, Kakashi, Iruka]
+5-14. What (first) name is shared amongst the most shinobi?
+    [text]
+5-15. Tailed Beasts!
+    [matching: Beasts = Shukaku, Matatabi, Isobu, Son Goku, Kokuo, Saiken, Chomei, Gyuki, Kurama | Criteria = "Has permanent body damage", "Their Jinchūriki killed an Akatsuki member first", "Has died and revived", "Has had the most number of Jinchūriki", "Has never manifested a tailed beast chakra cloak"]
+5-16. Select the first four final words in chronological order
+    "Kakashi..." | "You are the savior of this world" | "For the world of shinobi... for Konoha... I cannot let you live!" | "You are truly a kind child" | "I just want one last smoke" | "Because ... you called me a genius" | "It doesn't matter if i'm scattered to the wind! I will stop you!" | "Defeated... by a pack of brats"
+5-17. Itachi once says "On the brink of death, you'll see what kind of person you are" to someone. What is true about these two
+    They are on a 3 man squad together | Neither have ordinary human eyes | Exactly one of them have killed an Uchiha | One of them wields a weapon
+5-18. Where does Killer Bee not hold a sword in his 8-sword stance?
+    Elbow Armpit | Knee Armpit | Mouth | Armpit | Shoulder | Hand
+5-19. Match the Kage to their village
+    [matching: Hokage / Raikage / Tsuchikage / Mizukage / Kazekage]
+5-20. PERSON A's partner's teacher's son's killer's son's rival's student's crush's crush's brother is person B. Select all true statements.
+    They have fought each other | Person B is younger | There exists a person that has defeated both of them | They are from the same village
+5-21. Who has used a space-time jutsu?
+    Naruto | Sasuke | Hiruzen | Obito | Minato | Madara | Tsunade | Orochimaru
+5-22. Select the true statements
+    Crow has 6 arms | Sakura was the first to propose 3 man teams have a medical ninja | Darui is the only known user of Black Lightning | Truth seeking balls cannot nullify senjutsu
+5-23. What was the first thing Kamui was ever used to pass through?
+    Sword | Kunai | Wall | Punch | Rasengan | Other
+5-24. Which of the following scenes featured the OST "Stalemate"
+    Naruto vs Pain | Sasuke vs Itachi | Deidara vs Gaara | Chiyo vs Sasori | Naruto vs Orochimaru | Madara vs Hashirama (valley of the end)
+5-25. Describe where Sasuke was the first time he made eye contact with Danzo in a single 7 letter word.
+    [text — 7-letter constraint]
+
+==============================
+(Quiz 6 was not in the URL list — skipped.)
+==============================
+
+==============================
+Quiz 7 — DODOMAN'S ULTIMATE NARUTO QUIZ 7 (QK2TFN8DD)
+==============================
+
+(Note: this quiz overlaps heavily with Quiz 5. Numbering below skips the platform's leading "name for leaderboards" field.)
+
+7-1. Which of Kakashi's jutsu(s) were definitely not copied by his sharingan?
+    Chidori | Mud Wall | Kamui | Silent Killing | Clone technique | Water Dragon | Fire ball jutsu | Rasengan
+7-2. Select the first 4 pictures when sorted in chronological order
+    [image only — 8 images, no text labels]
+7-3. Which images are mirrored? (4)
+    [image only — 9 images, no text labels]
+7-4. Of all the Hokage that will ever be on the Hokage Rock, what is the most number of them alive at once? (Not edo)
+    [numeric]
+7-5. A leaf and a cloud ninja are the only known users of the ___ clone. What is true about these two?
+    One of them refers to Kakashi as senpai | One of them has fought one of the first 5 hokages | The leaf ninja is taller | One of them has wind release
+7-6. Great nation specialist teams
+    [matching: Left = Kinkaku Force, 12 Guardian Ninja, 7 Swordsmen, Puppet Brigade, Explosion Corps | Right = Hidden Leaf, Hidden Sand, Hidden Cloud, Hidden Stone, Hidden Mist]
+7-7. PERSON A's sons' student's student's student's student's godfather's rival's student's brother's killer. How many unique first names are in this chain?
+    [numeric]
+7-8. What is Naruto's favorite ramen?
+    Tonkotsu Ramen | Miso Pork Ramen | Shoyu Ramen | Shio Pork Ramen
+7-9. Who has not been shown to be able to perform summonings without blood?
+    Tsunade | Guy | Nagato (Animal Path) | Naruto
+7-10. Catch Phrases!
+    [matching: Left = Shikamaru, Sakura, Killer B, Deidara, Itachi, Naruto | Right = Shannarō, Mata Kondo Da, Mendokusē, Dattebayo, Bakayarō! Konoyarō!, Geijutsu wa bakuhatsu da]
+7-11. Who has been shown to cast a Juinjutsu? (Cursed Seals)
+    Hiashi Hyuga | Danzo Shimura | Orochimaru | Hiruzen Sarutobi | Fū Yamanaka | Nagato
+7-12. How many instructors have been shown using the bell test?
+    [numeric]
+7-13. How many unique ninja tool weapons were used in the fights between Team 7 and Zabuza?
+    [numeric]
+7-14. A person's dad is PERSON A who saved the tutor of PERSON B whose rival's master's sensei is PERSON C whom knows all basic nature transformations. What is true?
+    They are of 3 different generations | None of them share a lastname | All of them have met Naruto | None of them participated in the 4th war
+7-15. How many in-between degrees of separation connect Kisame and Choza? (Before the 9 Tails attack)
+    2 | 3 | 4 | 5 | 6 | 7+
+7-16. The first Naruto Popularity Poll (Taken during Chunin Exams)
+    [ranking: Gaara, Rock Lee, Sakura, Haku, Zabuza, Naruto, Sasuke, Hinata, Kakashi, Iruka]
+7-17. What (first) name is shared amongst the most shinobi?
+    [text]
+7-18. Tailed Beasts!
+    [matching: Left = Shukaku, Matatabi, Isobu, Son Goku, Kokuo, Saiken, Chomei, Gyuki, Kurama | Right = Has permanent body damage, Their Jinchūriki killed an Akatsuki member first, Has died and revived, Has had the most number of Jinchūriki, Has never manifested a tailed beast chakra cloak]
+7-19. Select the first four final words in chronological order
+    "Kakashi..." | "You are the savior of this world" | "For the world of shinobi... for Konoha... I cannot let you live!" | "You are truly a kind child" | "I just want one last smoke" | "Because ... you called me a genius" | "It doesn't matter if i'm scattered to the wind! I will stop you!" | "Defeated... by a pack of brats"
+7-20. Itachi once says 'On the brink of death, you'll see what kind of person you are' to someone. What is true about these two
+    They are on a 3 man squad together | Neither have ordinary human eyes | Exactly one of them have killed an Uchiha | One of them wields a weapon
+7-21. Where does Killer Bee not hold a sword in his 8-sword stance?
+    Elbow Armpit | Knee Armpit | Mouth | Armpit | Shoulder | Hand
+7-22. Match the Kage to their village
+    [matching: Left = Hokage, Raikage, Tsuchikage, Mizukage, Kazekage | Right = image only]
+7-23. PERSON A's partner's teacher's son's killer's son's rival's student's crush's crush's brother is person B. Select all true statements.
+    They have fought each other | Person B is younger | There exists a person that has defeated both of them | They are from the same village
+7-24. Who has used a space-time jutsu?
+    Naruto | Sasuke | Hiruzen | Obito | Minato | Madara | Tsunade | Orochimaru
+7-25. Select the true statements
+    Crow has 6 arms | Sakura was the first to propose 3 man teams have a medical ninja | Darui is the only known user of Black Lightning | Truth seeking balls cannot nullify senjutsu

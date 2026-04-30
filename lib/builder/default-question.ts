@@ -13,7 +13,7 @@ export function defaultQuestion(type: QuestionType): Question {
   const base = {
     id,
     prompt: { text: "New question" },
-    explanation: "Explanation goes here.",
+    explanation: { text: "Explanation goes here." },
   };
   switch (type) {
     case "mc-single":
@@ -77,6 +77,13 @@ export function defaultQuestion(type: QuestionType): Question {
         ...base,
         type: "name",
         acceptedAnswers: ["New answer"],
+      };
+    case "letters":
+      return {
+        ...base,
+        type: "letters",
+        answer: "ITACHI",
+        hint: "Sasuke's older brother",
       };
   }
 }

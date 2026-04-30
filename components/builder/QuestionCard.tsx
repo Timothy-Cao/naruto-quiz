@@ -10,6 +10,7 @@ import { CategorizeForm } from "./forms/CategorizeForm";
 import { OrderForm } from "./forms/OrderForm";
 import { SliderForm } from "./forms/SliderForm";
 import { NameForm } from "./forms/NameForm";
+import { LettersForm } from "./forms/LettersForm";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -32,6 +33,7 @@ const TYPE_LABEL: Record<Question["type"], string> = {
   order: "Order",
   slider: "Slider",
   name: "Name",
+  letters: "Letters",
 };
 
 export function QuestionCard({
@@ -147,5 +149,7 @@ function Form({
       return <SliderForm question={question} onChange={onChange} />;
     case "name":
       return <NameForm question={question} onChange={onChange} />;
+    case "letters":
+      return <LettersForm question={question} onChange={onChange} />;
   }
 }

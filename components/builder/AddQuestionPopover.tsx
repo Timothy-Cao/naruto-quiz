@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import type { Question } from "@/lib/quiz-schema";
-import { Plus, ListChecks, ListPlus, Layers, ArrowDown, Sliders, Type } from "lucide-react";
+import { Plus, ListChecks, ListPlus, Layers, ArrowDown, Sliders, Type, Hash } from "lucide-react";
 
 type QuestionType = Question["type"];
 
@@ -12,6 +12,7 @@ const TYPES: { type: QuestionType; label: string; icon: React.ElementType; desc:
   { type: "order", label: "Order", icon: ArrowDown, desc: "Sort items along an axis" },
   { type: "slider", label: "Slider", icon: Sliders, desc: "Pick a number on a range" },
   { type: "name", label: "Name", icon: Type, desc: "Type a name with autocomplete" },
+  { type: "letters", label: "Letters", icon: Hash, desc: "Crossword-style letter boxes with a hint" },
 ];
 
 export function AddQuestionPopover({

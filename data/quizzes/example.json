@@ -13,7 +13,7 @@
         { "id": "hiruzen", "text": "Hiruzen Sarutobi" }
       ],
       "correctId": "minato",
-      "explanation": "Minato Namikaze, the Yellow Flash, served as the Fourth Hokage. He sealed the Nine-Tails into his newborn son Naruto, dying in the process."
+      "explanation": { "text": "Minato Namikaze, the Yellow Flash, served as the Fourth Hokage. He sealed the Nine-Tails into his newborn son Naruto, dying in the process." }
     },
     {
       "id": "q2",
@@ -28,7 +28,7 @@
         { "id": "konan", "text": "Konan" }
       ],
       "correctIds": ["itachi", "kisame", "pain", "konan"],
-      "explanation": "Itachi, Kisame, Pain, and Konan were all Akatsuki members. Jiraiya was a Sannin and infiltrated Akatsuki only as a spy. Kakashi was never a member."
+      "explanation": { "text": "Itachi, Kisame, Pain, and Konan were all Akatsuki members. Jiraiya was a Sannin and infiltrated Akatsuki only as a spy. Kakashi was never a member." }
     },
     {
       "id": "q3",
@@ -49,7 +49,7 @@
         { "id": "pain", "text": "Pain", "correctBucketId": "akatsuki" },
         { "id": "konan", "text": "Konan", "correctBucketId": "akatsuki" }
       ],
-      "explanation": "Naruto, Sasuke, and Sakura are all genin of Konoha (Team 7). Gaara and Temari are siblings from the Sand Village. Itachi, Pain, and Konan are Akatsuki members."
+      "explanation": { "text": "Naruto, Sasuke, and Sakura are all genin of Konoha (Team 7). Gaara and Temari are siblings from the Sand Village. Itachi, Pain, and Konan are Akatsuki members." }
     },
     {
       "id": "q4",
@@ -66,7 +66,7 @@
       "startLabel": "Earliest",
       "endLabel": "Latest",
       "correctOrder": ["hashirama", "tobirama", "hiruzen", "minato", "tsunade"],
-      "explanation": "Hashirama (1st) → Tobirama (2nd) → Hiruzen (3rd) → Minato (4th) → Tsunade (5th)."
+      "explanation": { "text": "Hashirama (1st) → Tobirama (2nd) → Hiruzen (3rd) → Minato (4th) → Tsunade (5th)." }
     },
     {
       "id": "q5",
@@ -76,14 +76,14 @@
       "max": 10,
       "step": 1,
       "correctValue": 9,
-      "explanation": "There are nine tailed beasts, originally split off from the Ten-Tails (Jubi). Numbered One-Tail (Shukaku) through Nine-Tails (Kurama)."
+      "explanation": { "text": "There are nine tailed beasts, originally split off from the Ten-Tails (Jubi). Numbered One-Tail (Shukaku) through Nine-Tails (Kurama)." }
     },
     {
       "id": "q6",
       "type": "name",
       "prompt": { "text": "Name **Sasuke's** older brother." },
       "acceptedAnswers": ["Itachi Uchiha", "Itachi"],
-      "explanation": "Itachi Uchiha massacred the Uchiha clan under orders from Konoha's leadership to prevent a coup, sparing only his younger brother Sasuke."
+      "explanation": { "text": "Itachi Uchiha massacred the Uchiha clan under orders from Konoha's leadership to prevent a coup, sparing only his younger brother Sasuke." }
     },
     {
       "id": "q7",
@@ -99,7 +99,7 @@
         { "id": "samidare", "text": "Samidare" }
       ],
       "correctId": "samidare",
-      "explanation": "**Samidare** (early summer rain) — used in many of Shippuden's quieter, somber moments. The four candidates here are all instrumental Shippuden cues; *Saika* is the gentle piano piece, *Hitotsuba Chikara* is more strident, and *Gekiha* is heavier percussion."
+      "explanation": { "text": "**Samidare** (early summer rain) — used in many of Shippuden's quieter, somber moments. The four candidates here are all instrumental Shippuden cues; *Saika* is the gentle piano piece, *Hitotsuba Chikara* is more strident, and *Gekiha* is heavier percussion." }
     },
     {
       "id": "q8",
@@ -114,7 +114,18 @@
         { "id": "d", "audioSrc": "/music/naruto-ost/Hitotsuba Chikara.mp3" }
       ],
       "correctId": "c",
-      "explanation": "Clip C is **Samidare** — soft strings and gentle piano. The others are *Saika* (delicate piano), *Gekiha* (driving percussion), and *Hitotsuba Chikara* (strident, layered)."
+      "explanation": {
+        "text": "Clip C is **Samidare** — soft strings and gentle piano. The others are *Saika* (delicate piano), *Gekiha* (driving percussion), and *Hitotsuba Chikara* (strident, layered). Listen to the answer:",
+        "audioSrc": "/music/naruto-ost/Samidare.mp3"
+      }
+    },
+    {
+      "id": "q9",
+      "type": "letters",
+      "prompt": { "text": "Type the missing word." },
+      "hint": "Sasuke's older brother — six letters",
+      "answer": "ITACHI",
+      "explanation": { "text": "**Itachi Uchiha** — six letters." }
     }
   ]
 }

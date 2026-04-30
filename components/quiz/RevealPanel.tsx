@@ -1,7 +1,8 @@
 import { Check, X, CircleDashed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ScoreResult } from "@/lib/scoring";
-import { Markdown } from "./Markdown";
+import type { MediaBlockT } from "@/lib/quiz-schema";
+import { MediaBlock } from "./MediaBlock";
 import { DifficultyRater } from "./DifficultyRater";
 
 export function RevealPanel({
@@ -11,13 +12,15 @@ export function RevealPanel({
   questionId,
 }: {
   result: ScoreResult;
-  explanation: string;
+  /** The post-confirm answer key. A MediaBlock so authors can reveal an
+   *  image (e.g. the actual scene) or audio (e.g. play the right OST after
+   *  the user picks) alongside the text walkthrough. */
+  explanation: MediaBlockT;
   quizSlug: string;
   questionId: string;
 }) {
   const fullCredit = result.points === result.maxPoints;
   const partial = result.points > 0 && result.points < result.maxPoints;
-  const wrong = result.points === 0;
 
   const Icon = fullCredit ? Check : partial ? CircleDashed : X;
   const iconColor = fullCredit
@@ -32,7 +35,6 @@ export function RevealPanel({
       : "border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/10";
   const headline = fullCredit ? "Correct" : partial ? "Partial credit" : "Incorrect";
 
-  // Format points: drop trailing zeros, max 2 decimals.
   const fmt = (n: number) =>
     Number.isInteger(n) ? n.toString() : n.toFixed(2).replace(/\.?0+$/, "");
 
@@ -53,7 +55,7 @@ export function RevealPanel({
         )}
       </div>
       <div className="text-sm text-[var(--color-text)] leading-relaxed">
-        <Markdown>{explanation}</Markdown>
+        <MediaBlock block={explanation} size="prompt" />
       </div>
       <DifficultyRater quizSlug={quizSlug} questionId={questionId} />
     </div>

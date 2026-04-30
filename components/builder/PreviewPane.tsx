@@ -175,6 +175,11 @@ function generateExampleOutcomes(q: Question): { label: string; points: number; 
       out.push({ label: "Wrong name", ...scoreQuestion(q, "Definitely Not Right") });
       break;
     }
+    case "letters": {
+      out.push({ label: "Correct letters", ...scoreQuestion(q, q.answer) });
+      out.push({ label: "Wrong letters", ...scoreQuestion(q, "WRONG") });
+      break;
+    }
   }
   return out;
 }

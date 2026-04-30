@@ -4,7 +4,7 @@ import { QuizSchema, MediaBlock } from "@/lib/quiz-schema";
 const baseQuestion = {
   id: "q1",
   prompt: { text: "Sample prompt?" },
-  explanation: "Because so.",
+  explanation: { text: "Because so." },
 };
 
 describe("MediaBlock", () => {
@@ -124,9 +124,36 @@ describe("QuizSchema", () => {
           min: 0, max: 10, step: 1, correctValue: 9 },
         { ...baseQuestion, id: "q6", type: "name",
           acceptedAnswers: ["Itachi", "Itachi Uchiha"] },
+        { ...baseQuestion, id: "q7", type: "letters",
+          answer: "ITACHI", hint: "Sasuke's older brother" },
       ],
     };
     expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("accepts an explanation with audio (post-confirm answer key with media)", () => {
+    const quiz = {
+      slug: "ex",
+      title: "Ex",
+      questions: [{
+        ...baseQuestion,
+        explanation: { text: "Listen — the OST is **Samidare**.", audioSrc: "/music/Samidare.mp3" },
+        type: "mc-single",
+        options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
+        correctId: "a",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).not.toThrow();
+  });
+
+  it("rejects letters question without an answer or hint", () => {
+    const quiz = {
+      slug: "ex", title: "Ex",
+      questions: [{
+        ...baseQuestion, type: "letters", answer: "",
+      }],
+    };
+    expect(() => QuizSchema.parse(quiz)).toThrow();
   });
 
   it("rejects categorize where an item.correctBucketId doesn't match any bucket", () => {

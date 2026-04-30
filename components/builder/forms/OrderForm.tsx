@@ -162,13 +162,12 @@ export function OrderForm({ question, onChange }: Props) {
       </fieldset>
 
       <label className="grid gap-1 text-sm">
-        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Explanation</span>
-        <textarea
-          value={question.explanation}
-          onChange={(e) => onChange({ ...question, explanation: e.target.value })}
-          rows={3}
-          maxLength={limit("questionExplanation")}
-          className={cn(textareaCls, "w-full")}
+        <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">Explanation (post-confirm answer key — supports media)</span>
+        <MediaBlockEditor
+          block={question.explanation}
+          onChange={(explanation) => onChange({ ...question, explanation })}
+          textRows={3}
+          textMaxLength={limit("questionExplanation")}
         />
       </label>
 

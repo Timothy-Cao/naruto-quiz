@@ -5,10 +5,10 @@ import type { Quiz } from "@/lib/quiz-schema";
 const quiz: Quiz = {
   slug: "ex", title: "Ex",
   questions: [
-    { id: "q1", type: "mc-single", prompt: { text: "p1" }, explanation: "e1",
+    { id: "q1", type: "mc-single", prompt: { text: "p1" }, explanation: { text: "e1" },
       options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
       correctId: "a" },
-    { id: "q2", type: "mc-single", prompt: { text: "p2" }, explanation: "e2",
+    { id: "q2", type: "mc-single", prompt: { text: "p2" }, explanation: { text: "e2" },
       options: [{ id: "x", text: "X" }, { id: "y", text: "Y" }],
       correctId: "x" },
   ],

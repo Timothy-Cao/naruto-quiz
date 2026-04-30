@@ -59,7 +59,10 @@ const CategorizeItem = refineMedia(
 const QuestionBase = {
   id: z.string().min(1),
   prompt: MediaBlock,
-  explanation: z.string().min(1),
+  // The post-confirm "answer key" / explanation. A MediaBlock so authors can
+  // attach an image (e.g. the actual scene) or audio (e.g. play the right
+  // OST after the user picks) alongside the text walkthrough.
+  explanation: MediaBlock,
 };
 
 const ScoringBase = z.object({
@@ -165,8 +168,22 @@ const Name = z.object({
   scoring: ScoringBase.optional(),
 });
 
+/**
+ * Letters — crossword-style typing question. The author specifies a single
+ * canonical answer and a hint; the player renders one box per letter (spaces
+ * stay as visual gaps) and the user types in. Comparison is
+ * case-insensitive and ignores leading/trailing whitespace.
+ */
+const Letters = z.object({
+  ...QuestionBase,
+  type: z.literal("letters"),
+  answer: z.string().min(1),
+  hint: z.string().min(1),
+  scoring: ScoringBase.optional(),
+});
+
 export const QuestionSchema = z.discriminatedUnion("type", [
-  McSingle, McMulti, Categorize, Order, Slider, Name,
+  McSingle, McMulti, Categorize, Order, Slider, Name, Letters,
 ]);
 
 export const QuizSchema = z.object({
@@ -188,6 +205,7 @@ export type CategorizeQuestion = z.infer<typeof Categorize>;
 export type OrderQuestion = z.infer<typeof Order>;
 export type SliderQuestion = z.infer<typeof Slider>;
 export type NameQuestion = z.infer<typeof Name>;
+export type LettersQuestion = z.infer<typeof Letters>;
 
 /** Helper to extract the primary text of a media block, falling back to a placeholder. */
 export function mediaText(m: MediaBlockT | undefined): string {

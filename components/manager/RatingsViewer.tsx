@@ -25,6 +25,7 @@ const TYPE_LABEL: Record<string, string> = {
   order: "Order",
   slider: "Slider",
   name: "Name",
+  letters: "Letters",
 };
 
 export function RatingsViewer({ quizzes }: { quizzes: ListedQuiz[] }) {
