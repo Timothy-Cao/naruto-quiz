@@ -26,8 +26,8 @@
         { "id": "alive", "text": "Still alive" },
         { "id": "old", "text": "Old age" }
       ],
-      "correctId": "battle",
-      "explanation": { "text": "**[VERIFY]** Reverse-resolved: healer = Tsunade → granddaughter of Hashirama → Hashirama's rival = Madara → manipulator = Black Zetsu → manipulator = Kaguya → controller = Hagoromo → murdered son = Indra → Indra's father = Hagoromo. Person A's son was killed in battle. Worth re-checking the chain end-to-end." }
+      "correctId": "suicide",
+      "explanation": { "text": "Walking the chain backwards: healer = Tsunade → granddaughter of **Hashirama** → Hashirama's rival = **Madara** → Madara was the manipulator of **Obito** → Obito was the manipulator of **Nagato** → Nagato controlled **Pain** → Pain killed **Kakashi** during the Konoha invasion → Kakashi's father = **Sakumo Hatake**. Sakumo took his own life after being shamed for choosing to save his teammates over completing his mission." }
     },
     {
       "id": "q3",
