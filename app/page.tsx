@@ -39,7 +39,7 @@ export default function Home() {
           href="https://timcao.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs uppercase tracking-widest text-[var(--color-text-dim)] hover:text-[var(--color-accent)] transition-colors"
+          className="shimmer-link text-sm uppercase tracking-widest"
         >
           A Tim Cao Site
         </a>
