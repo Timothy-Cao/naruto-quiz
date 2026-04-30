@@ -60,15 +60,15 @@
     {
       "id": "q5",
       "type": "mc-single",
-      "prompt": { "text": "**Person A's** wife's father's impersonator's sensei's son's killer's partner is **Person B**. **Person C's** mother's successor's husband's sensei is **Person D**, who is a writer. Who is the oldest?" },
+      "prompt": { "text": "**Person A's** father's impersonator's sensei's son's killer's partner is **Person B**. **Person C's** mother's successor's husband's sensei is **Person D**, who is a writer. Who is the oldest?" },
       "options": [
         { "id": "a", "text": "A" },
         { "id": "b", "text": "B" },
         { "id": "c", "text": "C" },
         { "id": "d", "text": "D" }
       ],
-      "correctId": "d",
-      "explanation": { "text": "**[VERIFY]** D-the-writer most likely resolves to Jiraiya (the most famous shinobi author). Of the four, the writer's generation usually predates the others." }
+      "correctId": "b",
+      "explanation": { "text": "**Chain 1:** A = Temari / Gaara / Kankuro → father = **4th Kazekage** → impersonator = **Orochimaru** (during the Konoha invasion) → sensei = **Hiruzen** → son = **Asuma** → killer = **Hidan** → partner = **Kakuzu** = B.\n\n**Chain 2:** D = the writer = **Jiraiya** → student = **Minato** → wife = **Kushina** (whose predecessor as Kurama's jinchuriki was Mito) → so Kushina's predecessor = **Mito Uzumaki**, and Mito is C's mother → C = Mito's daughter.\n\n**Ages:** Kakuzu was already an adult during Hashirama's era (he tried to assassinate Hashirama and lost) — older than Mito's daughter (born after Mito married Hashirama), older than Jiraiya, much older than the Sand sibling. **B (Kakuzu) is the oldest.**" }
     },
     {
       "id": "q6",
