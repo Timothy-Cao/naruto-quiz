@@ -13,14 +13,10 @@
  * (kept simple — no auto-suffix logic).
  */
 export const GLOSSARY: Record<string, string> = {
-  "sibling-student":
-    "Two students who share the same sensei. (E.g. Naruto and Sakura are sibling-students under Kakashi.)",
-  "sibling-students":
-    "Two students who share the same sensei. (E.g. Naruto and Sakura are sibling-students under Kakashi.)",
-  "sibling-teacher":
-    "Two teachers that share the same student. (E.g. Iruka and Kakashi are sibling-teachers of Naruto.)",
-  "sibling-teachers":
-    "Two teachers that share the same student. (E.g. Iruka and Kakashi are sibling-teachers of Naruto.)",
+  "sibling-student": "Two students who share the same sensei.",
+  "sibling-students": "Two students who share the same sensei.",
+  "sibling-teacher": "Two teachers that share the same student.",
+  "sibling-teachers": "Two teachers that share the same student.",
 };
 
 /**

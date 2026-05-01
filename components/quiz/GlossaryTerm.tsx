@@ -7,8 +7,13 @@ import { cn } from "@/lib/utils";
  * tooltip showing the definition. The Markdown component automatically
  * wraps matching terms — authors don't add this manually.
  *
+ * Implemented as a <span> (not a <button>) so the global "button hover →
+ * filter brightness" rule doesn't fire on it; that filter caused a visible
+ * flash on hover when stacked with the term's own color transition. The
+ * span carries tabIndex + Enter/Space handling for keyboard parity.
+ *
  * Mobile: native hover doesn't fire on touch, so we also toggle on tap and
- * keep open until tap-elsewhere.
+ * keep open until tap-elsewhere or blur.
  */
 export function GlossaryTerm({
   surface,
@@ -21,21 +26,28 @@ export function GlossaryTerm({
 
   return (
     <span className="relative inline-block group">
-      <button
-        type="button"
+      <span
+        className={cn(
+          "glossary-term-trigger",
+          "border-b border-dotted cursor-help select-none",
+          "border-[var(--color-accent)] text-[var(--color-accent)]",
+          "hover:text-[var(--color-text)] hover:border-[var(--color-text)]",
+        )}
+        tabIndex={0}
         onClick={(e) => {
           e.stopPropagation();
           setTapOpen((o) => !o);
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setTapOpen((o) => !o);
+          }
+        }}
         onBlur={() => setTapOpen(false)}
-        className={cn(
-          "border-b border-dotted cursor-help bg-transparent p-0 text-inherit font-inherit",
-          "border-[var(--color-accent)] text-[var(--color-accent)]",
-          "hover:text-[var(--color-text)] hover:border-[var(--color-text)]",
-        )}
       >
         {surface}
-      </button>
+      </span>
       <span
         role="tooltip"
         className={cn(
@@ -43,9 +55,7 @@ export function GlossaryTerm({
           "rounded border border-[var(--color-border-2)] bg-[var(--color-surface-2)]",
           "text-[var(--color-text)] text-xs leading-snug shadow-2xl",
           "pointer-events-none transition-opacity duration-150",
-          tapOpen
-            ? "opacity-100"
-            : "opacity-0 group-hover:opacity-100",
+          tapOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100",
         )}
       >
         {definition}

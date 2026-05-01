@@ -173,3 +173,14 @@ a[href]:active,
     color: var(--color-text-dim);
   }
 }
+
+/* Glossary term triggers are inline spans (not buttons), but we want them
+   exempt from the global button-like hover filter so the tooltip-on-hover
+   doesn't flash. Override the global filter/transform rules here. */
+.glossary-term-trigger {
+  filter: none !important;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.glossary-term-trigger:active {
+  transform: none !important;
+}
