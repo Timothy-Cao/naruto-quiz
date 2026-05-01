@@ -129,15 +129,15 @@
       "type": "mc-single",
       "prompt": { "text": "**Character A's** spouse's killer's leader killed **Character B**, whose family member killed the son of **Character C**. Which statement could not be said by any of A, B, C?" },
       "options": [
-        { "id": "nicks", "text": "Every known member of my clan has a famous nickname" },
-        { "id": "sealed", "text": "I've sealed a tailed beast into someone before" },
-        { "id": "fought-leader", "text": "I've fought the current leader of a hidden village" },
-        { "id": "genjutsu", "text": "I specialize in genjutsu" },
-        { "id": "uchiha", "text": "I am the only one of us 3 who has fought 2 or more Uchiha in the past" },
-        { "id": "knew-a", "text": "I've known Character A since I was young" }
+        { "id": "jonin-sensei", "text": "I have led a genin team as their jōnin sensei." },
+        { "id": "sealed", "text": "I have sealed a tailed beast into a human host." },
+        { "id": "village-leader", "text": "I have served as the leader of my village." },
+        { "id": "outlived", "text": "I have outlived someone I loved on the battlefield." },
+        { "id": "only-sharingan", "text": "I am the only one of us 3 who has wielded a Sharingan." },
+        { "id": "sibling", "text": "I have lost a sibling." }
       ],
-      "correctId": "genjutsu",
-      "explanation": { "text": "**[VERIFY]** Chain resolves to a trio of broadly-skilled non-genjutsu specialists. The 'I specialize in genjutsu' line is the one none of them could honestly say." }
+      "correctId": "sibling",
+      "explanation": { "text": "**Chain:** A's spouse Asuma was killed by Hidan, whose Akatsuki leader Pain killed Kakashi (B). B's father Sakumo Hatake killed Chiyo's (C's) son during the Second Shinobi War.\n\n**A = Kurenai · B = Kakashi · C = Chiyo.**\n\n- *Led a genin team* — Kurenai (Team 8) and Kakashi (Team 7) ✓\n- *Sealed a tailed beast* — Chiyo (Shukaku into Gaara) ✓\n- *Served as the leader of my village* — Kakashi (6th Hokage) ✓\n- *Outlived someone I loved on the battlefield* — Kurenai (Asuma), Kakashi (Rin / Obito / Minato), Chiyo (her son, killed by Sakumo) ✓\n- *Only one of us 3 who has wielded a Sharingan* — Kakashi ✓ (and the 'only' claim holds — Kurenai and Chiyo never wielded one)\n\n**The lie: 'I have lost a sibling.'** Kurenai has no documented siblings, Kakashi is an only child, and Chiyo's brother Ebizo is still alive when she dies. None of the three could truthfully say it." }
     },
     {
       "id": "q11",
