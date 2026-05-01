@@ -108,8 +108,8 @@
       "min": 1,
       "max": 12,
       "step": 1,
-      "correctValue": 7,
-      "explanation": { "text": "**[VERIFY]** Long chain — re-walk during review. Best guess in the 6-8 range." }
+      "correctValue": 8,
+      "explanation": { "text": "Anchored at A = **Sasuke Sarutobi** (Hiruzen's father, named in canon).\n\n1. **Sasuke** Sarutobi (A)\n2. **Hiruzen** (son)\n3. **Jiraiya** (student)\n4. **Minato** (student)\n5. **Kakashi** (student)\n6. **Naruto** (student)\n7. *Jiraiya again* — Naruto's godfather (repeat)\n8. **Orochimaru** (rival)\n9. **Sasuke** Uchiha (rival's student — *same first name as A*)\n10. **Itachi** (brother)\n11. *Sasuke Uchiha again* — Itachi's killer (repeat)\n\nDistinct first names: **Sasuke, Hiruzen, Jiraiya, Minato, Kakashi, Naruto, Orochimaru, Itachi = 8.** The two Sasukes (Sarutobi and Uchiha) collapse into one unique first name." }
     },
     {
       "id": "q9",
