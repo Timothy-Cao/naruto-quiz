@@ -121,8 +121,8 @@
         { "id": "defeated", "text": "There exists a person that has defeated both of them" },
         { "id": "village", "text": "They are from the same village" }
       ],
-      "correctIds": ["younger", "village"],
-      "explanation": { "text": "**[VERIFY]** Long reference chain — best-guess: B is younger than A and they share a village; no on-page mutual fight or shared defeater. Re-walk during review." }
+      "correctIds": ["fought", "defeated"],
+      "explanation": { "text": "Walking the chain backward from B:\n\n- B's brother's crush's crush = **Sasuke** (Sakura's crush). So Sasuke's crush-back-resolver Sakura is P8, Lee (whose crush is Sakura) is P7.\n- Lee's sensei = **Guy** (P6) → Guy's rival = **Kakashi** (P5) → Kakashi's father = **Sakumo Hatake / White Fang** (P4 — the killer).\n- Sakumo killed **Sasori's father** during the Second Shinobi War (P3) → P3's mother = **Chiyo** (P2 — the teacher of Sasori).\n- Chiyo's student = **Sasori** (P1) → Sasori's Akatsuki partner = **Deidara** (A).\n- B = Sasuke's brother = **Itachi**.\n\n**A = Deidara, B = Itachi.**\n\n- *Fought each other* ✓ — Itachi put Deidara in genjutsu when Deidara was recruited to Akatsuki.\n- *B is younger* ✗ — Itachi (~21) is older than Deidara (~19) in Shippuden Part 1.\n- *Same person defeated both* ✓ — **Sasuke** survived the C0 detonation against Deidara and ended Itachi's fight as the surviving opponent.\n- *Same village* ✗ — Deidara is Iwa, Itachi is Konoha." }
     },
     {
       "id": "q10",
