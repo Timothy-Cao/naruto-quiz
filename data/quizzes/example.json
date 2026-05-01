@@ -93,23 +93,13 @@
     },
     {
       "id": "q7",
-      "type": "mc-multi",
-      "prompt": { "text": "**Person X's** father's murderer's murderer's sensei's teammate's savior's brother's murderer's father's rival's clan is clan A. Which characters in this chain belong to clan A?" },
-      "options": [
-        { "id": "x", "text": "Person X" },
-        { "id": "father", "text": "Person X's father" },
-        { "id": "fathers-killer", "text": "Father's murderer" },
-        { "id": "fathers-killers-killer", "text": "Father's murderer's murderer" },
-        { "id": "sensei", "text": "The sensei" },
-        { "id": "teammate", "text": "The teammate" },
-        { "id": "savior", "text": "The savior" },
-        { "id": "brother", "text": "The savior's brother" },
-        { "id": "brothers-killer", "text": "The brother's murderer" },
-        { "id": "killer-father", "text": "The brother's murderer's father" },
-        { "id": "rival", "text": "The rival" }
-      ],
-      "correctIds": ["x", "father", "fathers-killer", "savior", "brother", "rival"],
-      "explanation": { "text": "**[VERIFY]** Anchored at Person X = Sasuke: chain resolves Fugaku (Uchiha) → Itachi (Uchiha) → Sasuke → Kakashi → Obito (Uchiha) → Madara (Uchiha) → Izuna (Uchiha) → Tobirama → Butsuma → Tajima (Uchiha). Clan A = Uchiha. **Note:** original was a slider asking for the count (~7); reframed here as mc-multi for clarity. Adjust during review if you want it numeric." }
+      "type": "slider",
+      "prompt": { "text": "**Person X's** father's murderer's murderer's sensei's teammate's savior's brother's murderer's father's rival's clan is clan A. How many **unique characters** in this chain belong to clan A?" },
+      "min": 0,
+      "max": 11,
+      "step": 1,
+      "correctValue": 7,
+      "explanation": { "text": "Anchored at Person X = **Sasuke**, the chain resolves position-by-position:\n\n1. Person X = **Sasuke** (Uchiha)\n2. X's father = **Fugaku** (Uchiha)\n3. Father's murderer = **Itachi** (Uchiha)\n4. Father's murderer's murderer = **Sasuke** *(loops back — already counted)*\n5. Sensei = **Kakashi** (Hatake)\n6. Teammate = **Obito** (Uchiha)\n7. Savior = **Madara** (Uchiha)\n8. Brother = **Izuna** (Uchiha)\n9. Brother's murderer = **Tobirama** (Senju)\n10. Brother's murderer's father = **Butsuma** (Senju)\n11. Rival = **Tajima** (Uchiha)\n\nClan A = **Uchiha**. Unique Uchiha members in the chain: Sasuke, Fugaku, Itachi, Obito, Madara, Izuna, Tajima = **7**." }
     },
     {
       "id": "q8",
