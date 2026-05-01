@@ -88,8 +88,8 @@
         { "id": "hashirama", "text": "Hashirama" },
         { "id": "matatabi", "text": "Matatabi (Two Tails)" }
       ],
-      "correctIds": ["naruto", "minato", "kushina", "madara", "hashirama"],
-      "explanation": { "text": "**[VERIFY]** Character A = Kurama (Nine-Tails) — fought Madara, Hashirama, Mito, Kushina (jinchuriki sealing), Minato, and Naruto. Five of the listed characters. Two-Tails wouldn't beat that count." }
+      "correctIds": ["naruto", "sasuke", "jiraiya", "orochimaru", "kakashi", "kushina", "minato", "madara", "obito", "hashirama", "matatabi"],
+      "explanation": { "text": "**Character A = Kurama (Nine-Tails)** — 11 of the 12 listed have fought him directly or via Naruto's Kurama-cloak/mode. Only Itachi is the exception.\n\n- **Naruto** — internal confrontations inside the seal when negotiating for Kurama's chakra.\n- **Sasuke** — Valley of the End rematch in 1-tail cloak (Part 1) and full Kurama mode in their final duel.\n- **Jiraiya** — held down 4-tailed Naruto at the waterfall during Sage training.\n- **Orochimaru** — fought 4-tailed Naruto at Tenchi Bridge during the Sasuke retrieval.\n- **Kakashi** — sealed 4-tailed Naruto during the Tenchi Bridge incident, plus repeated cloak encounters.\n- **Kushina** — prior Kurama jinchuriki; restrained him with chakra chains during Naruto's birth.\n- **Minato** — sealed Kurama into newborn Naruto via the Reaper Death Seal.\n- **Madara** — original wielder of Kurama at the Valley of the End vs Hashirama; controlled the tailed beasts in the 4th war.\n- **Obito** — released Kurama from Kushina and controlled him during the Konoha attack; fought Kurama-mode Naruto in the war.\n- **Hashirama** — subdued Kurama at the Valley of the End and entrusted him to Mito.\n- **Matatabi (via Yugito)** — Edo-Tensei'd jinchuriki fought Naruto and Killer B in the 4th war.\n\nItachi never fought Kurama or Kurama-mode Naruto on-page." }
     },
     {
       "id": "q7",
