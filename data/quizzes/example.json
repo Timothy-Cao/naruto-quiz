@@ -1,7 +1,7 @@
 {
   "slug": "example",
-  "title": "Themed Quiz — The Ultimate 55",
-  "description": "55 questions curated from the original Dodoman quizzes — logic chains, deep canon facts, and a few classic puzzles. Every answer is best-guess; verify and correct in the builder before publishing.",
+  "title": "Themed Quiz — The Ultimate 54",
+  "description": "54 questions curated from the original Dodoman quizzes — logic chains, deep canon facts, and a few classic puzzles. Every answer is best-guess; verify and correct in the builder before publishing.",
   "questions": [
     {
       "id": "q1",
@@ -142,19 +142,6 @@
     {
       "id": "q11",
       "type": "mc-multi",
-      "prompt": { "text": "Person A, Person B, and Person C are all sibling-students. What is true?" },
-      "options": [
-        { "id": "first", "text": "Person B taught Person A first" },
-        { "id": "alive", "text": "The teacher of Person A and B has never died" },
-        { "id": "clan", "text": "None of them are from the same clan" },
-        { "id": "multi", "text": "Person C could be multiple people" }
-      ],
-      "correctIds": ["multi"],
-      "explanation": { "text": "Sibling-students share a single sensei, so neither taught the other (eliminates first). Their shared sensei could have died (eliminates alive as a universal truth). They could be from the same clan (no constraint). Many shinobi share a sensei across teams, so **C could be multiple people** is the only universal truth." }
-    },
-    {
-      "id": "q12",
-      "type": "mc-multi",
       "prompt": { "text": "Person A and Person B are sibling-teachers of Person C. 3 of the options below are correct, select them." },
       "options": [
         { "id": "kage", "text": "Person A or B is a kage" },
@@ -166,7 +153,7 @@
       "explanation": { "text": "**[VERIFY]** A canonical pair of sibling-teachers: Iruka + Kakashi → student Naruto. Kakashi is a Hokage (kage), both lived through the 3rd war, both are alive together. None are Uchiha." }
     },
     {
-      "id": "q13",
+      "id": "q12",
       "type": "mc-single",
       "prompt": { "text": "Person A and Person B both wanted to fight Person C. There is only one false statement below — select it." },
       "options": [
@@ -180,7 +167,7 @@
       "explanation": { "text": "**[VERIFY]** The trio resolves to characters where A and B both pursued C, but A and B never directly fought each other on-page. The 'all of them have fought each other' line is the lie." }
     },
     {
-      "id": "q14",
+      "id": "q13",
       "type": "slider",
       "prompt": { "text": "How many degrees of separation are between the **2nd Raikage** and **Yugito Nii**? (Two characters are connected if they have met — on panel or stated — before they died.)" },
       "min": 0,
@@ -190,7 +177,7 @@
       "explanation": { "text": "**[VERIFY]** Path through Cloud-village leadership: 2nd Raikage → 3rd Raikage → 4th Raikage → Yugito. Roughly 3 hops; verify against canon meetings." }
     },
     {
-      "id": "q15",
+      "id": "q14",
       "type": "mc-multi",
       "prompt": { "text": "Ignoring all instances of Edo Tensei, no two of Characters A, B, C, D were ever alive at the same time. Exactly 5 of these statements are true — select them." },
       "options": [
@@ -205,7 +192,7 @@
       "explanation": { "text": "Hidden 4-tuple: **Hagoromo, Hashirama, Minato, Konohamaru** — four eras, never overlapping. Different hair colors ✓. Two H-names ✓. 2 are kage (Hashirama, Minato) ✓. 3 had children (Hagoromo, Minato, Hashirama by adoption — verify) ✓. Sorted by birth = sorted by strength ✓. Only 2 (Hagoromo, Minato) are jinchuriki — the **'3 jinchuriki'** statement is the lie." }
     },
     {
-      "id": "q16",
+      "id": "q15",
       "type": "mc-single",
       "prompt": { "text": "Which major military force never employed the **Akatsuki**?" },
       "options": [
@@ -218,7 +205,7 @@
       "explanation": { "text": "Akatsuki was hired by Kiri (Yagura era), Iwa, and Kumo for missions across the series. Konoha never officially employed them — Itachi infiltrated as a Konoha agent, but Konoha as a state never hired the group." }
     },
     {
-      "id": "q17",
+      "id": "q16",
       "type": "mc-single",
       "prompt": { "text": "Which is a nature release **not** required for Dust Release?" },
       "options": [
@@ -231,14 +218,14 @@
       "explanation": { "text": "Dust Release (Jinton) is a Kekkei Tōta combining **Earth + Wind + Fire**. Lightning is the only listed element not used." }
     },
     {
-      "id": "q18",
+      "id": "q17",
       "type": "name",
       "prompt": { "text": "Who is the only known person to hold both the **Will of Fire** and the **Curse of Hatred**?" },
       "acceptedAnswers": ["Sasuke", "Sasuke Uchiha"],
       "explanation": { "text": "**[VERIFY]** **Sasuke Uchiha** — born and raised in Konoha (Will of Fire), member of the Uchiha clan (Curse of Hatred). Could also be argued for Itachi; original quiz answer worth checking." }
     },
     {
-      "id": "q19",
+      "id": "q18",
       "type": "mc-single",
       "prompt": { "text": "How many **Akatsuki** members took their own life?" },
       "options": [
@@ -251,7 +238,7 @@
       "explanation": { "text": "**[VERIFY]** Strong cases: **Itachi** (intentionally fought Sasuke knowing he'd die), **Nagato** (Rinne Rebirth), **Deidara** (C0 self-detonation vs Sasuke). Some count Konan too. Original answer probably 3 or 4." }
     },
     {
-      "id": "q20",
+      "id": "q19",
       "type": "mc-single",
       "prompt": { "text": "Which of the following is largest in size?" },
       "options": [
@@ -264,7 +251,7 @@
       "explanation": { "text": "The **Ten-Tails** in its first form is mountain-sized — comfortably larger than Hashirama's Wood Style giant, a Perfect Susanoo, or the Genbu turtle." }
     },
     {
-      "id": "q21",
+      "id": "q20",
       "type": "mc-single",
       "prompt": { "text": "The **Explosion Corps** belongs to which village?" },
       "options": [
@@ -278,7 +265,7 @@
       "explanation": { "text": "The Explosion Corps is an **Iwagakure** unit — Deidara was its most famous member before defecting to Akatsuki." }
     },
     {
-      "id": "q22",
+      "id": "q21",
       "type": "mc-single",
       "prompt": { "text": "Who predates the others?" },
       "options": [
@@ -293,7 +280,7 @@
       "explanation": { "text": "**Black Zetsu** was created from Kaguya's will *before* she was sealed — predating Hagoromo's sons (Indra, Asura), Kurama (split from the Ten-Tails by Hagoromo), Hashirama, the Toad Sage, and Onoki." }
     },
     {
-      "id": "q23",
+      "id": "q22",
       "type": "mc-multi",
       "prompt": { "text": "Which nature transformations are required for the **Rubber Kekkei Genkai**?" },
       "options": [
@@ -307,7 +294,7 @@
       "explanation": { "text": "**[VERIFY]** Rubber/Boil-style kekkei genkai is most commonly **Fire + Water** in fan compendia. Worth confirming the canonical author intent." }
     },
     {
-      "id": "q24",
+      "id": "q23",
       "type": "slider",
       "prompt": { "text": "Without being able to open any gates, a user can only use ___% of the body's full potential." },
       "min": 0,
@@ -317,7 +304,7 @@
       "explanation": { "text": "Canon: the limiter set by the brain caps a normal user at roughly **20%** of true muscular output — opening the Eight Gates lifts that ceiling stage by stage." }
     },
     {
-      "id": "q25",
+      "id": "q24",
       "type": "mc-single",
       "prompt": { "text": "How many shinobi have had the ability to fly?" },
       "options": [
@@ -330,7 +317,7 @@
       "explanation": { "text": "**[VERIFY]** Onoki, Konan, Madara (Susanoo wings), Pain (gravity), Deidara (clay), Nagato's animal path, Kaguya, Hagoromo, and a few Otsutsuki types — lands in the 8-9 range. Worth a re-count." }
     },
     {
-      "id": "q26",
+      "id": "q25",
       "type": "mc-single",
       "prompt": { "text": "Who has not been shown to have a water affinity?" },
       "options": [
@@ -343,7 +330,7 @@
       "explanation": { "text": "**Sasori** of the Red Sand is a puppeteer from Suna — known for poison and sand-iron techniques, no water affinity. Gamabunta uses water gun, Ao is Mist, Yahiko's affinity isn't strongly canonical but is more often associated with water." }
     },
     {
-      "id": "q27",
+      "id": "q26",
       "type": "order",
       "prompt": { "text": "Order these events from the final **Sasuke vs Itachi** fight from earliest to latest." },
       "items": [
@@ -359,7 +346,7 @@
       "explanation": { "text": "**[VERIFY]** The fight opens with a shuriken battle, escalates to Sasuke's rigged shuriken trick, then Itachi pulls Sasuke into Tsukuyomi, and the final beat before Itachi's collapse is reaching for his brother's eye." }
     },
     {
-      "id": "q28",
+      "id": "q27",
       "type": "mc-single",
       "prompt": { "text": "Which of the following is **NOT** a normal reaction when chakra paper is applied?" },
       "options": [
@@ -373,7 +360,7 @@
       "explanation": { "text": "All four are real reactions: ash → fire, split → wind, crumble → earth, damp → water. **None of the above** is correct — every listed reaction is a canonical chakra-paper outcome (the missing fifth is wrinkle/lightning)." }
     },
     {
-      "id": "q29",
+      "id": "q28",
       "type": "mc-single",
       "prompt": { "text": "The **Puppet Brigade** was most active in which era?" },
       "options": [
@@ -387,7 +374,7 @@
       "explanation": { "text": "**[VERIFY]** Sand's Puppet Brigade rose to prominence under Chiyo / Sasori during the **second shinobi war**." }
     },
     {
-      "id": "q30",
+      "id": "q29",
       "type": "mc-single",
       "prompt": { "text": "Where is DNA applied during the **Edo Tensei** process?" },
       "options": [
@@ -400,7 +387,7 @@
       "explanation": { "text": "Edo Tensei requires a sacrificial host body to which the target's DNA is applied — the soul is then bound to it." }
     },
     {
-      "id": "q31",
+      "id": "q30",
       "type": "mc-single",
       "prompt": { "text": "What percent of a **tailed beast bomb** is negative chakra?" },
       "options": [
@@ -415,7 +402,7 @@
       "explanation": { "text": "Canon ratio: **8 parts dark (negative) chakra to 2 parts light (positive) chakra** — 80% negative." }
     },
     {
-      "id": "q32",
+      "id": "q31",
       "type": "mc-single",
       "prompt": { "text": "What was the cause of the **First Shinobi World War**?" },
       "options": [
@@ -428,7 +415,7 @@
       "explanation": { "text": "**[VERIFY]** The 1st Shinobi War spun out of the post-Hashirama distribution of the tailed beasts — minor nations resented the imbalance and pushed back." }
     },
     {
-      "id": "q33",
+      "id": "q32",
       "type": "mc-multi",
       "prompt": { "text": "Which of the following events occurred during the **3rd Shinobi World War**?" },
       "options": [
@@ -443,7 +430,7 @@
       "explanation": { "text": "Sasori earned his Red Sand nickname and Minato earned Yellow Flash during the **3rd war**, and the 3rd Raikage died holding off 10,000 enemies. Madara died long earlier (Valley of the End era), the Sannin nickname is from the **2nd** war (Hanzo named them), and Dan died in the **2nd** war." }
     },
     {
-      "id": "q34",
+      "id": "q33",
       "type": "mc-single",
       "prompt": { "text": "What is the purpose of **Hanzo of the Salamander's** mask?" },
       "options": [
@@ -458,7 +445,7 @@
       "explanation": { "text": "Hanzo had a salamander poison sac surgically implanted in his body — the mask was to protect **others** from his own toxic breath." }
     },
     {
-      "id": "q35",
+      "id": "q34",
       "type": "mc-multi",
       "prompt": { "text": "Which of the following people don't wear their **forehead protector** on their head?" },
       "options": [
@@ -473,7 +460,7 @@
       "explanation": { "text": "Konan wears no village protector at all (defected). Hinata wears hers around her neck. Chōjūrō around his arm. Gaara wears his on his sash. Guy and Sakura wear theirs traditionally on the head." }
     },
     {
-      "id": "q36",
+      "id": "q35",
       "type": "mc-single",
       "prompt": { "text": "Who first figured out that **Pain's** eyes are linked?" },
       "options": [
@@ -487,7 +474,7 @@
       "explanation": { "text": "**[VERIFY]** **Jiraiya** worked it out during the Six Paths fight and encoded the message on Fukasaku's back before dying." }
     },
     {
-      "id": "q37",
+      "id": "q36",
       "type": "mc-multi",
       "prompt": { "text": "Where are the location(s) of **Shisui's eyes** at the time of **Neji's death**?" },
       "options": [
@@ -502,7 +489,7 @@
       "explanation": { "text": "**[VERIFY]** By Neji's death (Fourth War), one Shisui eye had been **incinerated** by Danzo's Reverse Four-Symbols Seal, and the other was inside Itachi's **crow**, then nested inside **Naruto** (Itachi placed it there earlier)." }
     },
     {
-      "id": "q38",
+      "id": "q37",
       "type": "mc-single",
       "prompt": { "text": "How was the **8 Tails** sealed into Killer Bee?" },
       "options": [
@@ -517,7 +504,7 @@
       "explanation": { "text": "The 8-Tails was sealed into Killer Bee using the **Iron Armor Seal** (鉄甲封印)." }
     },
     {
-      "id": "q39",
+      "id": "q38",
       "type": "slider",
       "prompt": { "text": "How many **Jinchūriki** were also Kages?" },
       "min": 0,
@@ -527,7 +514,7 @@
       "explanation": { "text": "**Yagura** (4th Mizukage, 3-Tails), **Gaara** (5th Kazekage, 1-Tail), and **Naruto** (7th Hokage, 9-Tails) — three." }
     },
     {
-      "id": "q40",
+      "id": "q39",
       "type": "mc-single",
       "prompt": { "text": "How many people have walked into Kakashi's **Chidori** intentionally?" },
       "options": [
@@ -540,7 +527,7 @@
       "explanation": { "text": "**Rin Nohara** stepped into Kakashi's Chidori to prevent the Three-Tails from being released into Konoha — the only canonical intentional walk-in." }
     },
     {
-      "id": "q41",
+      "id": "q40",
       "type": "mc-multi",
       "prompt": { "text": "Which of these has **Konan** created with her paper?" },
       "options": [
@@ -557,7 +544,7 @@
       "explanation": { "text": "**[VERIFY]** Konan's canonical paper creations cover wings (angel mode), the paper sea trap she set for Obito, butterflies, birds, paper kunai/shuriken explosives. Tree and rock aren't on-page constructions." }
     },
     {
-      "id": "q42",
+      "id": "q41",
       "type": "mc-single",
       "prompt": { "text": "A Leaf and a Cloud ninja are the only known users of the ___ clone. What is true about these two?" },
       "options": [
@@ -570,7 +557,7 @@
       "explanation": { "text": "**[VERIFY]** The blank is a specific clone variant shared by exactly one Konoha and one Kumo shinobi. Best guess at the relationship: one of them is Yamato (refers to Kakashi as senpai). Worth filling in the blank during review." }
     },
     {
-      "id": "q43",
+      "id": "q42",
       "type": "mc-single",
       "prompt": { "text": "What is **Naruto's** favorite ramen?" },
       "options": [
@@ -583,7 +570,7 @@
       "explanation": { "text": "**Miso Pork Ramen** at Ichiraku — Naruto's go-to order, established early in Part 1." }
     },
     {
-      "id": "q44",
+      "id": "q43",
       "type": "categorize",
       "prompt": { "text": "Match each character to their **catchphrase**." },
       "buckets": [
@@ -605,7 +592,7 @@
       "explanation": { "text": "Shikamaru's exhausted *mendokusē* (\"how troublesome\"), Sakura's *Shannarō* battle cry, Killer B's *Bakayarō! Konoyarō!*, Deidara's art-philosophy *Geijutsu wa bakuhatsu da*, Itachi's farewell *Mata Kondo Da* (\"next time\"), Naruto's signature *Dattebayo*." }
     },
     {
-      "id": "q45",
+      "id": "q44",
       "type": "mc-multi",
       "prompt": { "text": "Who has been shown to cast a **Juinjutsu** (Cursed Seal)?" },
       "options": [
@@ -620,7 +607,7 @@
       "explanation": { "text": "**[VERIFY]** Hiashi casts the Caged Bird seal on the Hyuga branch family. Danzo seals his Root operatives. Orochimaru's Heaven/Earth seal is the canonical example." }
     },
     {
-      "id": "q46",
+      "id": "q45",
       "type": "order",
       "prompt": { "text": "Order these characters by their rank in the **first Naruto popularity poll** (taken during the Chunin Exams), from highest rank to lowest." },
       "items": [
@@ -642,7 +629,7 @@
       "explanation": { "text": "**[VERIFY]** Rough recall of the first Naruto popularity poll order — verify against the published volume's results page before publishing." }
     },
     {
-      "id": "q47",
+      "id": "q46",
       "type": "order",
       "prompt": { "text": "Order these **final words** chronologically by when they were spoken in canon." },
       "items": [
@@ -662,7 +649,7 @@
       "explanation": { "text": "**[VERIFY]** Best-guess chronological mapping (Obito → Hiruzen → Asuma → Hidan? → Konan → Itachi → Jiraiya/Hagoromo → Madara). Worth re-walking each quote against canon timeline." }
     },
     {
-      "id": "q48",
+      "id": "q47",
       "type": "mc-single",
       "prompt": { "text": "Where does **Killer Bee** **NOT** hold a sword in his 8-sword stance?" },
       "options": [
@@ -677,7 +664,7 @@
       "explanation": { "text": "Bee's 8-sword stance distributes blades across hands, elbow-armpits, armpits, shoulders, and mouth. **Knee armpit** isn't a body-part position used in the technique." }
     },
     {
-      "id": "q49",
+      "id": "q48",
       "type": "mc-single",
       "prompt": { "text": "What was the first thing **Kamui** was ever used to pass through?" },
       "options": [
@@ -692,7 +679,7 @@
       "explanation": { "text": "**[VERIFY]** Kakashi's first on-screen use of Kamui to phase through a solid object was passing a wall during his Deidara fight (or during the Sasuke retrieval — the early Shippuden uses). Confirm precise first instance." }
     },
     {
-      "id": "q50",
+      "id": "q49",
       "type": "order",
       "prompt": { "text": "Order these **last-ish words** chronologically (by canon timing, not air date)." },
       "items": [
@@ -712,7 +699,7 @@
       "explanation": { "text": "**[VERIFY]** Three of these source quotes were truncated in the original — re-walk against canon and recover the full text before publishing. Best-guess ordering pending verification." }
     },
     {
-      "id": "q51",
+      "id": "q50",
       "type": "mc-single",
       "prompt": { "text": "\"If **Itachi** really wanted to kill you, you would most certainly be dead.\" — said by Person A to Person B. What is their relationship?" },
       "options": [
@@ -725,7 +712,7 @@
       "explanation": { "text": "**[VERIFY]** The line is most often attributed to Kisame referring to Itachi's restraint while addressing a fellow Akatsuki member — **same organization**." }
     },
     {
-      "id": "q52",
+      "id": "q51",
       "type": "slider",
       "prompt": { "text": "How many people have cast **reincarnation ninjutsu**?" },
       "min": 0,
@@ -735,7 +722,7 @@
       "explanation": { "text": "Edo Tensei has been cast by exactly three known users: **Tobirama** (creator), **Orochimaru**, and **Kabuto**." }
     },
     {
-      "id": "q53",
+      "id": "q52",
       "type": "mc-multi",
       "prompt": { "text": "Of the speakers below, select the **4 youngest** characters." },
       "options": [
@@ -752,7 +739,7 @@
       "explanation": { "text": "**[VERIFY]** Two of the source quotes were truncated, so speaker attribution is partially guesswork. Best-guess youngest four: lines from Sasuke, Sakura, Itachi (to Sasuke), and Naruto's generation. Verify each speaker before publishing." }
     },
     {
-      "id": "q54",
+      "id": "q53",
       "type": "mc-multi",
       "prompt": { "text": "Which chakra types have been seen infused into a blade?" },
       "options": [
@@ -768,7 +755,7 @@
       "explanation": { "text": "**[VERIFY]** Wind (Asuma's chakra blades), Lightning (Sasuke's chokuto, the 3rd Raikage), Yin (Shikamaru lending shadow chakra to Asuma's blade against Hidan/Kakuzu), Fire (Itachi's Susanoo blades). Water/Earth/Yang are less canonical examples." }
     },
     {
-      "id": "q55",
+      "id": "q54",
       "type": "order",
       "prompt": { "text": "Order these characters' deaths by when they happened in the show (earliest to latest, episode-wise)." },
       "items": [
