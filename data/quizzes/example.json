@@ -142,15 +142,15 @@
     {
       "id": "q11",
       "type": "mc-multi",
-      "prompt": { "text": "Person A and Person B are sibling-teachers of Person C. 3 of the options below are correct, select them." },
+      "prompt": { "text": "Person A and Person B are sibling-teachers of Person C. **Exactly 3** of the options below are correct — select them." },
       "options": [
-        { "id": "kage", "text": "Person A or B is a kage" },
+        { "id": "kage", "text": "One of A or B is a kage" },
         { "id": "uchiha", "text": "Two of them are Uchiha" },
-        { "id": "war", "text": "They have all participated in the 3rd war" },
-        { "id": "met", "text": "Person A and B have met before death" }
+        { "id": "war", "text": "All three were alive during the 3rd Shinobi War" },
+        { "id": "met", "text": "A and B met each other before either died" }
       ],
-      "correctIds": ["kage", "war", "met"],
-      "explanation": { "text": "**[VERIFY]** A canonical pair of sibling-teachers: Iruka + Kakashi → student Naruto. Kakashi is a Hokage (kage), both lived through the 3rd war, both are alive together. None are Uchiha." }
+      "correctIds": ["kage", "uchiha", "war"],
+      "explanation": { "text": "Anchor: **A = Minato, B = Madara, C = Obito** — both Minato (Team Minato sensei) and Madara (after Kannabi Bridge — Mokuton, sealing, Eye of the Moon plan) taught Obito.\n\n- *One of A or B is a kage* ✓ Minato is the 4th Hokage.\n- *Two of them are Uchiha* ✓ Madara and Obito.\n- *All three alive during the 3rd Shinobi War* ✓ Minato (young adult, earned his Yellow Flash nickname), Obito (died at Kannabi Bridge near the end of the war), Madara (secretly alive in hiding, saved Obito mid-war).\n- *A and B met each other before either died* ✗ Minato died on the night of Naruto's birth, well before Madara was reanimated in the 4th war. They never met before death." }
     },
     {
       "id": "q12",
