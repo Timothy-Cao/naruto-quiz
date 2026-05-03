@@ -11,8 +11,8 @@ type Props = {
 
 export function QuizHeader({ title, total, currentIndex, statusByIndex, onJump }: Props) {
   return (
-    <header className="grid gap-3 mb-6">
-      <h1 className="font-[family-name:var(--font-display)] text-3xl tracking-wide text-[var(--color-text)]">
+    <header className="grid gap-3 mb-6 min-w-0">
+      <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl tracking-wide text-[var(--color-text)] break-words">
         {title}
       </h1>
       <div className="flex flex-wrap items-center gap-2">

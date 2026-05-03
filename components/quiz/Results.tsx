@@ -40,10 +40,10 @@ export function Results({ quiz, answers, onRetry, onJumpTo }: Props) {
   }, [quiz.slug, totals.points, totals.maxPoints]);
 
   return (
-    <Card className="p-6 bg-[var(--color-surface)] border-[var(--color-border)]">
+    <Card className="p-4 sm:p-6 bg-[var(--color-surface)] border-[var(--color-border)] min-w-0">
       <div className="text-center mb-6">
         <p className="text-xs uppercase tracking-widest text-[var(--color-text-dim)]">Final score</p>
-        <p className="font-[family-name:var(--font-display)] text-7xl text-[var(--color-accent)] tracking-wide">
+        <p className="font-[family-name:var(--font-display)] text-5xl sm:text-7xl text-[var(--color-accent)] tracking-wide break-words">
           {fmt(totals.points)}{" "}
           <span className="text-[var(--color-text-dim)]">/ {fmt(totals.maxPoints)}</span>
         </p>

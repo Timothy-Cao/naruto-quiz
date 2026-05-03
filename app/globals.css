@@ -120,9 +120,25 @@ html, body {
    pill so content scroll never ends underneath it. */
 body {
   padding-bottom: 5rem;
+  /* Defensive: any rogue child wider than the viewport (long unbreakable
+     strings, a wide drag overlay, etc.) shouldn't add a horizontal
+     scrollbar to the page. The fixed-position visualizer + audio pill use
+     z-index above this, so clipping is safe. */
+  overflow-x: clip;
 }
 
 * { box-sizing: border-box; }
+
+/* Long unbreakable strings (URLs, character names without spaces) inside
+   prompts/options should wrap rather than blow out the layout. */
+.md-content,
+.md-content p,
+.md-content li,
+.md-content strong,
+.md-content em {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 
 /* Subtle hover/press feedback on every interactive control. */
 button, a[href], [role="button"] {

@@ -21,7 +21,7 @@ export default async function ManagerEditPage({
   if (!quiz) notFound();
 
   return (
-    <main className="max-w-7xl mx-auto p-4 grid gap-4">
+    <main className="max-w-7xl mx-auto p-3 sm:p-4 lg:p-6 grid gap-4">
       <Link href="/manager" className="text-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)]">
         ← Manager
       </Link>

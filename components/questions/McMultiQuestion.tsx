@@ -59,7 +59,7 @@ export function McMultiQuestionRenderer({
             >
               {isSelected && <Check className="w-3 h-3 text-white" />}
             </span>
-            <span className="flex-1">
+            <span className="flex-1 min-w-0 break-words">
               <MediaBlock block={opt} size="option" />
             </span>
             {showWrongPick && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0 mt-1" />}

@@ -36,7 +36,7 @@ export function McSingleQuestionRenderer({
               showWrong && "border-[var(--color-incorrect)]",
             )}
           >
-            <span className="flex-1">
+            <span className="flex-1 min-w-0 break-words">
               <MediaBlock block={opt} size="option" />
             </span>
             {showCorrect && <Check className="w-5 h-5 text-[var(--color-correct)] shrink-0 mt-1" />}
