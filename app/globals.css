@@ -114,17 +114,17 @@ html, body {
   color: var(--color-text);
   font-family: system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  /* Belt-and-suspenders: kill any horizontal scrollbar at both levels.
+     Anything wider than the viewport gets clipped instead of pushing
+     the page wider. */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Reserve space at the bottom of the viewport for the auto-hiding music
    pill so content scroll never ends underneath it. */
 body {
   padding-bottom: 5rem;
-  /* Defensive: any rogue child wider than the viewport (long unbreakable
-     strings, a wide drag overlay, etc.) shouldn't add a horizontal
-     scrollbar to the page. The fixed-position visualizer + audio pill use
-     z-index above this, so clipping is safe. */
-  overflow-x: clip;
 }
 
 * { box-sizing: border-box; }

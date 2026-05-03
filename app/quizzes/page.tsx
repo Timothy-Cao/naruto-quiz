@@ -37,11 +37,11 @@ export default async function QuizzesPage() {
   const items = [...builtInItems, ...publishedItems];
 
   return (
-    <main className="max-w-3xl mx-auto p-6">
+    <main className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 min-w-0">
       <Link href="/" className="text-sm text-[var(--color-text-dim)] hover:text-[var(--color-text)]">
         ← Main menu
       </Link>
-      <h1 className="font-[family-name:var(--font-display)] text-4xl text-[var(--color-text)] mt-4 mb-6">
+      <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl text-[var(--color-text)] mt-4 mb-6 break-words">
         Quizzes
       </h1>
       <QuizListClient quizzes={items} />
