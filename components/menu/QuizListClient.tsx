@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
 import { getAllScores, type ScoreStore } from "@/lib/storage";
 
 type ListItem = {
@@ -26,8 +25,10 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
       {quizzes.map((q) => {
         const score = scores[q.slug];
         return (
-          <Link key={q.slug} href={`/quizzes/${q.slug}`}>
-            <Card className="p-3 sm:p-4 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors flex items-center gap-3 sm:gap-4 min-w-0">
+          <Link key={q.slug} href={`/quizzes/${q.slug}`} className="block">
+            <div
+              className="rounded-xl ring-1 ring-foreground/10 p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors flex flex-row items-center gap-3 sm:gap-4 w-full min-w-0 overflow-hidden"
+            >
               {q.coverImage && (
                 <img
                   src={q.coverImage}
@@ -40,7 +41,9 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
                   {q.title}
                 </h3>
                 {q.description && (
-                  <p className="text-sm text-[var(--color-text-dim)] truncate">{q.description}</p>
+                  <p className="text-sm text-[var(--color-text-dim)] line-clamp-2 break-words">
+                    {q.description}
+                  </p>
                 )}
                 <p className="text-xs text-[var(--color-text-dim)] mt-1 break-words">
                   {q.questionCount} questions
@@ -64,7 +67,7 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
                   {score ? `${score.bestScore} / ${score.bestOutOf}` : "—"}
                 </p>
               </div>
-            </Card>
+            </div>
           </Link>
         );
       })}

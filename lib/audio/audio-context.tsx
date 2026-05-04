@@ -59,13 +59,10 @@ function loadActivePackId(): string {
   return DEFAULT_PACK_ID;
 }
 
-function buildOpenerUrl(pack: Pack, tracks: string[]): string | null {
-  // The opening track filename in pack.openingTrack must match a real file
-  // in tracks[]; we compare against the URL-encoded suffix.
-  const target = `/${pack.id}/${encodeURIComponent(pack.openingTrack)}`;
-  const exact = tracks.find((t) => t.endsWith(target));
-  if (exact) return exact;
-  // Fall back to a random track if the named opener is missing.
+// Each session opens with a random track from the pack — no fixed opener.
+// `pack` is unused here but kept in the signature so callers don't have to
+// change when we re-introduce per-pack opening behavior.
+function buildOpenerUrl(_pack: Pack, tracks: string[]): string | null {
   return pickNext(tracks, []);
 }
 
