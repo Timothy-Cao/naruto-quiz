@@ -28,19 +28,32 @@ export function McSingleQuestionRenderer({
             disabled={locked}
             onClick={() => onChange(opt.id)}
             className={cn(
-              "flex items-start gap-3 p-3 rounded-md border text-left transition-colors",
+              "flex items-center gap-3 p-3 rounded-lg border text-left transition-all duration-150",
               "bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text)]",
-              !locked && "hover:border-[var(--color-border-2)]",
+              !locked && "hover:border-[var(--color-border-2)] hover:bg-[var(--color-surface-2)]/50",
               isSelected && !locked && "border-[var(--color-accent)] bg-[var(--color-surface-2)]",
-              showCorrect && "border-[var(--color-correct)]",
-              showWrong && "border-[var(--color-incorrect)]",
+              showCorrect && "border-[var(--color-correct)] bg-[var(--color-correct)]/5",
+              showWrong && "border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/5",
             )}
           >
+            <span
+              className={cn(
+                "w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors",
+                isSelected && !locked && "border-[var(--color-accent)]",
+                !isSelected && !locked && "border-[var(--color-border-2)]",
+                showCorrect && "border-[var(--color-correct)]",
+                showWrong && "border-[var(--color-incorrect)]",
+              )}
+            >
+              {isSelected && !locked && <span className="w-2 h-2 rounded-full bg-[var(--color-accent)]" />}
+              {showCorrect && <span className="w-2 h-2 rounded-full bg-[var(--color-correct)]" />}
+              {showWrong && <span className="w-2 h-2 rounded-full bg-[var(--color-incorrect)]" />}
+            </span>
             <span className="flex-1 min-w-0 break-words">
               <MediaBlock block={opt} size="option" />
             </span>
-            {showCorrect && <Check className="w-5 h-5 text-[var(--color-correct)] shrink-0 mt-1" />}
-            {showWrong && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0 mt-1" />}
+            {showCorrect && <Check className="w-5 h-5 text-[var(--color-correct)] shrink-0" />}
+            {showWrong && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0" />}
           </button>
         );
       })}

@@ -31,20 +31,13 @@ export function UnderConstructionBanner() {
   if (signedIn === null || signedIn) return null;
 
   return (
-    <div className="rounded-xl border-2 border-dashed border-[var(--color-accent)] bg-[var(--color-accent)]/10 p-6 sm:p-8 text-center grid gap-3">
-      <div className="flex justify-center gap-3">
-        <Construction className="w-8 h-8 text-[var(--color-accent)] animate-pulse" />
-        <Construction className="w-8 h-8 text-[var(--color-accent)] animate-pulse" />
-        <Construction className="w-8 h-8 text-[var(--color-accent)] animate-pulse" />
-      </div>
-      <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl tracking-wide text-[var(--color-accent)] uppercase">
+    <div className="rounded-xl border border-dashed border-[var(--color-accent)]/40 bg-[var(--color-accent)]/5 px-5 py-6 sm:px-8 sm:py-8 text-center grid gap-2">
+      <Construction className="w-6 h-6 text-[var(--color-accent)] mx-auto opacity-70" />
+      <h2 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl tracking-wide text-[var(--color-accent)] uppercase">
         Under Construction
       </h2>
-      <p className="text-base sm:text-lg text-[var(--color-text)] leading-relaxed max-w-md mx-auto">
-        Quizzes being imported from Quiz Maker.
-      </p>
-      <p className="text-sm text-[var(--color-text-dim)]">
-        Sign in to access the full site.
+      <p className="text-sm text-[var(--color-text-dim)] leading-relaxed max-w-sm mx-auto">
+        Quizzes being imported from Quiz Maker. Sign in to access the full site.
       </p>
     </div>
   );

@@ -96,7 +96,7 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
   }
 
   return (
-    <main className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 grid gap-2 min-w-0">
+    <main className="max-w-2xl mx-auto px-4 py-6 sm:px-5 sm:py-8 grid gap-3 min-w-0">
       <QuizHeader
         title={quiz.title}
         total={total}

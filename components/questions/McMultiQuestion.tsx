@@ -40,31 +40,33 @@ export function McMultiQuestionRenderer({
             disabled={locked}
             onClick={() => toggle(opt.id)}
             className={cn(
-              "flex items-center gap-3 p-3 rounded-md border text-left transition-colors",
+              "flex items-center gap-3 p-3 rounded-lg border text-left transition-all duration-150",
               "bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text)]",
-              !locked && "hover:border-[var(--color-border-2)]",
+              !locked && "hover:border-[var(--color-border-2)] hover:bg-[var(--color-surface-2)]/50",
               isSelected && !locked && "border-[var(--color-accent)] bg-[var(--color-surface-2)]",
-              showCorrect && "border-[var(--color-correct)]",
-              showWrongPick && "border-[var(--color-incorrect)]",
+              showCorrect && "border-[var(--color-correct)] bg-[var(--color-correct)]/5",
+              showWrongPick && "border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/5",
               showMissed && "border-[var(--color-correct)]/50 border-dashed",
             )}
           >
             <span
               className={cn(
-                "w-5 h-5 rounded border flex items-center justify-center shrink-0",
-                isSelected
-                  ? "bg-[var(--color-accent)] border-[var(--color-accent)]"
-                  : "border-[var(--color-border-2)]",
+                "w-[18px] h-[18px] rounded border-2 flex items-center justify-center shrink-0 transition-colors",
+                isSelected && !locked && "bg-[var(--color-accent)] border-[var(--color-accent)]",
+                !isSelected && !locked && "border-[var(--color-border-2)]",
+                showCorrect && isSelected && "bg-[var(--color-correct)] border-[var(--color-correct)]",
+                showCorrect && !isSelected && "border-[var(--color-correct)]",
+                showWrongPick && "bg-[var(--color-incorrect)] border-[var(--color-incorrect)]",
               )}
             >
-              {isSelected && <Check className="w-3 h-3 text-white" />}
+              {(isSelected || showMissed) && <Check className="w-3 h-3 text-white" />}
             </span>
             <span className="flex-1 min-w-0 break-words">
               <MediaBlock block={opt} size="option" />
             </span>
-            {showWrongPick && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0 mt-1" />}
+            {showWrongPick && <X className="w-5 h-5 text-[var(--color-incorrect)] shrink-0" />}
             {showMissed && (
-              <span className="text-xs text-[var(--color-correct)]">Missed</span>
+              <span className="text-xs text-[var(--color-correct)] shrink-0">Missed</span>
             )}
           </button>
         );

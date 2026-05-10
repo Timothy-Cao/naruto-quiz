@@ -22,9 +22,9 @@ export function SliderQuestionRenderer({
     <div className="grid gap-4">
       <div className="flex items-baseline justify-between">
         <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)]">
-          Your value
+          Your answer
         </span>
-        <span className="font-mono text-2xl text-[var(--color-text)]">{value}</span>
+        <span className="font-[family-name:var(--font-display)] text-3xl text-[var(--color-accent)] tabular-nums">{value}</span>
       </div>
       <Slider
         min={question.min}
@@ -34,19 +34,19 @@ export function SliderQuestionRenderer({
         disabled={locked}
         onValueChange={(v) => onChange(Array.isArray(v) ? v[0] : (v as number))}
       />
-      <div className="flex justify-between text-xs text-[var(--color-text-dim)]">
+      <div className="flex justify-between text-xs text-[var(--color-text-dim)] font-mono">
         <span>{question.min}</span>
         <span>{question.max}</span>
       </div>
       {locked && (
         <div className={cn(
-          "flex justify-between font-mono text-sm rounded-md p-3 border",
+          "flex justify-between font-mono text-sm rounded-lg p-3 border",
           state.status === "confirmed" && state.correct
-            ? "border-[var(--color-correct)] bg-[var(--color-correct)]/10"
-            : "border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/10",
+            ? "border-[var(--color-correct)] bg-[var(--color-correct)]/5"
+            : "border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/5",
         )}>
-          <span>You: {value}</span>
-          <span>Correct: {question.correctValue}</span>
+          <span>You: <span className="font-semibold">{value}</span></span>
+          <span>Correct: <span className="font-semibold">{question.correctValue}</span></span>
         </div>
       )}
     </div>

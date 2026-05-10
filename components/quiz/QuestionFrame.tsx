@@ -23,8 +23,8 @@ type Props = {
 
 export function QuestionFrame({ question, state, onChange, quizSlug }: Props) {
   return (
-    <Card className="p-4 sm:p-6 bg-[var(--color-surface)] border-[var(--color-border)] overflow-visible min-w-0">
-      <div className="text-lg sm:text-xl font-medium text-[var(--color-text)] mb-4 break-words">
+    <Card className="p-4 sm:p-6 bg-[var(--color-surface)] border-[var(--color-border)] overflow-visible min-w-0 shadow-sm">
+      <div className="text-base sm:text-lg font-medium text-[var(--color-text)] mb-5 leading-relaxed break-words">
         <MediaBlock block={question.prompt} size="prompt" />
       </div>
       <Renderer question={question} state={state} onChange={onChange} />

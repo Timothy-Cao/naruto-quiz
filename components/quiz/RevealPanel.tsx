@@ -41,11 +41,11 @@ export function RevealPanel({
   return (
     <div
       className={cn(
-        "mt-4 p-4 rounded-md border animate-in slide-in-from-top-2 duration-250",
+        "mt-5 p-4 rounded-lg border animate-in fade-in slide-in-from-bottom-1 duration-300",
         borderColor,
       )}
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-3">
         <Icon className={cn("w-5 h-5", iconColor)} />
         <span className="font-semibold text-[var(--color-text)]">{headline}</span>
         {(partial || result.maxPoints !== 1) && (
@@ -54,7 +54,7 @@ export function RevealPanel({
           </span>
         )}
       </div>
-      <div className="text-sm text-[var(--color-text)] leading-relaxed">
+      <div className="text-sm text-[var(--color-text)]/90 leading-relaxed">
         <MediaBlock block={explanation} size="prompt" />
       </div>
       <DifficultyRater quizSlug={quizSlug} questionId={questionId} />

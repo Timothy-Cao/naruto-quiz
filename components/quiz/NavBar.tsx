@@ -22,7 +22,7 @@ export function NavBar({
   onNext,
 }: Props) {
   return (
-    <div className="flex items-center justify-between mt-6">
+    <div className="flex items-center justify-between mt-2">
       <Button
         variant="ghost"
         disabled={!canPrev}
