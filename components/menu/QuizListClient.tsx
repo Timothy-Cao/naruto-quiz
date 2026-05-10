@@ -27,7 +27,7 @@ export function QuizListClient({ quizzes }: { quizzes: ListItem[] }) {
         return (
           <Link key={q.slug} href={`/quizzes/${q.slug}`} className="block">
             <div
-              className="rounded-xl ring-1 ring-foreground/10 p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors flex flex-row items-center gap-3 sm:gap-4 w-full min-w-0 overflow-hidden"
+              className="rounded-xl p-3 sm:p-4 bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-accent)]/60 transition-all duration-200 flex flex-row items-center gap-3 sm:gap-4 w-full min-w-0 overflow-hidden hover:shadow-lg hover:shadow-[var(--color-accent)]/5"
             >
               {q.coverImage && (
                 <img

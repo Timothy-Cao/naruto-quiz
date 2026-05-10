@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Quiz } from "@/lib/quiz-schema";
 import type { AnswerState } from "@/lib/player-reducer";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -35,7 +35,10 @@ export function Results({ quiz, answers, onRetry, onJumpTo }: Props) {
     { points: 0, maxPoints: 0 },
   );
 
+  const recordedRef = useRef(false);
   useEffect(() => {
+    if (recordedRef.current) return;
+    recordedRef.current = true;
     recordAttempt(quiz.slug, totals.points, totals.maxPoints);
   }, [quiz.slug, totals.points, totals.maxPoints]);
 

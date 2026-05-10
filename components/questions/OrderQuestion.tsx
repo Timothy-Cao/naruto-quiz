@@ -64,7 +64,7 @@ function SortableItem({
 function VerticalAxis({ startLabel, endLabel }: { startLabel: string; endLabel: string }) {
   return (
     <div className="flex flex-col items-center w-12 shrink-0 self-stretch py-1">
-      <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)] font-[family-name:var(--font-display)] text-base">
+      <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)] font-[family-name:var(--font-display)]">
         {startLabel}
       </span>
       <div className="flex-1 my-2 w-1 rounded-full bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent-2)] relative">
@@ -75,7 +75,7 @@ function VerticalAxis({ startLabel, endLabel }: { startLabel: string; endLabel: 
                      border-t-[10px] border-t-[var(--color-accent-2)]"
         />
       </div>
-      <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)] font-[family-name:var(--font-display)] text-base mt-1">
+      <span className="text-xs uppercase tracking-wide text-[var(--color-text-dim)] font-[family-name:var(--font-display)] mt-1">
         {endLabel}
       </span>
     </div>

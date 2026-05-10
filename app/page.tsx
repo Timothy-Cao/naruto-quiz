@@ -13,35 +13,35 @@ const cards = [
 
 export default function Home() {
   return (
-    <main className="max-w-3xl mx-auto p-6 grid gap-6">
+    <main className="max-w-2xl mx-auto px-5 py-10 grid gap-8">
       <MainHeader />
       <UnderConstructionBanner />
-      <div className="grid gap-4 md:grid-cols-3">
+      <nav className="grid gap-3 sm:grid-cols-3">
         {cards.map((c) => (
           <Link key={c.href} href={c.href}>
-            <Card className="p-5 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors h-full grid gap-2">
+            <Card className="group p-5 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-accent)]/60 transition-all duration-200 h-full grid gap-3 hover:shadow-lg hover:shadow-[var(--color-accent)]/5">
               <div className="flex items-center justify-between">
-                <c.icon className="w-6 h-6 text-[var(--color-accent)]" />
+                <c.icon className="w-5 h-5 text-[var(--color-accent)] opacity-80 group-hover:opacity-100 transition-opacity" />
                 {c.badge && (
-                  <Badge variant="outline" className="text-xs border-[var(--color-border-2)] text-[var(--color-text-dim)]">
+                  <Badge variant="outline" className="text-[10px] border-[var(--color-border-2)] text-[var(--color-text-dim)]">
                     {c.badge}
                   </Badge>
                 )}
               </div>
-              <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-text)]">
+              <h2 className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-text)] leading-tight">
                 {c.title}
               </h2>
-              <p className="text-sm text-[var(--color-text-dim)]">{c.desc}</p>
+              <p className="text-sm text-[var(--color-text-dim)] leading-relaxed">{c.desc}</p>
             </Card>
           </Link>
         ))}
-      </div>
-      <footer className="text-center mt-8">
+      </nav>
+      <footer className="text-center pt-4">
         <a
           href="https://timcao.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="shimmer-link text-sm uppercase tracking-widest"
+          className="shimmer-link text-xs uppercase tracking-[0.2em]"
         >
           A Tim Cao Site
         </a>
