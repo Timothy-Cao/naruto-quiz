@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Hammer, FolderOpen } from "lucide-react";
 import { MainHeader } from "@/components/menu/MainHeader";
+import { UnderConstructionBanner } from "@/components/UnderConstructionBanner";
 
 const cards = [
   { href: "/quizzes", title: "Quizzes", desc: "Browse quizzes and your top scores.", icon: Trophy, badge: null },
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <main className="max-w-3xl mx-auto p-6 grid gap-6">
       <MainHeader />
+      <UnderConstructionBanner />
       <div className="grid gap-4 md:grid-cols-3">
         {cards.map((c) => (
           <Link key={c.href} href={c.href}>
