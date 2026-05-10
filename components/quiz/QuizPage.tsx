@@ -119,6 +119,7 @@ export function QuizPage({ quiz }: { quiz: Quiz }) {
         currentAnswer && (
           <>
             <QuestionFrame
+              key={currentQuestion.id}
               question={currentQuestion}
               state={currentAnswer}
               onChange={handleChange}

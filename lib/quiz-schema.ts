@@ -193,7 +193,13 @@ export const QuizSchema = z.object({
   coverImage: z.string().min(1).optional(),
   author: z.string().min(1).max(120).optional(),
   questions: z.array(QuestionSchema).min(1),
-});
+}).refine(
+  (q) => {
+    const ids = q.questions.map((question) => question.id);
+    return new Set(ids).size === ids.length;
+  },
+  { message: "question IDs must be unique within a quiz" },
+);
 
 export type Quiz = z.infer<typeof QuizSchema>;
 export type Question = z.infer<typeof QuestionSchema>;
